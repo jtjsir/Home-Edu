@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jing.edu.mapper.joggle.UserRecordDao">
+	<insert id="insertUserRecord">
+		insert into core_stuteacher_record(stuid,teacherid,guideby,isdelete) values(#{0},#{1},#{2},#{3})
+	</insert>
+	
+	<select id="queryRecordsByStudent" parameterType="int" resultMap="recordMapByStudent">
+		select 
+				a.id as recordid,
+				b.id as sid,
+				b.username as susername,b.type as stype,b.sex as ssex,b.age as sage,b.email as semail,b.phone as sphone,b.level as slevel,
+				c.id as tid,
+				c.username as tusername,c.type as ttype,c.sex as tsex,c.age as tage,c.email as temail,c.phone as tphone,c.level as tlevel
+		from core_stuteacher_record a left join base_user b  on a.stuid=b.id
+		left join base_user c on a.teacherid=c.id
+		where a.stuid=#{stuid} and a.guideby=1 and a.isdelete=0
+	</select>
+	<resultMap type="StuTeacherRecord" id="recordMapByStudent">
+		<id property="id" column="recordid"/>
+		<association property="student" javaType="User">
+			<id property="id" column="sid" />
+			<result property="username" column="susername" />
+			<result property="password" column="spassword"/>
+			<result property="type" column="stype"/>
+			<result property="sex" column="ssex"/>
+			<result property="age" column="sage"/>
+			<result property="email" column="semail"/>
+			<result property="phone" column="sphone"/>
+			<result property="level" column="slevel"/>
+		</association>
+		<association property="teacher" javaType="User">
+			<id property="id" column="tid" />
+			<result property="username" column="tusername" />
+			<result property="password" column="tpassword"/>
+			<result property="type" column="ttype"/>
+			<result property="sex" column="tsex"/>
+			<result property="age" column="tage"/>
+			<result property="email" column="temail"/>
+			<result property="phone" column="tphone"/>
+			<result property="level" column="tlevel"/>
+		</association>
+	</resultMap>
+	
+	<select id="queryRecordsByTeacher" parameterType="int" resultMap="recordMapByTeacher">
+		select 
+				a.id as recordid,
+				b.id as sid,
+				b.username as susername,b.type as stype,b.sex as ssex,b.age as sage,b.email as semail,b.phone as sphone,b.level as slevel,
+				c.id as tid,
+				c.username as tusername,c.type as ttype,c.sex as tsex,c.age as tage,c.email as temail,c.phone as tphone,c.level as tlevel
+		from core_stuteacher_record a 
+		left join base_user b  on a.stuid=b.id
+		left join base_user c on a.teacherid=c.id
+		where a.teacherid=#{teaid} and a.guideby=0 and a.isdelete=0
+	</select>
+	<resultMap type="StuTeacherRecord" id="recordMapByTeacher">
+		<id property="id" column="recordid"/>
+		<association property="student" javaType="User">
+			<id property="id" column="sid" />
+			<result property="username" column="susername" />
+			<result property="password" column="spassword"/>
+			<result property="type" column="stype"/>
+			<result property="sex" column="ssex"/>
+			<result property="age" column="sage"/>
+			<result property="email" column="semail"/>
+			<result property="phone" column="sphone"/>
+			<result property="level" column="slevel"/>
+		</association>
+		<association property="teacher" javaType="User">
+			<id property="id" column="tid" />
+			<result property="username" column="tusername" />
+			<result property="password" column="tpassword"/>
+			<result property="type" column="ttype"/>
+			<result property="sex" column="tsex"/>
+			<result property="age" column="tage"/>
+			<result property="email" column="temail"/>
+			<result property="phone" column="tphone"/>
+			<result property="level" column="tlevel"/>
+		</association>
+	</resultMap>
+	
+	<select id="queryTeaRecordsBySubject" parameterType="String" resultType="UserDetailTea">
+		select * from  detail_user_teacher
+		where subject like CONCAT('%',#{sub},'%') limit 0,4
+	</select>
+	
+	<select id="queryStuRecordsBySubject" parameterType="String" resultType="UserDetailStu">
+		select * from  detail_user_student 
+		where subject like CONCAT('%',#{sub},'%') limit 0,4
+	</select>
+	
+	<update id="updateIsdelete">
+		update core_stuteacher_record
+		set isdelete=1
+		where stuid=#{0} and teacherid=#{1} and guideby=#{2}
+	</update>
+</mapper>

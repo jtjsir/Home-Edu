@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jing.edu.mapper.joggle.CourseDao">
+	<delete id="deleteCourseById" parameterType="int">
+		delete from core_course where teacherId=#{teacherId} 
+	</delete>
+	
+	<insert id="insertCourse" parameterType="Course">
+		insert into core_course(teacherName,teacherId,name,grade,price) values(#{teacherName},#{teacherId},#{name},#{grade},#{price})
+	</insert>
+	
+	<select id="queryCourseByTeacher" parameterType="int" resultType="Course">
+		select * from core_course where teacherId=#{teacherId}
+	</select>
+</mapper>

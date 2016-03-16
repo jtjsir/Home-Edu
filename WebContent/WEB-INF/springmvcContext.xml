@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"  
+       xmlns:context="http://www.springframework.org/schema/context"  
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+       http://www.springframework.org/schema/mvc  
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd  
+       http://www.springframework.org/schema/context   
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<context:annotation-config />
+	<context:component-scan base-package="com.jing.edu.controller" /> 
+	<mvc:annotation-driven />
+	
+	<!-- 配置资源的外部访问 -->
+	<mvc:resources location="/WEB-INF/images/" mapping="/images/**" />
+	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>      
+	<mvc:resources location="/upload_photos/" mapping="/upload_photos/**"/>   
+	
+	<bean id="viewResolver"
+                class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+    p:prefix="/WEB-INF/pages/"
+    p:suffix=".jsp" />
+    
+    <!-- 上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<property name="maxUploadSize" value="10485760"/>
+    </bean>
+    <!-- 拦截器设置 -->
+    <!--  <mvc:interceptors>
+    	<mvc:interceptor>
+    		<mvc:mapping path="/**"/>
+    		<mvc:exclude-mapping path="/*"/>
+    		<mvc:exclude-mapping path="/images/**"/>
+    		<mvc:exclude-mapping path="/css/**"/>
+    		<mvc:exclude-mapping path="/index/**"/>
+    		<mvc:exclude-mapping path="/login/**"/>
+    		<mvc:exclude-mapping path="/register/**"/>
+    		<mvc:exclude-mapping path="/upload_photos/**"/>
+    		<bean class="com.jing.edu.interceptor.UserInterceptor" />
+    	</mvc:interceptor>
+    </mvc:interceptors> -->
+</beans>

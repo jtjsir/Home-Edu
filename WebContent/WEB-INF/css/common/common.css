@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+body {
+	padding-top: 50px;
+	/*padding-bottom: 40px;*/
+	font-family: "华文新魏";
+}
+
+.img-welcome {
+	width: 22%;
+	height: 48px;
+}
+
+.content {
+	font-size: 10px;
+}
+
+#loginHeader a {
+	font-size: 18px;
+}
+
+.footer {
+	height: 80px;
+	background: #2a2c38;
+	text-align: center;
+	font-size: 15px;
+	color: #999;
+}
+
+.bottom {
+	padding-top: 20px;
+	/*margin-top: 20px;	*/
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jing.edu.mapper.joggle.UserDao">
+	<parameterMap type="map" id="userQueryMap">
+		<parameter property="username" javaType="java.lang.String"/>
+		<parameter property="password" javaType="java.lang.String"/>
+		<parameter property="type" javaType="java.lang.Integer"/>
+	</parameterMap>
+	
+	<select id="queryUser" parameterMap="userQueryMap" resultType="User">
+		select * from base_user where username=#{0} and password=#{1} and type=#{2}
+	</select>
+	
+	<select id="queryUserByName" parameterType="String" resultType="User">
+		select * from base_user where username=#{username}
+	</select>
+	
+	<insert id="insertUser" parameterType="User">
+		insert into base_user(username,password,type,sex,age,email,phone,level) values(#{username},#{password},#{type},#{sex},#{age},#{email},#{phone},#{level})
+	</insert>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from base_user where id=#{id} 
+	</delete>
+	<delete id="deleteCourseById" parameterType="int">
+		delete from core_course where teacherId=#{teacherId} 
+	</delete>
+	
+	<update id="updatePass">
+		update base_user set password=#{1} where username=#{0}
+	</update>
+</mapper>

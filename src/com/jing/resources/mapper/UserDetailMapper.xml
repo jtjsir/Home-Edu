@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jing.edu.mapper.joggle.UserDetailDao">
+
+	<insert id="insertDetail" parameterType="UserDetail">
+		<if test="type==1">
+			insert into detail_user_teacher(name,realname,type,level,introduction,school,honor,image,subject,isonline,price,city)
+			values(#{name},
+			#{realname},
+			#{type},
+			#{level},
+			#{introduction},
+			#{school},
+			#{honor},
+			#{image,javaType=byte[],jdbcType=BLOB,typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+			#{subject},
+			#{isonline},
+			#{price},
+			#{city})
+		</if>
+		<if test="type==2">
+			insert into detail_user_student(name,realname,type,level,introduction,address,image,subject,isonline,price,city)
+			values(#{name},
+			#{realname},
+			#{type},
+			#{level},
+			#{introduction},
+			#{address},
+			#{image,javaType=byte[],jdbcType=BLOB,typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+			#{subject},
+			#{isonline},
+			{price},
+			#{city})
+		</if>		
+	</insert>
+	
+	<select id="queryTeaInfos" resultType="UserDetailTea">
+		select * from detail_user_teacher where city like CONCAT('%',#{0},'%')  
+		and  subject like CONCAT('%',#{1},'%') limit #{2},#{3} 
+	</select>
+	
+	<select id="queryAllTeaInfos" resultType="UserDetailTea">
+		select * from detail_user_teacher where subject like CONCAT('%',#{0},'%') limit #{1},#{2} 
+	</select>
+	
+	<select id="queryStuInfos" resultType="UserDetailStu">
+		select * from detail_user_student where city like CONCAT('%',#{0},'%')  
+		and  subject like CONCAT('%',#{1},'%') limit #{2},#{3} 
+	</select>
+	
+	<select id="queryAllStuInfos" resultType="UserDetailStu">
+		select * from detail_user_student where subject like CONCAT('%',#{0},'%') limit #{1},#{2} 
+	</select>
+	
+	<select id="queryCountStuInfos" resultType="int">
+		select count(name) from detail_user_student where city like CONCAT('%',#{0},'%')  
+		and  subject like CONCAT('%',#{1},'%')
+	</select>
+	
+	<select id="queryCountAllStuInfos" resultType="int">
+		select count(name) from detail_user_student where subject like CONCAT('%',#{0},'%')
+	</select>
+	
+	<select id="queryCountTeaInfos" resultType="int">
+		select count(name) from detail_user_teacher where city like CONCAT('%',#{0},'%')  
+		and  subject like CONCAT('%',#{1},'%')
+	</select>
+	
+	<select id="queryCountAllTeaInfos" resultType="int">
+		select count(name) from detail_user_teacher where subject like CONCAT('%',#{0},'%')
+	</select>
+	
+	<select id="queryStuInfo" parameterType="String" resultType="UserDetailStu">
+		select * from detail_user_student where name=#{username}
+	</select>
+	
+	<select id="queryTeaInfo" parameterType="String" resultType="UserDetailTea">
+		select * from detail_user_teacher where name=#{username}
+	</select>
+</mapper>
