@@ -75,14 +75,15 @@
 					class="am-input-group am-input-group-primary">
 					<span class="am-input-group-label"><i class="am-icon-user"></i></span>
 					<%
-							User user = (User)request.getSession().getAttribute("user") ;
-							String username = null ;
-							if(user==null){
+						String username = (String)request.getAttribute("from") ;
+						if(username==null||"".equals(username)){
 								username = "ROBOT" ;
-							}else{
-								username = user.getUsername() ;
-							}
-								boolean isTea = (boolean)request.getAttribute("isTea") ;
+						}
+						 String toName = (String)request.getAttribute("to") ;
+						 if(toName==null||"".equals(toName)){
+							 toName = "ROBOT" ;
+						 }
+						boolean isTea = (boolean)request.getAttribute("isTea") ;
 					%>
 					<input id="username" type="text" class="am-form-field"
 						value="<%=username%>" disabled/>
@@ -126,7 +127,8 @@
 				}else{
 					websk.send(JSON.stringify({
 						content:um.getContent() ,
-						username:username
+						username:username,
+						toName:<%=toName%>
 					}));
 					//清空输入框内容
 					um.setContent('') ;
@@ -139,24 +141,26 @@
 			}
 			
 			function addMessage(message){
-				console.log(message) ;
 				var jsonob = JSON.parse(message) ;
-				var combineMessage = '<li class="am-comment '
-		            + (jsonob.isSelf ? 'am-comment-flip' : 'am-comment')
-		            + '">'
-		            + '<a href="javascript:void(0)" ><img src="<%=basePath%>/images/common/'
-		            + ((jsonob.isSelf&&<%=isTea%>) ? 'tea.jpg' : 'stu.jpg')
-		            + '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
-		            + '<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">'
-		            + '<a href="javascript:void(0)" class="am-comment-author">'
-		            + jsonob.username + '</a> <time>' + jsonob.datetime
-		            + '</time></div></header>'
-		            + '<div class="am-comment-bd">' + jsonob.content
-		            + '</div></div></li>' ;
+				//只有匹配自身的session或者接受者的session才显示内容
+				if(jsonob.username==<%=username%>||jsonob.toName==<%=toName%>){
+					var combineMessage = '<li class="am-comment '
+		        	    + (jsonob.isSelf ? 'am-comment-flip' : 'am-comment')
+		            	+ '">'
+		            	+ '<a href="javascript:void(0)" ><img src="<%=basePath%>/images/common/'
+		            	+ ((jsonob.isSelf&&<%=isTea%>) ? 'tea.jpg' : 'stu.jpg')
+		            	+ '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
+		            	+ '<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">'
+		            	+ '<a href="javascript:void(0)" class="am-comment-author">'
+		            	+ jsonob.username + '</a> <time>' + jsonob.datetime
+		            	+ '</time></div></header>'
+		            	+ '<div class="am-comment-bd">' + jsonob.content
+		            	+ '</div></div></li>' ;
 		            
-		            $(combineMessage).appendTo('#message-list') ;
-		         // 把滚动条滚动到底部
-		            $(".chat-content-container").scrollTop($(".chat-content-container")[0].scrollHeight);
+		            	$(combineMessage).appendTo('#message-list') ;
+		         		// 把滚动条滚动到底部
+		            	$(".chat-content-container").scrollTop($(".chat-content-container")[0].scrollHeight);
+				}
 			}
 			
 		});
