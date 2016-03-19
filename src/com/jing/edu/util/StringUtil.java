@@ -1,5 +1,8 @@
 package com.jing.edu.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -22,6 +25,13 @@ public class StringUtil {
 		return buffer.toString();
 	}
 
+	/**
+	 * price拼接成字符串
+	 * @param small
+	 * @param medium
+	 * @param senior
+	 * @return
+	 */
 	public static String priceContact(String small, String medium, String senior) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("小学报价: ").append(small).append("元/小时;").append("初中报价: ").append(medium).append("元/小时;")
@@ -30,6 +40,11 @@ public class StringUtil {
 		return buffer.toString();
 	}
 
+	/**
+	 * subject拼接成字符串
+	 * @param subject
+	 * @return
+	 */
 	public static String[] seperateSubject(String subject) {
 		String[] result = new String[3];
 		if (subject == null) {
@@ -52,10 +67,48 @@ public class StringUtil {
 		return result;
 	}
 
+	/**
+	 * 格式化获取的实时时间
+	 * @return
+	 */
 	public static String getNowFormatTime() {
 		Calendar calendar = Calendar.getInstance();
 		java.util.Date date = calendar.getTime();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return formatter.format(date);
+	}
+	
+	/**
+	 * url加密参数
+	 * @param param
+	 * @param charset
+	 * @return
+	 */
+	public static String encodeParam(String param,String charset){
+		String result = null ;
+		try {
+			result = URLEncoder.encode(param, charset) ;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return result ;
+	}
+	
+	/**
+	 * url解密参数
+	 * @param encodeParam
+	 * @param charset
+	 * @return
+	 */
+	public static String decodeParam(String encodeParam,String charset){
+		String resule = null ;
+		try {
+			resule = URLDecoder.decode(encodeParam, charset) ;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return resule ;
 	}
 }
