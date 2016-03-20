@@ -1,6 +1,10 @@
 package com.jing.edu.service;
 
+import java.util.Map;
+
 public interface UserRecordService {
+	
+	void addSubscribtion(Map<String, String> paramMap) ;
 	
 	String queryRecordsByStudent(String stuid);
 	

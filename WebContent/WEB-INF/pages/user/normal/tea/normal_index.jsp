@@ -1,3 +1,4 @@
+<%@page import="com.jing.edu.util.StringUtil"%>
 <%@page import="com.jing.edu.model.UserDetailTea"%>
 <%@page import="com.jing.edu.model.User"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -78,11 +79,21 @@
 					<span>性别:<span><%=((User)request.getAttribute("normalUser")).getSex() %></span></span>
 				</div>
 			</div>
-			<div style="width:30%;float:left;margin-top: 40px;margin-left: 150px;font-size: 16px;">
+			<div style="width:54%;float:left;margin-left: 120px;margin-top:10px;font-size: 16px;">
 				<p>昵称:<span><%=((User)request.getAttribute("normalUser")).getUsername() %></span></p>
 				<p>实际名字:<span id="realname"></span></p>
 				<p>学历:<span><%=((User)request.getAttribute("normalUser")).getLevel() %></span></p>
 				<p>学校:<span id="school"></span></p>
+				<div style="height:92px;margin-top:50px;padding-top:32px;">
+					<button class="btn btn-primary btn-danger subscribebtn" style="width: 44%;height: 65%;">立即预约</button>
+					<%
+							String chatbtnPath = basePath + "/user/chat/index" + "?from=" +	
+																		StringUtil.encodeParam(((User)request.getSession().getAttribute("user")).getUsername(), "GBK") + "&to=" + 
+																		StringUtil.encodeParam(((User)request.getAttribute("normalUser")).getUsername(), "GBK") + "&type=" + 
+																		StringUtil.encodeParam("tea", "GBK");
+					%>
+					<a href="<%=chatbtnPath %>"><button class="btn btn-primary chatbtn" style="width: 44%;height: 65%;">发起聊天</button></a>
+			</div>
 			</div>
 		</div>
 		<p class="underline"></p>
@@ -106,10 +117,12 @@
 		<p class="underline"></p>
 		<div style="height:150px;">
 			<div style="height: 100px;padding:20px;">
-				<span>辅导课程:<span id="sub"></span></span><span>课程报价:<span id="price"></span></span>
-			</div>
-			<div style="height:100px;text-align: center;">
-				<button class="btn btn-primary" style="width: 44%;height: 45%;">立即预约</button>
+				<div style="height:50px;">
+					<span>辅导课程:<span id="sub"></span></span>
+				</div>
+				<div style="height:50px;">
+					<span>课程报价:<span id="price"></span></span>
+				</div>
 			</div>
 		</div>
 		<p class="underline"></p>
@@ -180,6 +193,10 @@
 <script type="text/javascript">
 	$(function(){
 		<%
+			int teacherid = ((User)request.getAttribute("normalUser")).getId() ;
+			int stuid = ((User)request.getSession().getAttribute("user")).getId() ;
+		%>
+		<%
 			UserDetailTea detailUser = (UserDetailTea)request.getAttribute("detailUser") ;
 			if(detailUser!=null){
 				
@@ -189,8 +206,12 @@
 		$('#school').html("<%=detailUser.getSchool()%>") ;
 		$('#honor').html("<%=detailUser.getHonor()%>") ;
 		$('#intro').html("<%=detailUser.getIntroduction()%>") ;
-		$('#sub').html("<%=detailUser.getSubject()%>") ;
-		$('#price').html("<%=detailUser.getPrice()%>") ;
+		$('#sub').html("<strong style='font-size:40px;'><%=detailUser.getSubject()%></strong>") ;
+		$('#price').html("<strong style='font-size:40px;'><%=detailUser.getPrice()%></strong>") ;
+			<%
+					int isOnline = detailUser.getIsonline() ;
+			%>
+		$('.chatbtn').attr('disabled',<%=isOnline%>==0?true:false) ;
 		<%}%>
 		<%
 			if(detailUser==null){
@@ -202,7 +223,24 @@
 		$('#intro').html("未填写") ;
 		$('#sub').html("未填写") ;
 		$('#price').html("未填写") ;
+		$('.chatbtn').attr('disabled',true) ;
 		<%}%>
+		
+		//立即预约按钮的点击事件
+		$('.subscribebtn').on('click',function(){
+				$.ajax({
+					url:"/baseweb_homeEDU/user/detail/record/addSubcribe",
+					type:"GET",
+					data:{
+						stuid:<%=stuid%>,
+						teacherid:<%=teacherid%>,
+						guideby:0,
+						isdelete:0
+					}
+				});
+				$('.subscribebtn').attr('disabled',true) ;
+				$('.subscribebtn').attr('value','已经预约') ;
+		}) ;
 	});
 </script>
 </body>

@@ -1,6 +1,8 @@
 package com.jing.edu.controller.user;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -97,5 +99,20 @@ public class UserRecordController {
 				writer.close();
 			}
 		}
+	}
+	
+	@RequestMapping(value = "/addSubcribe")
+	public void addSubscribtion(HttpServletRequest request,HttpServletResponse response){
+		Map<String, String> paramMap = new HashMap<>() ;
+		String stuid = request.getParameter("stuid") ;
+		String teacherid = request.getParameter("teacherid") ;
+		String guideby = request.getParameter("guideby") ;
+		String isdelete = request.getParameter("isdelete") ;
+		paramMap.put("stuid", stuid) ;
+		paramMap.put("teacherid", teacherid) ;
+		paramMap.put("guideby", guideby) ;
+		paramMap.put("isdelete", isdelete) ;
+		//订阅插入数据库供个人中心板块调用显示
+		userRecordService.addSubscribtion(paramMap);
 	}
 }

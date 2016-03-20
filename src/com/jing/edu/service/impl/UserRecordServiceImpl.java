@@ -1,6 +1,7 @@
 package com.jing.edu.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -181,6 +182,24 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 插入数据库订阅信息
+	 */
+	@Override
+	public void addSubscribtion(Map<String, String> paramMap) {
+		String stu = paramMap.get("stuid") ;
+		int stuid = Integer.valueOf(stu) ;
+		int teacherid = Integer.valueOf(paramMap.get("teacherid")) ;
+		int guideby = Integer.valueOf(paramMap.get("guideby")) ;
+		//默认为0
+		int isdelete = 0 ;
+		if(paramMap.get("isdelete")!=null){
+			isdelete = Integer.valueOf(paramMap.get("isdelete")) ;
+		}
+		userRecordDao.insertUserRecord(stuid, teacherid, guideby, isdelete);
+		
 	}
 
 }

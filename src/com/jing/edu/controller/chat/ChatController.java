@@ -8,19 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jing.edu.util.StringUtil;
 
 @Controller
-@RequestMapping(value = "/chat")
+@RequestMapping(value = "/user/chat")
 public class ChatController {
 
 	@RequestMapping(value = "/index")
 	public String redirectToIndex(HttpServletRequest request){
-		String fromName = (String)request.getAttribute("form") ;
-		String toName = (String)request.getAttribute("to") ;
+		String fromName = StringUtil.encodeParam((String)request.getAttribute("from") ,"GBK");
+		String toName = StringUtil.encodeParam((String)request.getAttribute("to"),"GBK") ;
 		String type = StringUtil.decodeParam((String)request.getParameter("type"), "GBK") ;
-		boolean isTea = false ;
-		if("tea".equals(type)){
-			isTea = true ;
-		}
-		request.setAttribute("isTea",isTea);
+		request.setAttribute("type",type);
 		request.setAttribute("from", fromName);
 		request.setAttribute("to", toName);
 		return "/user/chat/chat_index" ;

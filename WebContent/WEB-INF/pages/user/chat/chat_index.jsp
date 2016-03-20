@@ -83,7 +83,7 @@
 						 if(toName==null||"".equals(toName)){
 							 toName = "ROBOT" ;
 						 }
-						boolean isTea = (boolean)request.getAttribute("isTea") ;
+						String type = (String)request.getAttribute("type") ;
 					%>
 					<input id="username" type="text" class="am-form-field"
 						value="<%=username%>" disabled/>
@@ -128,7 +128,8 @@
 					websk.send(JSON.stringify({
 						content:um.getContent() ,
 						username:username,
-						toName:<%=toName%>
+						toName:<%=toName%>,
+						requestType:<%=type%>
 					}));
 					//清空输入框内容
 					um.setContent('') ;
@@ -143,12 +144,12 @@
 			function addMessage(message){
 				var jsonob = JSON.parse(message) ;
 				//只有匹配自身的session或者接受者的session才显示内容
-				if(jsonob.username==<%=username%>||jsonob.toName==<%=toName%>){
+				if(jsonob.username==<%=username%>||jsonob.username==<%=toName%>){
 					var combineMessage = '<li class="am-comment '
 		        	    + (jsonob.isSelf ? 'am-comment-flip' : 'am-comment')
 		            	+ '">'
 		            	+ '<a href="javascript:void(0)" ><img src="<%=basePath%>/images/common/'
-		            	+ ((jsonob.isSelf&&<%=isTea%>) ? 'tea.jpg' : 'stu.jpg')
+		            	+ (((<%=type%>==jsonob.requestType&&<%=type%>=='tea')||(<%=type%>!=jsonob.requestType&&<%=type%>=='stu')) ? 'tea.jpg' : 'stu.jpg')
 		            	+ '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
 		            	+ '<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">'
 		            	+ '<a href="javascript:void(0)" class="am-comment-author">'
