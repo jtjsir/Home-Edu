@@ -16,6 +16,9 @@ public class ChatController {
 		String fromName = StringUtil.encodeParam((String)request.getAttribute("from") ,"GBK");
 		String toName = StringUtil.encodeParam((String)request.getAttribute("to"),"GBK") ;
 		String type = StringUtil.decodeParam((String)request.getParameter("type"), "GBK") ;
+//		String fromName = (String)request.getParameter("from") ;
+//		String toName = (String)request.getParameter("to") ;
+//		String type = (String)request.getParameter("type") ;
 		request.setAttribute("type",type);
 		request.setAttribute("from", fromName);
 		request.setAttribute("to", toName);
