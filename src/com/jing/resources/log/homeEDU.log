@@ -1,0 +1,2 @@
+2016-03-22 16:17:06,139 INFO c.j.e.t.LoggerTest ----[main] this is a info message
+2016-03-22 16:17:06,140 ERROR c.j.e.t.LoggerTest ----[main] this is a warn message

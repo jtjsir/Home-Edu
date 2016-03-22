@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="off">
     <Appenders>
-        <RollingFile name="RollingFile" fileName="com/jing/resources/log/homeEDU.log"
-        filePattern="com/jing/resources/log/$${date:yyyy-MM}/eda-%d{MM-dd-yyyy}-%i.log.gz">
+        <RollingFile name="RollingFile" fileName="src/com/jing/resources/log/homeEDU.log"
+        filePattern="src/com/jing/resources/log/$${date:yyyy-MM}/homeEDU-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} ----[%t] %m%n</Pattern>
             </PatternLayout>
@@ -16,7 +16,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <root level="info">
+        <root level="INFO">
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="STDOUT"/>
         </root>
