@@ -85,7 +85,20 @@ public class IndexController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value = "/find")
+	public void redirectToForgetIndex(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// 跳转到index_passToLogin.jsp页面
+			request.getRequestDispatcher("/index_find.jsp").forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	@Deprecated
 	//后台获取图片  设计上有问题不使用
 	@RequestMapping(value = "/searchImage")
 	public void getImage(HttpServletRequest request, HttpServletResponse response) {

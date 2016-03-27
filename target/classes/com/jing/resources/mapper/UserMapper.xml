@@ -16,6 +16,10 @@
 		select * from base_user where username=#{username}
 	</select>
 	
+	<select id="queryUserByEmail" parameterType="String" resultType="User">
+		select * from base_user where email=#{email}
+	</select>
+	
 	<insert id="insertUser" parameterType="User">
 		insert into base_user(username,password,type,sex,age,email,phone,level) values(#{username},#{password},#{type},#{sex},#{age},#{email},#{phone},#{level})
 	</insert>

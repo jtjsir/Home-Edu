@@ -140,19 +140,19 @@
 				<p class="label-error" id="label-email" hidden></p>
 				<div class="input-group">
 					<span class="input-group-addon">Email</span>
-					<input type="text" class="form-control" name="email">
+					<input type="text" class="form-control" name="email" placeholder="input like abc@163.com">
 				</div>
 				<br>
 				<p class="label-error" id="label-phone" hidden></p>
 				<div class="input-group">
 					<span class="input-group-addon">Phone</span>
-					<input type="text" class="form-control" name="phone">
+					<input type="text" class="form-control" name="phone" placeholder="input 11 validate numbers">
 				</div>
 				<br>
 				<p class="label-error" id="label-level" hidden></p>
 				<div class="input-group">
 					<span class="input-group-addon">Level</span>
-					<input type="text" class="form-control" name="level">
+					<input type="text" class="form-control" name="level" placeholder="input like 小一/初一/高一/大一">
 				</div>
 				<br><br>
 				<input type="submit" class="form-control btn btn-danger" value="一键注册">

@@ -9,6 +9,6 @@ public class LoggerTest {
 	
 	public static void main(String[] args){
 		logger.info("this is a info message");
-		logger.error("this is a warn message");
+		logger.error("this is a error message");
 	}
 }

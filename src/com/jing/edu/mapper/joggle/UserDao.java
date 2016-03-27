@@ -8,6 +8,8 @@ public interface UserDao {
 	
 	User queryUserByName(String username);
 	
+	User queryUserByEmail(String email) ;
+	
 	//返回插入的记录成功数目 	0/1
 	int insertUser(User user);
 	
