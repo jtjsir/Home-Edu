@@ -16,8 +16,8 @@
 		select * from base_user where username=#{username}
 	</select>
 	
-	<select id="queryUserByEmail" parameterType="String" resultType="User">
-		select * from base_user where email=#{email}
+	<select id="queryUserByEmail" resultType="User">
+		select * from base_user where email=#{0} and username=#{1}
 	</select>
 	
 	<insert id="insertUser" parameterType="User">
