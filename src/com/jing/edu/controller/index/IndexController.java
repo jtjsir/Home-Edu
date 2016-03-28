@@ -89,7 +89,7 @@ public class IndexController {
 	@RequestMapping(value = "/find")
 	public void redirectToForgetIndex(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// 跳转到index_passToLogin.jsp页面
+			// 跳转到index_find.jsp页面
 			request.getRequestDispatcher("/index_find.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -98,6 +98,17 @@ public class IndexController {
 		}
 	}
 
+	@RequestMapping(value = "/reset")
+	public void redirectToResetIndex(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// 跳转到index_reset.jsp页面
+			request.getRequestDispatcher("/index_reset.jsp").forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	@Deprecated
 	//后台获取图片  设计上有问题不使用
 	@RequestMapping(value = "/searchImage")

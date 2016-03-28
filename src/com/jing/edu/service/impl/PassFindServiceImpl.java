@@ -15,8 +15,8 @@ public class PassFindServiceImpl implements PassFindService {
 	public UserDao userDao ;
 	
 	@Override
-	public boolean isEmailExist(String email) {
-		User user = userDao.queryUserByEmail(email) ;
+	public boolean isEmailExist(String email,String username) {
+		User user = userDao.queryUserByEmail(email,username) ;
 		if(user!=null){
 			return true ;
 		}
@@ -24,8 +24,13 @@ public class PassFindServiceImpl implements PassFindService {
 	}
 
 	@Override
-	public User getUserByEmail(String email) {
-		return userDao.queryUserByEmail(email) ;
+	public User getUserByEmail(String email,String username) {
+		return userDao.queryUserByEmail(email,username) ;
+	}
+
+	@Override
+	public void updatePassword(String username, String password) {
+			userDao.updatePass(username, password);
 	}
 
 }
