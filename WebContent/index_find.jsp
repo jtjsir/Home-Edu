@@ -52,10 +52,88 @@
 		</div>
 	</div>
 </div>
+<div style="height:600px;">
+	<div class="g-hd" style="height:50px;background:rgba(72, 20, 20, 0.1);">
+		<div class="g-in" style="width:990px;margin:0 auto;">
+				<h1 style="float:left;width:70px;font-size: 20px;text-align:center;">
+					<span class="glyphicon glyphicon-search"></span>|
+				</h1>
+				<h2 style="float:left;font-size:20px;font-weight:normal;font-family: 'Microsoft YaHei'">找回密码</h2>
+		</div>
+	</div>
+	<div style="height:550px;width:900px;margin:0 auto;padding-top:100px;background:url(/baseweb_homeEDU/images/common/password_bg.jpg)">
+		<div style="height:300px;width:450px;margin:0 auto;">
+			<p   id="accountIt"><span class="glyphicon glyphicon-user" style="font-size:20px;margin-right:20px;"></span>
+					  <input type="text" placeholder="注册帐号" style="width: 250px;    height: 48px;"/>
+					  <label class="accountTip" hidden style="width:150px;font-size: 10px;"/>
+			</p>
+			<p   id="emailIt"><span class="glyphicon glyphicon-envelope" style="font-size:20px;margin-right:20px;"></span>
+					  <input type="text" placeholder="注册邮箱" style="width: 250px;    height: 48px;"/>
+					  <label class="emailTip" hidden style="width:150px;font-size: 10px;"/>
+			</p>
+			<p class="submitbtn"><input type="button"  value="下一步" style="width:290px;display: block;    height: 50px;  line-height: 50px; 
+								   border: none;    overflow: hidden;   text-align: center;    border-radius: 2px;background: #69b3f2;    color: #FFF;" /></p>
+		</div>
+	</div>
+</div>
 <div class="footer">
 	<div class="bottom">Copyright &copy; 2015 by JingSir,All Right Reserved</div>
 </div>
 <script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('.submitbtn').on('click','input',function(){
+				var account = $('#accountIt input').val() ;
+				var email = $('#emailIt input').val() ;
+				console.log('account: ' + account + "###email: " + email);
+				$.ajax({
+					url:"/baseweb_homeEDU/password/find/emailval",
+					type:"post",
+					data:{
+						username:account,
+						email:email
+					},
+					success:function(data){
+						if(data==null||data==''){
+							
+						}else{
+							console.log(data);
+							$('.emailTip').html(data).show() ;
+						}
+					}
+				});
+		});
+		
+		//帐号检测
+		$('#accountIt input').blur(function(event){
+			var username = $('#accountIt input').val();
+			if(username===''){
+				$('.accountTip').html("Username is empty!&times;").show();
+			}else{
+				$.ajax({
+					url:"/baseweb_homeEDU/password/findName",
+					type:"get",
+					data:{username:username},
+					success:function(info){
+						$('.accountTip').html(info).show();
+					}
+				});
+			}
+		});
+		$('#accountIt input').focus(function(event){
+			$('.accountTip').hide();
+			var username = $('#accountIt input').val();
+			if(username===''){
+			}else{
+				$('#accountIt input').val('');
+			}
+		});
+		//Email检测
+		$('#emailIt input').focus(function(event){
+			$('.emailTip').hide();
+		});
+	});
+</script>
 </body>
 </html>

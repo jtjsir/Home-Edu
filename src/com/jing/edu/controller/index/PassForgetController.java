@@ -1,5 +1,6 @@
 package com.jing.edu.controller.index;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
@@ -10,9 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jing.edu.common.BaseLogger;
 import com.jing.edu.model.User;
+import com.jing.edu.service.LoginRegisterService;
 import com.jing.edu.service.PassFindService;
 import com.jing.edu.util.EmailUtil;
 import com.jing.edu.util.PassUtil;
@@ -27,15 +30,19 @@ public class PassForgetController implements BaseLogger {
 	@Resource
 	public PassFindService findService;
 
+	@Resource
+	LoginRegisterService service;
+	
 	@Override
 	public Logger getLogger() {
 		return this.passLogger;
 	}
 
-	@RequestMapping(value = "/find/emailval")
+	//ajax请求
+	@RequestMapping(value = "/find/emailval",method=RequestMethod.POST)
 	public void processEmail(HttpServletRequest request, HttpServletResponse response) {
-		String email = StringUtil.decodeParam(request.getParameter("email"), "GBK");
-		String username = StringUtil.decodeParam(request.getParameter("username"), "GBK");
+		String email = request.getParameter("email");
+		String username =request.getParameter("username");
 		getLogger().debug(StringUtil.getNowFormatTime() + " email为: " + email + " 正在验证数据库信息....");
 		boolean isExist = findService.isEmailExist(email, username);
 		if (isExist) {
@@ -79,5 +86,30 @@ public class PassForgetController implements BaseLogger {
 		String encodePassword = PassUtil.encodePass(password) ;
 		findService.updatePassword(username, encodePassword);
 		getLogger().debug(StringUtil.getNowFormatTime()+username + " 更新密码成功!");
+	}
+	
+	/**
+	 * 提供密码寻找页面的username请求
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "/findName")
+	public void validateUsername(HttpServletRequest request,HttpServletResponse response){
+		String username = request.getParameter("username") ;
+		
+		String resultInfo = "" ;
+		boolean isHavingUser = service.isHavingUser(username) ;
+		if(isHavingUser){
+			//表明数据库中含有username
+			resultInfo = "the username is used,OK" ;
+		}else{
+			resultInfo = "the username is not used yet,Please change" ;
+		}
+		
+		try {
+			response.getWriter().write(resultInfo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
