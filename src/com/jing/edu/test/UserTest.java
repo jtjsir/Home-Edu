@@ -22,7 +22,8 @@ public class UserTest extends BaseTest{
 	@Test
 	public void testQueryUserByName(){
 //		String username = "admin" ;
-//		String password = "admin" ;
+//		//admin
+//		String password = "M6uTNOzFptY=" ;
 //		int type = 0 ;
 //		User user = userDao.queryUser(username,password,type) ;
 ////		Assert.assertNotNull(user);

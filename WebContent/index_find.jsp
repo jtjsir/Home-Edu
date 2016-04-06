@@ -79,6 +79,24 @@
 <div class="footer">
 	<div class="bottom">Copyright &copy; 2015 by JingSir,All Right Reserved</div>
 </div>
+<div id="result_modal" class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" >&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Notice</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            </div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -86,30 +104,35 @@
 		$('.submitbtn').on('click','input',function(){
 				var account = $('#accountIt input').val() ;
 				var email = $('#emailIt input').val() ;
-				console.log('account: ' + account + "###email: " + email);
-				$.ajax({
-					url:"/baseweb_homeEDU/password/find/emailval",
-					type:"post",
-					data:{
-						username:account,
-						email:email
-					},
-					success:function(data){
-						if(data==null||data==''){
-							
-						}else{
-							console.log(data);
-							$('.emailTip').html(data).show() ;
+				if(account==email){
+					$.ajax({
+						url:"/baseweb_homeEDU/password/find/emailval",
+						type:"post",
+						data:{
+							username:account,
+							email:email
+						},
+						success:function(data){
+							if(data==null||data==''){
+								//$('.modal-body').html('<span style='font-family: 'Microsoft YaHei''>重置链接已经发送到您的邮箱，请注意查收。点击确定将跳转到登录页面</span>');
+								//$('#result_modal').modal('show');
+							}else{
+								console.log(data);
+								$('.emailTip').html(data).show() ;
+								$('#emailIt input').focus();
+							}
 						}
-					}
-				});
+					});
+				}else{
+					return;
+				}
 		});
 		
 		//帐号检测
 		$('#accountIt input').blur(function(event){
 			var username = $('#accountIt input').val();
 			if(username===''){
-				$('.accountTip').html("Username is empty!&times;").show();
+				$('.accountTip').html("Username is empty!<span style='color:red;'>&times;</span>").show();
 			}else{
 				$.ajax({
 					url:"/baseweb_homeEDU/password/findName",
@@ -133,7 +156,18 @@
 		$('#emailIt input').focus(function(event){
 			$('.emailTip').hide();
 		});
+		
+		$('#emailIt input').blur(function(event){
+			var email = $('#emailIt input').val();
+			if(email===''){
+				$('.emailTip').html("Email is empty!<span style='color:red'>&times;</span>").show();
+			}else{
+				$('.emailTip').html("<span style='color:red'>&radic;</span>").show();
+			}
+		});
 	});
+</script>
+<script type="text/javascript">
 </script>
 </body>
 </html>

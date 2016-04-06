@@ -73,19 +73,20 @@ public class PassForgetController implements BaseLogger {
 	@RequestMapping(value = "/accept/email")
 	public String acceptPassReq(HttpServletRequest request, HttpServletResponse response) {
 		//跳转到重置密码页面
-		request.setAttribute("email", request.getParameter("email"));
-		request.setAttribute("username", request.getParameter("username"));
-		return "redirect:/index/reset" ;
+		return "redirect:/index/reset?username=" + request.getParameter("username") ;
 	}
 
 	@RequestMapping(value = "/reset/email")
-	public void resetPassword(HttpServletRequest request) {
+	public String resetPassword(HttpServletRequest request) {
 //		String email = StringUtil.decodeParam(request.getParameter("email"), "GBK") ;
 		String username = StringUtil.decodeParam(request.getParameter("username"), "GBK") ;
-		String password = StringUtil.decodeParam(request.getParameter("password"), "GBK") ;
+		String password = request.getParameter("password") ;
 		String encodePassword = PassUtil.encodePass(password) ;
 		findService.updatePassword(username, encodePassword);
 		getLogger().debug(StringUtil.getNowFormatTime()+username + " 更新密码成功!");
+		
+		//跳转到过渡页面
+		return "redirect:/index/passToLogin" ;
 	}
 	
 	/**
@@ -101,12 +102,13 @@ public class PassForgetController implements BaseLogger {
 		boolean isHavingUser = service.isHavingUser(username) ;
 		if(isHavingUser){
 			//表明数据库中含有username
-			resultInfo = "the username is used,OK" ;
+			resultInfo = "<span style='color:red'>&radic;</span>" ;
 		}else{
 			resultInfo = "the username is not used yet,Please change" ;
 		}
 		
 		try {
+			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().write(resultInfo);
 		} catch (IOException e) {
 			e.printStackTrace();

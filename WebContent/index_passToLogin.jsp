@@ -41,7 +41,7 @@
 		<div class="row">
 			<div class="content">
 				<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-				<span class="text">注册成功，3秒后将为你跳转到登录页面...</span><br>
+				<span class="text"> Congratulation！3秒后将为你跳转到登录页面...</span><br>
 				<p><img src="<%=basePath %>/images/pass/cutecat.jpg" alt="cutecat" class="img-circle"></p>	
 			</div>
 		</div>
