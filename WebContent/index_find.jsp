@@ -104,7 +104,9 @@
 		$('.submitbtn').on('click','input',function(){
 				var account = $('#accountIt input').val() ;
 				var email = $('#emailIt input').val() ;
-				if(account==email){
+				var emailTips = $('.emailTip').html();
+				var accountTips = $('.accountTip').html();
+				if(emailTips==accountTips){
 					$.ajax({
 						url:"/baseweb_homeEDU/password/find/emailval",
 						type:"post",
@@ -114,8 +116,8 @@
 						},
 						success:function(data){
 							if(data==null||data==''){
-								//$('.modal-body').html('<span style='font-family: 'Microsoft YaHei''>重置链接已经发送到您的邮箱，请注意查收。点击确定将跳转到登录页面</span>');
-								//$('#result_modal').modal('show');
+								alert('重置链接已经发送到您的邮箱，请注意查收。点击 <span>确定</span> 按钮之后将跳转到登录页面');
+								window.location.href = "<%=basePath%>/index/login" ;
 							}else{
 								console.log(data);
 								$('.emailTip').html(data).show() ;

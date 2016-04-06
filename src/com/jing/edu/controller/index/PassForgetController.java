@@ -47,7 +47,7 @@ public class PassForgetController implements BaseLogger {
 		boolean isExist = findService.isEmailExist(email, username);
 		if (isExist) {
 			User user = findService.getUserByEmail(email, username);
-			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() 
 					+ request.getContextPath() + "/password/accept/email?email=" + StringUtil.encodeParam(email, "GBK")
 					+ "&username=" + StringUtil.encodeParam(username, "GBK");
 			StringBuffer content = new StringBuffer();
@@ -77,7 +77,7 @@ public class PassForgetController implements BaseLogger {
 	}
 
 	@RequestMapping(value = "/reset/email")
-	public String resetPassword(HttpServletRequest request) {
+	public void resetPassword(HttpServletRequest request) {
 //		String email = StringUtil.decodeParam(request.getParameter("email"), "GBK") ;
 		String username = StringUtil.decodeParam(request.getParameter("username"), "GBK") ;
 		String password = request.getParameter("password") ;
@@ -85,8 +85,6 @@ public class PassForgetController implements BaseLogger {
 		findService.updatePassword(username, encodePassword);
 		getLogger().debug(StringUtil.getNowFormatTime()+username + " 更新密码成功!");
 		
-		//跳转到过渡页面
-		return "redirect:/index/passToLogin" ;
 	}
 	
 	/**

@@ -88,7 +88,7 @@
 				var newwordlabel1 = $('.newwordTip1').html() ;
 				var newwordlabel2 = $('.newwordTip2').html() ;
 				if(newwordlabel1!=newwordlabel2){
-					return;
+					$('#newwordIt2 input').focus();
 				}else{
 				var password = $('#newwordIt2 input').val() ;
 				var account = $('#username input').attr('value') ;
@@ -100,6 +100,8 @@
 						password:password
 					},
 					success:function(data){
+						alert("重置密码成功~~");
+						window.location.href="<%=basePath%>/index/passToLogin" ;
 					}
 				});
 				}
