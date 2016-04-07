@@ -95,7 +95,7 @@
 	<div class="register-in">
 		<div class="register-box">
 			<h2>HOME注册</h2>
-			<form class="form-group" action="<%=basePath%>/register" method="post">
+			<form class="form-group" action="" method="post">
 				<p class="label-error" id="label-username" hidden></p>
 				<div class="input-group">
 					<span class="input-group-addon">Username</span>
@@ -155,7 +155,7 @@
 					<input type="text" class="form-control" name="level" placeholder="input like 小一/初一/高一/大一">
 				</div>
 				<br><br>
-				<input type="submit" class="form-control btn btn-danger" value="一键注册">
+				<input type="button" class="form-control btn btn-danger" value="一键注册" id="regbtn">
 			</form>
 			<p class="elseInfo">
 				已有HomeEdu账号？
@@ -216,10 +216,14 @@
 		//age
 		$('.input-group input[name="age"]').blur(function(event){
 			var age = $('.input-group input[name="age"]').val();
+			console.log("age: " + age) ;
 			if(!isNaN(age)){
 				//是数字
 			}else{
 				$('#label-age').html("Age is not a number! &times;").show();
+			}
+			if(age==''||age==null){
+				$('#label-age').html("Age is empty!&times;").show();
 			}
 		});
 		$('.input-group input[name="age"]').focus(function(event){
@@ -289,7 +293,24 @@
 </script>
 <script type="text/javascript">
 	$(function(){
-		
+		$('.form-group').on('click','input[id="regbtn"]',function(){
+			var hasName = $('.input-group input[name="username"]').val();
+			var ispassHd = $('#label-pass').is(':hidden') ;
+			var isageHd = $('#label-age').is(':hidden') ;
+			var isemailHd = $('#label-email').is(':hidden') ;
+			var isphoneHd = $('#label-phone').is(':hidden') ;
+			var islevelHd = $('#label-level').is(':hidden') ;
+			var isRedirect = false ;
+			if(hasName!=null&&hasName!=''&&ispassHd==true&&isageHd==true&&isemailHd==true&&isphoneHd==true&&islevelHd==true){
+				isRedirect = true ;
+			}
+			if(isRedirect){
+				//可跳转则填入正确的url
+				$('.form-group').attr('action',"<%=basePath%>/register").submit();
+			}else{
+				$('.input-group input[name="password"]').focus();
+			}
+		});
 	});
 </script>
 </body>
