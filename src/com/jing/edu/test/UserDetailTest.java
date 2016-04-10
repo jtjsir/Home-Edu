@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,5 +53,14 @@ public class UserDetailTest extends BaseTest{
 	@Test
 	public void queryInfos(){
 		System.out.println(userDetailDao.queryCountTeaInfos("浙江杭州市", "小学数学")) ;
+	}
+	
+	@Test
+	public void setIsOnline(){
+		Map<String, Object> map = new HashMap<>() ;
+		map.put("username", "JingSir") ;
+		map.put("type", "tea") ;
+		map.put("onlineValue", 1) ;
+		userDetailDao.setIsonline(map);
 	}
 }

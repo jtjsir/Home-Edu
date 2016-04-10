@@ -1,6 +1,7 @@
 package com.jing.edu.mapper.joggle;
 
 import java.util.List;
+import java.util.Map;
 
 import com.jing.edu.model.UserDetail;
 import com.jing.edu.model.UserDetailStu;
@@ -29,4 +30,6 @@ public interface UserDetailDao {
 	UserDetailStu queryStuInfo(String username);
 	
 	UserDetailTea queryTeaInfo(String username);
+	
+	void setIsonline(Map<String, Object> onlineMap);
 }

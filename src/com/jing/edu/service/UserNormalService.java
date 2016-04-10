@@ -15,4 +15,6 @@ public interface UserNormalService {
 	UserDetailTea getTeaDetail(String name) ;
 	
 	User getUser(String name) ;
+	
+	void updateIsonline(String username,String type,int onlineValue);
 }

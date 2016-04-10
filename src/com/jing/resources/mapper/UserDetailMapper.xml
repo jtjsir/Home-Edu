@@ -78,4 +78,23 @@
 	<select id="queryTeaInfo" parameterType="String" resultType="UserDetailTea">
 		select * from detail_user_teacher where name=#{username}
 	</select>
+	
+	<parameterMap type="map" id="onlineMap">
+		<parameter property="username" javaType="java.lang.String"/>
+		<parameter property="type" javaType="java.lang.String"/>
+		<parameter property="onlineValue" javaType="java.lang.Integer"/>
+	</parameterMap>
+	
+	<update id="setIsonline" parameterMap="onlineMap">
+		<if test="type=='tea'">
+			update detail_user_teacher 
+			set isonline=#{onlineValue}
+			where name=#{username}
+		</if>
+		<if test="type=='stu'">
+			update detail_user_student
+			set isonline=#{onlineValue}
+			where name=#{username}
+		</if>
+	</update>
 </mapper>
