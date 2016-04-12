@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
 import com.jing.edu.mapper.joggle.UserDetailDao;
+import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.model.UserDetail;
 import com.jing.edu.service.UserDetailService;
 import com.jing.edu.thread.userdetail.UserPhotosToServer;
@@ -51,6 +52,24 @@ public class UserDetailServiceImpl implements UserDetailService,BaseLogger {
 		//通过另起一个线程去插入图片到服务端
 		UserPhotosToServer userPhotoRun = new UserPhotosToServer(rootPath, userType, realname, subjects, level, images) ;
 		new Thread(userPhotoRun).start();
+	}
+
+	/**
+	 * 判断userdetail在表中是否有记录
+	 */
+	@Override
+	public boolean isUserDetail(String username, UserType userType) {
+		Object userdetail = null ;
+		if(UserType.STUDENT.equals(userType)){
+			userdetail = userdetailDao.queryStuInfo(username) ;
+		}else if(UserType.TEACHER.equals(userType)){
+			userdetail = userdetailDao.queryTeaInfo(username) ;
+		}
+		if(null!=userdetail){
+			return true ;
+		}else{
+			return false ;
+		}
 	}
 
 }

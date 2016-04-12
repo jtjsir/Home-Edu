@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jing.edu.model.Course;
+import com.jing.edu.model.User;
 import com.jing.edu.model.UserDetailStu;
 import com.jing.edu.model.UserDetailTea;
+import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.service.CourseService;
 import com.jing.edu.service.UserDetailService;
 import com.jing.edu.util.StringUtil;
@@ -146,11 +148,17 @@ public class UserDetailController {
 
 	@RequestMapping(value = "/tea/index")
 	public String redirectToTeaIndex(HttpServletRequest request) {
+		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
+		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER) ;
+		request.setAttribute("isdetail", isdetail);
 		return "user/detail/tea/index";
 	}
 
 	@RequestMapping(value = "/stu/index")
 	public String redirectToStuIndex(HttpServletRequest request) {
+		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
+		boolean isdetail = detailService.isUserDetail(username, UserType.STUDENT) ;
+		request.setAttribute("isdetail", isdetail);
 		return "user/detail/stu/index";
 	}
 

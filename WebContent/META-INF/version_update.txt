@@ -46,7 +46,8 @@ v.Apr 10, 2016
 
 v.Apr 12, 2016
 补充了学生个人信息公共浏览页面的实现,与教师的页面是一致的;
-新增了version_update.txt文件用来记录每次的提交情况,与github上一致
+新增了version_update.txt文件用来记录每次的提交情况,与github上一致;
+修改了学生与个人信息页面的显示问题，待测。
 
 附录：
 远程项目的url地址--https://github.com/jtjsir/baseweb_homeEDU

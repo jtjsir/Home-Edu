@@ -166,7 +166,14 @@
 		<%
 			}
 		%>
-		
+		//是否显示哭泣图片
+		<%
+			boolean isdetail = (boolean)request.getAttribute("isdetail") ;
+			if(isdetail){
+				
+		%>
+		$('.right-content').html("<div style='text-align: center;margin-top: 80px;'><h2>还没完善自己的个人信息,点击设置进一步完善或者修改吧~</h2><img alt='' src='<%=basePath %>/images/user/detail/index/cry.jpg' class=''></div>");
+		<%}%>
 		//个人信息设置修改点击事件
 		$('.left-border a[href="#set-info"]').click(function(event){
 			$.ajax({
