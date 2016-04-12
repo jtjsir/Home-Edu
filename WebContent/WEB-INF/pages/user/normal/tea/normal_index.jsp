@@ -195,6 +195,8 @@
 		<%
 			int teacherid = ((User)request.getAttribute("normalUser")).getId() ;
 			int stuid = ((User)request.getSession().getAttribute("user")).getId() ;
+			int teaType = ((User)request.getAttribute("normalUser")).getType() ;
+			int stuType = ((User)request.getSession().getAttribute("user")).getType() ;
 		%>
 		<%
 			UserDetailTea detailUser = (UserDetailTea)request.getAttribute("detailUser") ;
@@ -228,6 +230,7 @@
 		
 		//立即预约按钮的点击事件
 		$('.subscribebtn').on('click',function(){
+			if(<%=stuType%>==2&&<%=teaType%>==1){
 				$.ajax({
 					url:"/baseweb_homeEDU/user/detail/record/addSubcribe",
 					type:"GET",
@@ -238,8 +241,13 @@
 						isdelete:0
 					}
 				});
+				//对该用户显示已经预约
 				$('.subscribebtn').attr('disabled',true) ;
 				$('.subscribebtn').attr('value','已经预约') ;
+			}else{
+				//相同类型的不可进行预约
+				$('.subscribebtn').attr('disabled',true) ;
+			}
 		}) ;
 	});
 </script>
