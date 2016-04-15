@@ -168,8 +168,8 @@
 		%>
 		//是否显示哭泣图片
 		<%
-			boolean isdetail = (boolean)request.getAttribute("isdetail") ;
-			if(isdetail){
+			String hasDetail = (String)request.getAttribute("hasDetail") ;
+			if("0".equals(hasDetail)){
 				
 		%>
 		$('.right-content').html("<div style='text-align: center;margin-top: 80px;'><h2>还没完善自己的个人信息,点击设置进一步完善或者修改吧~</h2><img alt='' src='<%=basePath %>/images/user/detail/index/cry.jpg' class=''></div>");
@@ -257,6 +257,7 @@
 		
 		<%
 			User teaUser = (User)request.getSession().getAttribute("user") ;
+			if(null!=teaUser){
 		%>
 		//消息按钮响应事件
 		$('.left-border a[href="#personal-message"]').click(function(event){
@@ -354,6 +355,7 @@
 			}
 		});
 	});
+	<%}%>
 });
 </script>
 <script type="text/javascript">

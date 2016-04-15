@@ -43,8 +43,11 @@
 	</style>
 </head>
 <body>
+	<% 
+		User user = (User)request.getSession().getAttribute("user") ;
+	%>
 	<div class="container info-content">
-		<form class="form-horizontal" action="<%=basePath %>/user/detail/add?userType=stu" method="post" enctype="multipart/form-data">
+		<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 					<div class="info_text"><span class="glyphicon glyphicon-user">Username(用户名)</span></div>
 					<div class="info_input">
@@ -54,7 +57,7 @@
 			<div class="form-group">
 					<div class="info_text"><span class="glyphicon glyphicon-tag">Realname(真实姓名)</span></div>
 					<div class="info_input">
-						<input type="text" class="form-control" name="realname" value="">
+						<input type="text" class="form-control" name="realname" value="test_realname">
 					</div>
 			</div>
 			<div class="form-group">
@@ -66,7 +69,7 @@
 			<div class="form-group">
 				<div class="info_text"><span class="glyphicon glyphicon-send">Introduction(自我简介)</span></div>
 				<div class="info_input">
-					<textarea rows="5"  class="form-control" name="introduction" placeholder="请输入自己的相关简介" value="${user.introduction }">
+					<textarea rows="5"  class="form-control" name="introduction" placeholder="请输入自己的相关简介" value="test_introduction">
 					</textarea>
 				</div>
 			</div>
@@ -74,7 +77,7 @@
 				<div class="info_text"><span class="glyphicon glyphicon-book">Subjects(授课内容)</span></div>
 				<div class="info_input">
 					<lable class="checkbox-inline">
-						<input type="checkbox" name="subjects" value="小学数学">小学数学
+						<input type="checkbox" name="subjects" value="小学数学" checked>小学数学
 					</lable>
 					<lable class="checkbox-inline">
 						<input type="checkbox" name="subjects" value="小学语文">小学语文
@@ -134,8 +137,8 @@
 			<div class="form-group">
 					<div class="info_text"><span class="glyphicon glyphicon-map-marker">Location(位置)</span></div>
 					<div class="info_input">
-						城市: <input class="form-control" name="city" type="text">
-						地址: <input class="form-control" name="address" type="text">
+						城市: <input class="form-control" name="city" type="text" value="杭州市" placeholder="默认:杭州市/浙江杭州市">
+						地址: <input class="form-control" name="address" type="text" value="test_address">
 					</div>
 			</div>
 			<div class="form-group">
@@ -157,7 +160,6 @@
 <script type="text/javascript">
 	$(function(){
 		<%
-			Object user = request.getSession().getAttribute("user") ;
 			Object userDetail = request.getSession().getAttribute("userDetail") ;
 			if(user!=null&&userDetail==null){
 					User normalUser = (User)user ;				
@@ -197,6 +199,20 @@
 			<%
 				}
 			%>
+	});
+</script>
+<script type="text/javascript">
+	$(function(){
+		$('.info_sumbit').on('click','input',function(){
+			//图片校验
+			var image = $('.info_input[name="imageFile"]') ;
+			if(image.value==""||image.value==null){
+				$(".info_input name['imageFile']").focus();
+				alert("请输入上传的头像图片!");
+			}else{
+				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=stu&id=<%=user.getId()%>').submit();
+			}
+		});
 	});
 </script>
 </body>

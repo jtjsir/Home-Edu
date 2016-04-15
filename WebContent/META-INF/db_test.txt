@@ -1,0 +1,16 @@
+#base_user表测试数据
+--teachers
+jingtj 	3Am10iPQitQ=(jingtj) 	1 	男 	22 	15958042648@163.com 	15958042648 	大四
+wangms		sDD77qad1bI=(wangms) 	1 	男 	22	 1039989792@qq.com		15958042648 	大四
+lixw	mP2r5RdyY5g=(lixw) 	1 	男 	22 	1393441583@qq.com		15958042648 	大四
+liuming		JzPc0xD4KcY=(liuming) 1 男	21 	1332758387@qq.com	15958042648		大四
+liuying		LopQJ8Ck39o=(liuying)	1	女	22	1365818447@qq.com	15957152408		大四
+liubo		BzNn1hfYDP8=(liubo)		1	男	22	634109509@qq.com	15958042648		大四
+--students
+zhengqian	sLFgCJgL3EpA1UskTGDObg==(zhengqian)	2	女	11	335948460@qq.com	15957152408		小五
+zhanglp		TxrTiAhH93Y=(zhanglp)	2	女	11	wwhgzmm@qq.com		15957152408		小五
+lifeng		ABjdikzBeTI=(lifeng)	2	女	13	2443097045@qq.com	15957152408		初一
+lvzq		LYoC/LknGk0=(lvzq)		2	男	13	10497902@qq.com		15958042648		初一
+wanghk		YXEZdOqbVkk=(wanghk)	2	男	17	1459086640@qq.com	15958042648		高二
+wuwei		9CnsxfRRWTM=(wuwei)		2	男	17	wwhgzmm@qq.com		15958042648		高二
+yangkf		OhvRTiGOxfI=(yangkf)	2	男	18	308321925@qq.com	15958042648		高三

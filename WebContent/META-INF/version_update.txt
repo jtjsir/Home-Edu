@@ -49,5 +49,9 @@ v.Apr 12, 2016
 新增了version_update.txt文件用来记录每次的提交情况,与github上一致;
 修改了学生与个人信息页面的显示问题，待测。
 
+v.Apr 13, 2016
+修改了个人中心页面个人信息版块的逻辑实现;
+增加了base_user表的测试数据,名字为db_test.txt
+
 附录：
 远程项目的url地址--https://github.com/jtjsir/baseweb_homeEDU

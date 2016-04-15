@@ -34,6 +34,15 @@ public class StringUtil {
 	 */
 	public static String priceContact(String small, String medium, String senior) {
 		StringBuffer buffer = new StringBuffer();
+		if(null==small){
+			small = "0" ;
+		}
+		if(null==medium){
+			medium = "0" ;
+		}
+		if(null==senior){
+			senior = "0" ;
+		}
 		buffer.append("小学报价: ").append(small).append("元/小时;").append("初中报价: ").append(medium).append("元/小时;")
 				.append("高中报价: ").append(senior).append("元/小时");
 

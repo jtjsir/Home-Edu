@@ -148,17 +148,27 @@ public class UserDetailController {
 
 	@RequestMapping(value = "/tea/index")
 	public String redirectToTeaIndex(HttpServletRequest request) {
+		//默认没有用户的具体信息
+		String hasDetail = "0" ;
 		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
 		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER) ;
-		request.setAttribute("isdetail", isdetail);
+		if(isdetail){
+			hasDetail = "1" ;
+		}
+		request.setAttribute("hasDetail", hasDetail);
 		return "user/detail/tea/index";
 	}
 
 	@RequestMapping(value = "/stu/index")
 	public String redirectToStuIndex(HttpServletRequest request) {
+		//默认没有用户的具体信息
+		String hasDetail = "0" ;
 		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
 		boolean isdetail = detailService.isUserDetail(username, UserType.STUDENT) ;
-		request.setAttribute("isdetail", isdetail);
+		if(isdetail){
+			hasDetail = "1" ;
+		}
+		request.setAttribute("hasDetail", hasDetail);
 		return "user/detail/stu/index";
 	}
 
