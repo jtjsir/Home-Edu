@@ -18,4 +18,9 @@ public class EduType {
 		
 		
 	}
+	
+	//学历类别
+	public enum LevelType{
+		PRIMARY,MEDIUM,SENIOR,COLLEGE
+	}
 }

@@ -6,6 +6,8 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.jing.edu.model.EduType.LevelType;
+
 public class StringUtil {
 
 	/**
@@ -27,6 +29,7 @@ public class StringUtil {
 
 	/**
 	 * price拼接成字符串
+	 * 
 	 * @param small
 	 * @param medium
 	 * @param senior
@@ -34,14 +37,14 @@ public class StringUtil {
 	 */
 	public static String priceContact(String small, String medium, String senior) {
 		StringBuffer buffer = new StringBuffer();
-		if(null==small){
-			small = "0" ;
+		if (null == small) {
+			small = "0";
 		}
-		if(null==medium){
-			medium = "0" ;
+		if (null == medium) {
+			medium = "0";
 		}
-		if(null==senior){
-			senior = "0" ;
+		if (null == senior) {
+			senior = "0";
 		}
 		buffer.append("小学报价: ").append(small).append("元/小时;").append("初中报价: ").append(medium).append("元/小时;")
 				.append("高中报价: ").append(senior).append("元/小时");
@@ -50,7 +53,68 @@ public class StringUtil {
 	}
 
 	/**
+	 * 
+	 * @param priceStr
+	 * @param type
+	 *            学籍类别:小学/初中/高中
+	 * @return
+	 */
+	public static int getPriceByType(String priceStr, LevelType type) {
+		int price = 0;
+
+		if (null == priceStr) {
+			return 0;
+		} else {
+			int[] prices = getPrices(priceStr);
+			switch (type) {
+			case PRIMARY:
+				price = prices[0];
+				break;
+			case MEDIUM:
+				price = prices[1];
+				break;
+			case SENIOR:
+				price = prices[2];
+				break;
+			default:
+				price = 0;
+				break;
+			}
+		}
+
+		return price;
+	}
+
+	/**
+	 * str转int[]
+	 * 
+	 * @param priceStr
+	 * @return
+	 */
+	public static int[] getPrices(String priceStr) {
+		int[] prices = new int[3];
+		if (null != priceStr) {
+			priceStr = priceStr + ";";
+			int index1 = 0;
+			int index2 = 0;
+			for (int i = 0; i < 3; i++) {
+				index1 = priceStr.indexOf(":");
+				index2 = priceStr.indexOf(";");
+				prices[i] = Integer.valueOf(priceStr.substring(index1 + 2, index2 - 4));
+				priceStr = priceStr.substring(index2 + 1);
+			}
+		}
+
+		return prices;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(StringUtil.getPrices("小学报价: 3元/小时;初中报价: 3元/小时;高中报价: 3元/小时")[2]);
+	}
+
+	/**
 	 * subject拼接成字符串
+	 * 
 	 * @param subject
 	 * @return
 	 */
@@ -78,6 +142,7 @@ public class StringUtil {
 
 	/**
 	 * 格式化获取的实时时间
+	 * 
 	 * @return
 	 */
 	public static String getNowFormatTime() {
@@ -86,38 +151,40 @@ public class StringUtil {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return formatter.format(date);
 	}
-	
+
 	/**
 	 * url加密参数
+	 * 
 	 * @param param
 	 * @param charset
 	 * @return
 	 */
-	public static String encodeParam(String param,String charset){
-		String result = null ;
+	public static String encodeParam(String param, String charset) {
+		String result = null;
 		try {
-			result = URLEncoder.encode(param, charset) ;
+			result = URLEncoder.encode(param, charset);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
-		return result ;
+
+		return result;
 	}
-	
+
 	/**
 	 * url解密参数
+	 * 
 	 * @param encodeParam
 	 * @param charset
 	 * @return
 	 */
-	public static String decodeParam(String encodeParam,String charset){
-		String resule = null ;
+	public static String decodeParam(String encodeParam, String charset) {
+		String resule = null;
 		try {
-			resule = URLDecoder.decode(encodeParam, charset) ;
+			resule = URLDecoder.decode(encodeParam, charset);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
-		return resule ;
+
+		return resule;
 	}
 }

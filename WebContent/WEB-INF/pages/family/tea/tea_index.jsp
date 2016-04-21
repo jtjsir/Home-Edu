@@ -180,6 +180,16 @@
 		</div>
 	</div>
 	<div class="underline"></div>
+	<div class="sort_menu" style="height:20px;">
+  		<span style="margin-left: 86px;" id="sort_price" class="dropup"><a href="javascript(0)">价格<span class="caret"></span></a></span>
+  		<span style="margin-left: 20px;">|</span>
+  		<span style="margin-left: 30px; " id="sort_comment"><a href="javascript(0)">关注<span class="caret"></span></a></span>
+  		<span style="margin-left: 20px;">|</span>
+  		<span style="margin-left: 30px;" id="sort_age"><a href="javascript(0)">年龄<span class="caret"></span></a></span>
+  		<span style="margin-left: 20px;">|</span>
+	</div>
+	<!-- underline -->
+	<div style="border: wavy 1px #795548; margin: 10px auto 2px auto;width: 90%;"></div>
 	<div class="wrap_content">
 		<div class="row infowrap"></div>
 	</div>
