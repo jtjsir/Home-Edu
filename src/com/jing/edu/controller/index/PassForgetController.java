@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.EmailUtil;
+import com.jing.edu.common.util.PassUtil;
+import com.jing.edu.common.util.StringUtil;
 import com.jing.edu.model.User;
 import com.jing.edu.service.LoginRegisterService;
 import com.jing.edu.service.PassFindService;
-import com.jing.edu.util.EmailUtil;
-import com.jing.edu.util.PassUtil;
-import com.jing.edu.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/password")

@@ -6,6 +6,10 @@
 		select notice from core_sort_notice where username=#{username}
 	</select>
 	
+	<select id="readNoticeByType" resultType="UserNotice">
+		select * from core_sort_notice where type=#{type}
+	</select>
+	
 	<insert id="insertNoticeNums">
 		insert into core_sort_notice(username,notice) values(#{0},#{1});
 	</insert>

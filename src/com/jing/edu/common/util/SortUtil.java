@@ -1,4 +1,4 @@
-package com.jing.edu.util;
+package com.jing.edu.common.util;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,7 +24,7 @@ public class SortUtil {
 	}
 	
 	//price排序
-	public static void sortByPrice(List<UserDetail> users,int order,LevelType type){
+	public static void sortByPrice(List<? extends UserDetail> users,int order,LevelType type){
 		PriceSortComp priceSort = new PriceSortComp(order,type) ;
 		Collections.sort(users, priceSort);
 	}
@@ -144,6 +144,9 @@ public class SortUtil {
 			return comp;
 		}
 		
+	}
+	
+	public static void main(String[] args){
 	}
 }
 

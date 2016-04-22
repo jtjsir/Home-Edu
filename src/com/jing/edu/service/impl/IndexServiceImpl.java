@@ -10,8 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.FileUtil;
 import com.jing.edu.service.IndexService;
-import com.jing.edu.util.FileUtil;
 
 @Service
 public class IndexServiceImpl implements IndexService ,BaseLogger{

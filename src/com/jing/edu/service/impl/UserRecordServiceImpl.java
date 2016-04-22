@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.StringUtil;
 import com.jing.edu.mapper.joggle.UserRecordDao;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.model.StuTeacherRecord;
@@ -21,7 +22,6 @@ import com.jing.edu.model.User;
 import com.jing.edu.model.UserDetailStu;
 import com.jing.edu.model.UserDetailTea;
 import com.jing.edu.service.UserRecordService;
-import com.jing.edu.util.StringUtil;
 
 /**
  * 学生教师订阅表处理service

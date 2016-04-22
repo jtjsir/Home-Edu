@@ -1,6 +1,6 @@
 package com.jing.edu.thread.userdetail;
 
-import com.jing.edu.util.ImageUtil;
+import com.jing.edu.common.util.ImageUtil;
 
 public class UserPhotosToServer implements Runnable {
 	private String rootPath;

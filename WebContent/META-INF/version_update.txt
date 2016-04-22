@@ -53,5 +53,14 @@ v.Apr 13, 2016
 修改了个人中心页面个人信息版块的逻辑实现;
 增加了base_user表的测试数据,名字为db_test.txt
 
+v.Apr 21, 2016
+在部营页面增加排序功能，现创建相关的数据库表以及Entity类、DAO类等等，待逻辑完善
+
+v.Apr 22, 2016
+1.修改com.jing.edu.util为com.jing.edu.common.util
+2.新建包名com.jing.edu.service.util并新建FamilyUtil
+3.新增sortUtil工具类，新增EduType中的LevelType和SortType
+4.FamilyController排序以及service、dao业务的完善，待测
+
 附录：
 远程项目的url地址--https://github.com/jtjsir/baseweb_homeEDU

@@ -1,4 +1,4 @@
-package com.jing.edu.util;
+package com.jing.edu.common.util;
 
 import java.io.File;
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jing.edu.common.util.StringUtil;
 import com.jing.edu.model.Course;
 import com.jing.edu.model.User;
 import com.jing.edu.model.UserDetailStu;
@@ -20,7 +21,6 @@ import com.jing.edu.model.UserDetailTea;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.service.CourseService;
 import com.jing.edu.service.UserDetailService;
-import com.jing.edu.util.StringUtil;
 /**
  * 教师或者学生的个人中心Controller
  * @author jing

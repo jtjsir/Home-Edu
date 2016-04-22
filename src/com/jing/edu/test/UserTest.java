@@ -1,14 +1,15 @@
 package com.jing.edu.test;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.jing.edu.common.BaseTest;
+import com.jing.edu.common.util.PassUtil;
 import com.jing.edu.mapper.joggle.UserDao;
 import com.jing.edu.model.User;
-import com.jing.edu.util.PassUtil;
 
 public class UserTest extends BaseTest{
 
@@ -57,6 +58,13 @@ public class UserTest extends BaseTest{
 		user.setSex("男");
 		user.setType(2);
 		userDao.insertUser(user) ;
+	}
+	
+	@Test
+	public void testQueryUserByType(){
+		int type = 1 ;
+		List<User> users = userDao.queryUsersByType(type) ;
+		System.out.println("Tea user's size: " +users.size());
 	}
 	
 }

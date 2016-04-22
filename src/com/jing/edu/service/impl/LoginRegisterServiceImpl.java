@@ -7,10 +7,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.PassUtil;
 import com.jing.edu.mapper.joggle.UserDao;
 import com.jing.edu.model.User;
 import com.jing.edu.service.LoginRegisterService;
-import com.jing.edu.util.PassUtil;
 
 @Service
 public class LoginRegisterServiceImpl implements LoginRegisterService,BaseLogger{

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jing.edu.util.StringUtil;
+import com.jing.edu.common.util.StringUtil;
 
 @Controller
 @RequestMapping(value = "/user/chat")

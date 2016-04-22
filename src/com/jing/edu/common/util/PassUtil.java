@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jing.edu.util;
+package com.jing.edu.common.util;
 
 import java.security.Key;
 

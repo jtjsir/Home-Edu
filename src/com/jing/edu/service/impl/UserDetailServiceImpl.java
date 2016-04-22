@@ -7,12 +7,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.ImageUtil;
 import com.jing.edu.mapper.joggle.UserDetailDao;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.model.UserDetail;
 import com.jing.edu.service.UserDetailService;
 import com.jing.edu.thread.userdetail.UserPhotosToServer;
-import com.jing.edu.util.ImageUtil;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailService,BaseLogger {

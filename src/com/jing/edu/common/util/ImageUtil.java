@@ -1,4 +1,4 @@
-package com.jing.edu.util;
+package com.jing.edu.common.util;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
