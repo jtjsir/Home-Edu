@@ -147,14 +147,13 @@ body{
 			function addMessage(message){
 				var jsonob = JSON.parse(message) ;
 				//只有匹配自身的session或者接受者的session才显示内容
-				if(jsonob.username=='<%=username%>'||jsonob.username=='<%=toName%>'){
-					<%
-						String imagePath = basePath + "/user/normal/" + type + "/index?name=" + username ;
-					%>
+				if((jsonob.username=='<%=username%>'&&jsonob.toName=='<%=toName%>')||(jsonob.username=='<%=toName%>'&&jsonob.toName=='<%=username%>')){
+					//设置图片路径
+					var image_path = "<%=basePath%>/user/normal/" + jsonob.requestType + "/index?name=" + jsonob.username ;
 					var combineMessage = '<li class="am-comment '
 		        	    + (jsonob.isSelf ? 'am-comment-flip' : 'am-comment')
 		            	+ '">'
-		            	+ '<a href="<%=imagePath%>" ><img src="<%=basePath%>/images/common/'
+		            	+ '<a href="javascript:void(0)" class="sendOb"><img src="<%=basePath%>/images/common/'
 		            	+ ((('<%=type%>'==jsonob.requestType&&'<%=type%>'=='tea')||('<%=type%>'!=jsonob.requestType&&'<%=type%>'=='stu')) ? 'tea.jpg' : 'stu.jpg')
 		            	+ '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
 		            	+ '<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">'
@@ -165,6 +164,7 @@ body{
 		            	+ '</div></div></li>' ;
 		            
 		            	$(combineMessage).appendTo('#message-list') ;
+		            	$('.sendOb').attr('href',image_path) ;
 		         		// 把滚动条滚动到底部 scrollTop返回滚动条与所在顶部的距离,scrollHeight返回本身具有的高度
 		            	$(".chat-content-container").scrollTop($(".chat-content-container")[0].scrollHeight);
 				}

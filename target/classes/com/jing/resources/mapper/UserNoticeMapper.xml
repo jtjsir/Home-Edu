@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jing.edu.mapper.joggle.UserNoticeDao">
+	<select id="readNoticeNums" parameterType="String" resultType="int">
+		select notice from core_sort_notice where username=#{username}
+	</select>
+	
+	<select id="readNoticeByType" resultType="UserNotice">
+		select * from core_sort_notice where type=#{type}
+	</select>
+	
+	<insert id="insertNoticeNums">
+		insert into core_sort_notice(username,notice) values(#{0},#{1});
+	</insert>
+	
+	<update id="updateNoticeNums">
+		update core_sort_notice
+		set
+		notice=#{1}
+		where username=#{0}
+	</update>
+</mapper>

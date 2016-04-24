@@ -1,5 +1,5 @@
 <%@page import="com.jing.edu.model.UserDetailStu"%>
-<%@page import="com.jing.edu.util.StringUtil"%>
+<%@page import="com.jing.edu.common.util.StringUtil"%>
 <%@page import="com.jing.edu.model.UserDetailTea"%>
 <%@page import="com.jing.edu.model.User"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
