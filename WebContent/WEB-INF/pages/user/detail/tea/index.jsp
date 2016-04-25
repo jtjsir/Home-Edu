@@ -401,7 +401,7 @@
 	goEasy.subscribe({
 		channel:"channel_chat_jingtj" ,
 		onMessage:function(result){
-			alert(result.content);
+			//alert(result.content);
 			messageCon[messageAcceptNums] = result.content;
 			messageAcceptNums++ ;
 			$('.badge').text(messageAcceptNums);
@@ -412,12 +412,25 @@
 	$('.left-border a[href="#chat-info"]').click(function(event){
 		//聊天消息数目置为0并删除相应的badges数目
 		messageAcceptNums = 0 ;
+		for(var i = 0 ; i < messageCon.length;i++){
+			var rightContent = "" ;
+			var text = JSON.parse(messageCon[i]);
+			var words = text.content ;
+			//来源者
+			var from = text.username ;
+			//接受者
+			var to = text.toName ;
+			rightContent+="<div>名为:<span class='font-size:20px;'> " + from 
+											+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;'>" 
+											+words + "</span>"
+											+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>";
+			$('.right-content').append(rightContent) ;
+			//
+			$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
+			$('.reply').removeClass('reply');
+		}
 		messageCon.length = 0 ;
-		var tipNode = $('.badge') ;
-		$('#chat-info').removeChild(tipNode);
 		
-		
-		$('.right-content').html() ;
 	});	
 </script>
 </body>

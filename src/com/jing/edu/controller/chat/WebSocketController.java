@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.jing.edu.common.BaseLogger;
 import com.jing.edu.common.util.PushUtil;
+import com.jing.edu.common.util.StringUtil;
 import com.jing.edu.model.params.PushConstants;
 
 /**
@@ -81,6 +82,14 @@ public class WebSocketController implements BaseLogger{
 		//将信息传送给指定的接收者
 		String toName = jsons.getString("toName") ;
 		this.getLogger().debug("开始发送给<< "+ (PushConstants.COMM_CHANNEL_CHAT + "_" + toName) +"通道>>此类信息: " + jsons.get("content"));
-		PushUtil.getGoeasyServer().publish(PushConstants.COMM_CHANNEL_CHAT + "_" + toName, (String)jsons.get("content"));
+		//过滤html字符串
+		jsons.put("content", StringUtil.filterHTMLLabel(jsons.getString("content"))) ;
+		
+		//加密下其他的参数
+		jsons.put("username", StringUtil.encodeParam(jsons.getString("username"), "GBK")) ;
+		jsons.put("toName", StringUtil.encodeParam(jsons.getString("toName"), "GBK")) ;
+		jsons.put("requestType", StringUtil.encodeParam(jsons.getString("requestType"), "GBK")) ;
+		
+		PushUtil.getGoeasyServer().publish(PushConstants.COMM_CHANNEL_CHAT + "_" + toName, jsons.toString());
 	}
 }

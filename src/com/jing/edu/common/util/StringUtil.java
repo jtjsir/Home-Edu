@@ -5,6 +5,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.jing.edu.model.EduType.LevelType;
 
@@ -108,10 +110,6 @@ public class StringUtil {
 		return prices;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(StringUtil.getPrices("小学报价: 3元/小时;初中报价: 3元/小时;高中报价: 3元/小时")[2]);
-	}
-
 	/**
 	 * subject拼接成字符串
 	 * 
@@ -186,5 +184,27 @@ public class StringUtil {
 		}
 
 		return resule;
+	}
+	
+	//过滤html标签的正则表达式
+	private static String htmlReg = "<([^>]*)>" ;
+	
+	public static String filterHTMLLabel(String str){
+		Pattern pattern = Pattern.compile(htmlReg) ;
+		Matcher matcher = pattern.matcher(str) ;
+		StringBuffer sBuffer = new StringBuffer() ;
+		boolean isFind = matcher.find() ;
+		while(isFind){
+			matcher.appendReplacement(sBuffer, "") ;
+			isFind = matcher.find() ;
+		}
+		
+		
+		return sBuffer.toString() ;
+	}
+	
+	public static void main(String[] args){
+		System.err.println(StringUtil.filterHTMLLabel("<div><p>jingtj</p></div>"));
+		System.err.println(StringUtil.encodeParam("tea", "GBK")) ;
 	}
 }
