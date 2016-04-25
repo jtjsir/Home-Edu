@@ -54,8 +54,8 @@ public class PushUtil {
 				List<GoeasyAccount> accounts = new ArrayList<>();
 				for (int i = 0; i < size; i++) {
 					GoeasyAccount account = new GoeasyAccount();
-					account.setSuperKey(accountList.get(i).attributeValue("superkey"));
-					account.setSubscribeKey(accountList.get(i).attributeValue("subscribekey"));
+					account.setSuperKey(accountList.get(i).elementText("superkey"));
+					account.setSubscribeKey(accountList.get(i).elementText("subscribekey"));
 					accounts.add(account);
 				}
 				goeasyApp.setAccounts(accounts);

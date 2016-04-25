@@ -78,9 +78,9 @@ public class WebSocketController implements BaseLogger{
 			jsons.put("isSelf",session==openSession?true:false) ;
 			openSession.getAsyncRemote().sendText(jsons.toString()) ;
 		}
-//		//将信息传送给指定的接收者
-//		String toName = jsons.getString("toName") ;
-//		this.getLogger().debug("开始发送给<< "+ (PushConstants.COMM_CHANNEL_CHAT + "_" + toName) +"通道>>此类信息: " + jsons.get("content"));
-//		PushUtil.getGoeasyServer().publish(PushConstants.COMM_CHANNEL_CHAT + "_" + toName, (String)jsons.get("content"));
+		//将信息传送给指定的接收者
+		String toName = jsons.getString("toName") ;
+		this.getLogger().debug("开始发送给<< "+ (PushConstants.COMM_CHANNEL_CHAT + "_" + toName) +"通道>>此类信息: " + jsons.get("content"));
+		PushUtil.getGoeasyServer().publish(PushConstants.COMM_CHANNEL_CHAT + "_" + toName, (String)jsons.get("content"));
 	}
 }
