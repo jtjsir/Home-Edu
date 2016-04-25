@@ -117,6 +117,7 @@
 			<li ><a href="#personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
 			<li ><a href="#set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
 			<li ><a href="#recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
+			<li ><a href="#chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
 		</ul>
 	</div>
 	<div class="right-wrap">
@@ -246,6 +247,7 @@
 		});
 		
 		<%
+			//图片是否上传成功信息展示
 			String result = (String)request.getSession().getAttribute("result") ;
 			if(result!=null){
 		%>
@@ -280,16 +282,6 @@
 					if(data===null){
 						$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无消息数据~~</p>");
 					}else{
-//						$.each(data,function(i,item){
-		//					console.log(item.username + '-----' + item.level);
-			//				var row = $('#template').clone();
-				//			row.find('#messageid').text(i+1);
-					//		row.find('#username').text(item.username);
-						//	row.find('#age').text(item.age) ;
-						//	row.find('#sex').text(item.sex) ;
-						//	row.find('#level').text(item.level) ;
-						//	row.find('#operate').html("<span>前往</span>|<span>忽略</span>");
-						//});
 						var stuOb = JSON.parse(data) ;
 						var len = stuOb.records.length;
 						var contentBody = $('#contentBody') ;
@@ -396,6 +388,37 @@
 			});
 		});
 	});
+</script>
+<script type="text/javascript" src="<%=basePath %>/html/goeasy/goeasy.js"></script>
+<script type="text/javascript">
+	//goeasy事件js
+	var goEasy = new GoEasy({
+		appkey:"04f5a023-63f6-477a-a933-a6dfa264fdda"
+	});
+	var messageAcceptNums = 0 ;
+	var messageCon = new Array();
+	
+	goEasy.subscribe({
+		channel:"channel_chat_jingtj" ,
+		onMessage:function(result){
+			alert(result.content);
+			messageCon[messageAcceptNums] = result.content;
+			messageAcceptNums++ ;
+			$('.badge').text(messageAcceptNums);
+		}
+	});
+	
+	//有人@按钮的点击事件
+	$('.left-border a[href="#chat-info"]').click(function(event){
+		//聊天消息数目置为0并删除相应的badges数目
+		messageAcceptNums = 0 ;
+		messageCon.length = 0 ;
+		var tipNode = $('.badge') ;
+		$('#chat-info').removeChild(tipNode);
+		
+		
+		$('.right-content').html() ;
+	});	
 </script>
 </body>
 </html>

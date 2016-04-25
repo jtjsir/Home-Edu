@@ -109,6 +109,7 @@ body{
 		src="<%=basePath%>/html/umeditor/umeditor.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>/html/umeditor/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript" src="<%=basePath %>/html/goeasy/goeasy.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			//实例化编辑器
@@ -134,6 +135,14 @@ body{
 						toName:'<%=toName%>',
 						requestType:'<%=type%>'
 					}));
+					//goeasy事件js
+					var goEasy = new GoEasy({
+						appkey:"04f5a023-63f6-477a-a933-a6dfa264fdda"
+					});
+					goEasy.publish({
+						channel:"channel_chat_jingtj",
+						message:um.getContent()
+					});
 					//清空输入框内容
 					um.setContent('') ;
 					um.focus() ;

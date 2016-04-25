@@ -56,22 +56,19 @@ public class WebSocketController implements BaseLogger{
 	}
 	
 	@OnError
-	public void onError(Throwable cause,Session session){
+	public void onError(Throwable cause,Session session) throws Throwable{
 		this.getLogger().debug(FORMAT.format(new Date()) + "--" + cause.getMessage()) ;
 		sessionSets.remove(session) ;
+		throw cause ;
 	}
 	
 	@OnMessage
 	public void onMessage(String message,Session session){
 		String time  = FORMAT.format(new Date()) ;
 		this.getLogger().debug(time + " 接收到的信息为: " + message);
-		System.out.println(time + " 接收到的信息为: " + message);
 		//将数据message封装成JsonObject
 		net.sf.json.JSONObject jsons = net.sf.json.JSONObject.fromObject(message) ;
 		jsons.put("datetime", time) ;
-		
-		//将信息传送给指定的接收者
-		PushUtil.getGoeasyServer().publish(PushConstants.CHANNEL_CHAT, message);
 		
 		//遍历发送信息
 		Iterator<Session> iterator = sessionSets.iterator() ;
@@ -81,5 +78,9 @@ public class WebSocketController implements BaseLogger{
 			jsons.put("isSelf",session==openSession?true:false) ;
 			openSession.getAsyncRemote().sendText(jsons.toString()) ;
 		}
+//		//将信息传送给指定的接收者
+//		String toName = jsons.getString("toName") ;
+//		this.getLogger().debug("开始发送给<< "+ (PushConstants.COMM_CHANNEL_CHAT + "_" + toName) +"通道>>此类信息: " + jsons.get("content"));
+//		PushUtil.getGoeasyServer().publish(PushConstants.COMM_CHANNEL_CHAT + "_" + toName, (String)jsons.get("content"));
 	}
 }
