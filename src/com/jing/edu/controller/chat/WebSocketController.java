@@ -1,14 +1,11 @@
 package com.jing.edu.controller.chat;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -21,6 +18,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.PushUtil;
+import com.jing.edu.model.params.PushConstants;
 
 /**
  * session代表会话
@@ -36,7 +35,7 @@ public class WebSocketController implements BaseLogger{
 
 	@Override
 	public Logger getLogger() {
-		return this.webSocketLogger;
+		return webSocketLogger;
 	}
 	
 	//onopen事件在创建本对象时即运行
@@ -71,7 +70,10 @@ public class WebSocketController implements BaseLogger{
 		net.sf.json.JSONObject jsons = net.sf.json.JSONObject.fromObject(message) ;
 		jsons.put("datetime", time) ;
 		
-		//遍历
+		//将信息传送给指定的接收者
+		PushUtil.getGoeasyServer().publish(PushConstants.CHANNEL_CHAT, message);
+		
+		//遍历发送信息
 		Iterator<Session> iterator = sessionSets.iterator() ;
 		Session openSession = null ;
 		while(iterator.hasNext()){

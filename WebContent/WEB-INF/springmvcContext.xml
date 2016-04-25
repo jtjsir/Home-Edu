@@ -20,7 +20,7 @@
 	
 	<!-- 配置资源的外部访问 -->
 	<mvc:resources location="/WEB-INF/images/" mapping="/images/**" />
-	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>      
+	<mvc:resources location="/WEB-INF/html/" mapping="/html/**"/>      
 	<mvc:resources location="/upload_photos/" mapping="/upload_photos/**"/>   
 	
 	<bean id="viewResolver"

@@ -15,7 +15,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Page to Pass</title>
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/bootstrap/css/bootstrap.min.css">
 	<style type="text/css">
 		body{
 			font-family: "华文新魏";
@@ -52,7 +52,7 @@
 		%>
 	</div>
 
-<script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/jquery.min.js" ></script>
-<script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery.min.js" ></script>
+<script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

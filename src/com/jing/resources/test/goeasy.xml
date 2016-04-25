@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<goeasy>
+	<application name="baseweb_homeEDU" create_time="2016-04-25 02:50:05">
+		<account>
+			<!-- 可推送也可接受的key 用做server端 -->
+			<superkey>04f5a023-63f6-477a-a933-a6dfa264fdda</superkey>
+			<!-- 只可接受消息的key -->
+			<subscribekey>4c345968-0d23-43a9-a01c-66be5439fc68</subscribekey>
+		</account>
+	</application>
+</goeasy>

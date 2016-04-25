@@ -18,8 +18,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/common/common.css">
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/common/common.css">
 	
 <title>USER_normal</title>
 <style type="text/css">
@@ -136,8 +136,8 @@
 	</div>
 </div>
 </div>
-<script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	//共有的js代码
 	$(function(){
@@ -203,11 +203,11 @@
 			if(detailUser!=null){
 				
 		%>
-		$('#city').html("<%=(detailUser.getCity())%>") ;
-		$('#realname').html("<%=detailUser.getRealName()%>") ;
-		$('#intro').html("<%=detailUser.getIntroduction()%>") ;
-		$('#sub').html("<strong style='font-size:40px;'><%=detailUser.getSubject()%></strong>") ;
-		$('#price').html("<strong style='font-size:40px;'><%=detailUser.getPrice()%></strong>") ;
+		$('#city').html("<%=(detailUser.getCity()==null?"未填写":detailUser.getCity())%>") ;
+		$('#realname').html("<%=(detailUser.getRealName()==null?"未填写":detailUser.getRealName())%>") ;
+		$('#intro').html("<%=(detailUser.getIntroduction()==null?"未填写":detailUser.getIntroduction())%>") ;
+		$('#sub').html("<strong style='font-size:40px;'><%=(detailUser.getSubject()==null?"未填写":detailUser.getSubject())%></strong>") ;
+		$('#price').html("<strong style='font-size:40px;'><%=(detailUser.getPrice()==null?"未填写":detailUser.getPrice())%></strong>") ;
 			<%
 					int isOnline = detailUser.getIsonline() ;
 			%>
@@ -221,7 +221,6 @@
 		$('#intro').html("未填写") ;
 		$('#sub').html("未填写") ;
 		$('#price').html("未填写") ;
-		$('.chatbtn').attr('disabled',true) ;
 		<%}%>
 		
 		//立即预约按钮的点击事件
@@ -238,11 +237,13 @@
 							isdelete:0
 						}
 					});
+					//对该用户显示已经预约
 					$('.subscribebtn').attr('disabled',true) ;
 					$('.subscribebtn').attr('value','已经预约') ;
 				}else{
-					//类型相同不可进行预约
+					//类型相同不可进行预约与聊天
 					$('.subscribebtn').attr('disabled',true) ;
+					$('.chatbtn').attr('disabled',true);
 				}
 		}) ;
 	});

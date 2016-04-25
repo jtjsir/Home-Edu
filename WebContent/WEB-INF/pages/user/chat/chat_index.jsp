@@ -16,15 +16,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" type="text/css"
-	href="<%=basePath%>/css/bootstrap/css/bootstrap.min.css">
+	href="<%=basePath%>/html/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=basePath%>/css/common/common.css">
+	href="<%=basePath%>/html/common/common.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=basePath%>/css/amazeui/assets/css/amazeui.min.css">
+	href="<%=basePath%>/html/amazeui/assets/css/amazeui.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=basePath%>/css/amazeui/assets/css/app.css">
+	href="<%=basePath%>/html/amazeui/assets/css/app.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=basePath%>/css/umeditor/themes/default/css/umeditor.css">
+	href="<%=basePath%>/html/umeditor/themes/default/css/umeditor.css">
 <title>chat test</title>
 <style>
 body{
@@ -101,14 +101,14 @@ body{
 	</div>
 
 	<script type="text/javascript"
-		src="<%=basePath%>/css/bootstrap/js/jquery-1.11.1.min.js"></script>
+		src="<%=basePath%>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
 	<!-- 加入umeditor相关js文件 -->
 	<script type="text/javascript" charset="utf-8"
-		src="<%=basePath%>/css/umeditor/umeditor.config.js"></script>
+		src="<%=basePath%>/html/umeditor/umeditor.config.js"></script>
 	<script type="text/javascript" charset="utf-8"
-		src="<%=basePath%>/css/umeditor/umeditor.min.js"></script>
+		src="<%=basePath%>/html/umeditor/umeditor.min.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>/css/umeditor/lang/zh-cn/zh-cn.js"></script>
+		src="<%=basePath%>/html/umeditor/lang/zh-cn/zh-cn.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			//实例化编辑器

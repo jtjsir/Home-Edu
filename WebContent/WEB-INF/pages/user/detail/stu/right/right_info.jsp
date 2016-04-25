@@ -16,8 +16,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/common/common.css">
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/common/common.css">
 	<title>TEA_DETAIL_INFO</title>
 	<style type="text/css">
 		body{
@@ -155,8 +155,8 @@
 			
 		</form>
 	</div>
-<script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<%=basePath %>/css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		<%
