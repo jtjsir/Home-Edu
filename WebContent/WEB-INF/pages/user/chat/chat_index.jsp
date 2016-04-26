@@ -118,7 +118,7 @@ body{
 			$('#myEditor')[0].focus() ;
 			
 			//websocket页面端的调用
-			var websk = new WebSocket("ws://localhost:8080/baseweb_homeEDU/chatserver") ;
+			var websk = new WebSocket("ws://localhost:8080/baseweb_homeEDU/chatserver/" + "<%=username + ">" + toName%>") ;
 			//点击发送的事件
 			$('#send').on('click',function(){
 				var username = $('#username').val();
@@ -150,6 +150,7 @@ body{
 			});
 			//处理返回来的数据
 			websk.onmessage = function(event){
+				alert(event.data) ;
 				addMessage(event.data) ;
 			}
 			

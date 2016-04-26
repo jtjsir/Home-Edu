@@ -189,7 +189,7 @@
   		<span style="margin-left: 20px;">|</span>
 	</div>
 	<!-- underline -->
-	<div style="border: wavy 1px #795548; margin: 10px auto 2px auto;width: 90%;"></div>
+	<div style="border: solid 1px #795548; margin: 10px auto 2px auto;width: 90%;"></div>
 	<div class="wrap_content">
 		<div class="row infowrap"></div>
 	</div>

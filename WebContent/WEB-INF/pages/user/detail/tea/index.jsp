@@ -117,7 +117,7 @@
 			<li ><a href="#personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
 			<li ><a href="#set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
 			<li ><a href="#recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
-			<li ><a href="#chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
+			<li ><a href="#chat-info" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
 		</ul>
 	</div>
 	<div class="right-wrap">
@@ -401,36 +401,45 @@
 	goEasy.subscribe({
 		channel:"channel_chat_jingtj" ,
 		onMessage:function(result){
-			//alert(result.content);
-			messageCon[messageAcceptNums] = result.content;
+			//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
+			var displayCon = result.content.replace(/&quot;/g,"\"");
+			messageCon[messageAcceptNums] = displayCon;
 			messageAcceptNums++ ;
 			$('.badge').text(messageAcceptNums);
 		}
 	});
 	
-	//有人@按钮的点击事件
-	$('.left-border a[href="#chat-info"]').click(function(event){
-		//聊天消息数目置为0并删除相应的badges数目
-		messageAcceptNums = 0 ;
-		for(var i = 0 ; i < messageCon.length;i++){
-			var rightContent = "" ;
-			var text = JSON.parse(messageCon[i]);
-			var words = text.content ;
-			//来源者
-			var from = text.username ;
-			//接受者
-			var to = text.toName ;
-			rightContent+="<div>名为:<span class='font-size:20px;'> " + from 
-											+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;'>" 
+	//有人@按钮的点击事件,不支持离线接收数据
+	$('.left-border .chat-info').click(function(event){
+		$('.right-content').html('') ;
+		if(0!=messageAcceptNums){
+			//messageAcceptNums = 0 ;
+			for(var i = 0 ; i < messageCon.length;i++){
+				var rightContent = "" ;
+				var text = JSON.parse(messageCon[i]);
+				var words = text.content ;
+				//来源者
+				var from = text.username ;
+				//接受者
+				var to = text.toName ;
+				rightContent+="<div style='margin-top: 20px;margin-left: 30px;height: 40px;'>名为:<span style='font-size: 25px;padding-left: 10px;padding-right: 10px;'> " + from 
+											+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;padding-left: 10px;padding-right: 10px;'>" 
 											+words + "</span>"
-											+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>";
-			$('.right-content').append(rightContent) ;
-			//
-			$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
-			$('.reply').removeClass('reply');
+											+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>"
+											+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
+				$('.right-content').append(rightContent) ;
+				//
+				$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
+				$('.reply').attr('target',"_blank");
+				$('.reply').removeClass('reply');
+			}
+			//messageCon.length = 0 ;
+			
 		}
-		messageCon.length = 0 ;
-		
+		if($(this).attr('href')!='javascript:void(0)'){
+			messageAcceptNums = 0 ;
+			messageCon.length = 0 ;
+		}
 	});	
 </script>
 </body>

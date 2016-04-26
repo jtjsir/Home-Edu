@@ -204,7 +204,24 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args){
-		System.err.println(StringUtil.filterHTMLLabel("<div><p>jingtj</p></div>"));
-		System.err.println(StringUtil.encodeParam("tea", "GBK")) ;
+//		System.err.println(StringUtil.filterHTMLLabel("<div><p>jingtj</p></div>"));
+//		System.err.println(StringUtil.encodeParam("tea", "GBK")) ;
+		System.err.println(StringUtil.exchangePos("char_byte", "_"));
+	}
+	
+	/**
+	 * 交换位置
+	 * @param str	交换的字符串
+	 * @param reg	分隔符
+	 * @return
+	 */
+	public static String exchangePos(String str,String reg){
+		StringBuffer sBuffer = new StringBuffer() ;
+		int pos = str.indexOf(reg) ;
+		sBuffer.append(str.substring(pos+1, str.length())) ;
+		sBuffer.append(reg) ;
+		sBuffer.append(str.substring(0, pos)) ;
+		
+		return sBuffer.toString() ;
 	}
 }
