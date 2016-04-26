@@ -229,7 +229,7 @@
 					$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 				}else{
 					$('.wrap_content .infowrap').html('');
-					var pageLen = Math.ceil((teaOb.count-1) / 4);
+					var pageLen = Math.ceil(teaOb.count/4);
 					if(teaLen>=4){
 						teaLen = 4 ;
 					}
@@ -303,7 +303,7 @@
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
 						contentDiv.html('');
-						var pageLen = Math.ceil((teaOb.count-1) / 4);
+						var pageLen = Math.ceil(teaOb.count/4);
 						if(teaLen>=4){
 							teaLen = 4 ;
 						}
@@ -364,7 +364,7 @@
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
 						contentDiv.html('');
-						var pageLen = Math.ceil((teaOb.count-1) / 4);
+						var pageLen = Math.ceil(teaOb.count/4);
 						if(teaLen>=4){
 							teaLen = 4 ;
 						}
@@ -417,7 +417,7 @@
 							$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 						}else{
 							contentDiv.html('');
-							var pageLen = Math.ceil((teaOb.count-1) / 4);
+							var pageLen = Math.ceil(teaOb.count/4);
 							if(teaLen>=4){
 								teaLen = 4 ;
 							}
@@ -474,7 +474,7 @@
 							$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 						}else{
 							$('.wrap_content .infowrap').html('');
-							var pageLen = Math.ceil((teaOb.count-1) / 4);
+							var pageLen = Math.ceil(teaOb.count/4);
 							if(teaLen>=4){
 								teaLen = 4 ;
 							}
@@ -524,7 +524,7 @@
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil((teaOb.count-1) / 4);
+						var pageLen = Math.ceil(teaOb.count/4);
 						if(teaLen>=4){
 							teaLen = 4 ;
 						}
@@ -578,7 +578,7 @@
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil((teaOb.count-1) / 4);
+						var pageLen = Math.ceil(teaOb.count/4);
 						if(teaLen>=4){
 							teaLen = 4 ;
 						}
@@ -636,7 +636,7 @@
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil((teaOb.count-1) / 4);
+						var pageLen = Math.ceil(teaOb.count/4);
 						if(teaLen>=4){
 							teaLen = 4 ;
 						}
@@ -694,7 +694,7 @@
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil((teaOb.count-1) / 4);
+						var pageLen = Math.ceil(teaOb.count/4);
 						if(teaLen>=4){
 							teaLen = 4 ;
 						}

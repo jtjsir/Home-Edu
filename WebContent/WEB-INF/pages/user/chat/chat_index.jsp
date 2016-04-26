@@ -150,7 +150,7 @@ body{
 			});
 			//处理返回来的数据
 			websk.onmessage = function(event){
-				alert(event.data) ;
+				/* alert(event.data) ; */
 				addMessage(event.data) ;
 			}
 			

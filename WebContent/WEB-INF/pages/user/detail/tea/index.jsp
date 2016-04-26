@@ -113,11 +113,11 @@
 <div class="wrap-content">
 	<div class="left-border">
 		<ul class="nav nav-tabs nav-stacked">
-			<li ><a href="#personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
-			<li ><a href="#personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
-			<li ><a href="#set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
-			<li ><a href="#recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
-			<li ><a href="#chat-info" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
+			<li ><a href="javascript:void(0)" class="personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
+			<li ><a href="javascript:void(0)" class="personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
+			<li ><a href="javascript:void(0)" class="set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
+			<li ><a href="javascript:void(0)" class="recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
+			<li ><a href="javascript:void(0)" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
 		</ul>
 	</div>
 	<div class="right-wrap">
@@ -176,7 +176,7 @@
 		$('.right-content').html("<div style='text-align: center;margin-top: 80px;'><h2>还没完善自己的个人信息,点击设置进一步完善或者修改吧~</h2><img alt='' src='<%=basePath %>/images/user/detail/index/cry.jpg' class=''></div>");
 		<%}%>
 		//个人信息设置修改点击事件
-		$('.left-border a[href="#set-info"]').click(function(event){
+		$('.left-border .set-info').click(function(event){
 			$.ajax({
 				url:"/baseweb_homeEDU/user/detail/tea/index/right/info",
 				type:"GET",
@@ -188,7 +188,7 @@
 		});	
 		
 		//个人信息点击事件
-		$('.left-border a[href="#personal-info"]').click(function(event){
+		$('.left-border .personal-info').click(function(event){
 			$.ajax({
 				url:"/baseweb_homeEDU/user/detail/content/personinfoHTML",
 				type:"GET",
@@ -262,7 +262,7 @@
 			if(null!=teaUser){
 		%>
 		//消息按钮响应事件
-		$('.left-border a[href="#personal-message"]').click(function(event){
+		$('.left-border .personal-message').click(function(event){
 			$.ajax({
 				url:"/baseweb_homeEDU/user/detail/content/informMessageHTML",
 				type:"GET",
@@ -305,7 +305,7 @@
 		});	
 		
 	//推荐按钮响应事件
-	$('.left-border a[href="#recommend-info"]').click(function(event){
+	$('.left-border .recommend-info').click(function(event){
 		$.ajax({
 			url:"/baseweb_homeEDU/user/detail/content/resRecommendHTML",
 			type:"GET",
@@ -391,56 +391,118 @@
 </script>
 <script type="text/javascript" src="<%=basePath %>/html/goeasy/goeasy.js"></script>
 <script type="text/javascript">
-	//goeasy事件js
-	var goEasy = new GoEasy({
-		appkey:"04f5a023-63f6-477a-a933-a6dfa264fdda"
-	});
-	var messageAcceptNums = 0 ;
-	var messageCon = new Array();
-	
-	goEasy.subscribe({
-		channel:"channel_chat_jingtj" ,
-		onMessage:function(result){
-			//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
-			var displayCon = result.content.replace(/&quot;/g,"\"");
-			messageCon[messageAcceptNums] = displayCon;
-			messageAcceptNums++ ;
-			$('.badge').text(messageAcceptNums);
-		}
-	});
-	
-	//有人@按钮的点击事件,不支持离线接收数据
-	$('.left-border .chat-info').click(function(event){
-		$('.right-content').html('') ;
-		if(0!=messageAcceptNums){
-			//messageAcceptNums = 0 ;
-			for(var i = 0 ; i < messageCon.length;i++){
-				var rightContent = "" ;
-				var text = JSON.parse(messageCon[i]);
-				var words = text.content ;
-				//来源者
-				var from = text.username ;
-				//接受者
-				var to = text.toName ;
-				rightContent+="<div style='margin-top: 20px;margin-left: 30px;height: 40px;'>名为:<span style='font-size: 25px;padding-left: 10px;padding-right: 10px;'> " + from 
-											+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;padding-left: 10px;padding-right: 10px;'>" 
-											+words + "</span>"
-											+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>"
-											+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
-				$('.right-content').append(rightContent) ;
-				//
-				$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
-				$('.reply').attr('target',"_blank");
-				$('.reply').removeClass('reply');
+	$(function(){
+		//goeasy事件js
+		var goEasy = new GoEasy({
+			appkey:"04f5a023-63f6-477a-a933-a6dfa264fdda"
+		});
+		var messageAcceptNums = 0 ;
+		var messageCon = new Array();
+		
+		goEasy.subscribe({
+			channel:"channel_chat_jingtj" ,
+			onMessage:function(result){
+				//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
+				var displayCon = result.content.replace(/&quot;/g,"\"");
+				messageCon[messageAcceptNums] = displayCon;
+				messageAcceptNums++ ;
+				$('.badge').text(messageAcceptNums);
 			}
-			//messageCon.length = 0 ;
+		});
+		
+		//有人@按钮的点击事件,不支持离线接收数据
+		$('.left-border .chat-info').click(function(event){
+			$('.right-content').html('') ;
+			if(0!=messageAcceptNums){
+				var nums = messageAcceptNums ;
+				if(messageAcceptNums>=4){
+					nums = 4 ;
+				}
+				for(var i = 0 ; i < nums;i++){
+					var rightContent = "" ;
+					var text = JSON.parse(messageCon[i]);
+					var words = text.content ;
+					//来源者
+					var from = text.username ;
+					//接受者
+					var to = text.toName ;
+					rightContent+="<div style='margin-top: 20px;margin-left: 30px;height: 40px;'>名为:<span style='font-size: 25px;padding-left: 10px;padding-right: 10px;'> " + from 
+												+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;padding-left: 10px;padding-right: 10px;'>" 
+												+words + "</span>"
+												+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>"
+												+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
+					$('.right-content').append(rightContent) ;
+					//
+					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
+					$('.reply').attr('target',"_blank");
+					$('.reply').removeClass('reply');
+				}
+				var pageLen = Math.ceil(messageAcceptNums / 4);
+				//生成page标签页
+				var pageStr = "<div style='height: 200px;width:500px;margin:0 auto;text-align: center;' class='pagebtn'><ul class='pagination'><li><a id='page_1' href='javascript:void(0)'><<</a></li>" ;
+				for(var j= 0 ; j < pageLen ; j++){
+					pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
+				}
+				pageStr+="<li><a id='page_" +pageLen  + "'>>></a></li></ul></div>" ;
+				$('.right-content').append(pageStr) ;
+			}
+		});	
+
+	});
+</script>
+<script type="text/javascript">
+	$(function(){
+		//page按钮的事件
+		$('.right-content .pagebtn .pagination li').on("click","a",function(event){
+			console.log('click it now') ;
+			var id = $(this).attr('id') ;
+			var page = parseInt(id.substring(id.indexOf('_') + 1,id.length) );
+			var pageLen = Math.ceil(messageAcceptNums / 4) ;
+			var offset = (page - 1) * 4 ;
+			if((offset + 4)<=messageAcceptNums){
+				for(var i = offset; i < offset + 4; i++){
+					var rightContent = "" ;
+					var text = JSON.parse(messageCon[i]);
+					var words = text.content ;
+					//来源者
+					var from = text.username ;
+					//接受者
+					var to = text.toName ;
+					rightContent+="<div style='margin-top: 20px;margin-left: 30px;height: 40px;'>名为:<span style='font-size: 25px;padding-left: 10px;padding-right: 10px;'> " + from 
+												+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;padding-left: 10px;padding-right: 10px;'>" 
+												+words + "</span>"
+												+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>"
+												+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
+					$('.right-content').append(rightContent) ;
+					//
+					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
+					$('.reply').attr('target',"_blank");
+					$('.reply').removeClass('reply');
+				}
+			}else{
+				for(var i = offset ; i < messageAcceptNums; i++){
+					var rightContent = "" ;
+					var text = JSON.parse(messageCon[i]);
+					var words = text.content ;
+					//来源者
+					var from = text.username ;
+					//接受者
+					var to = text.toName ;
+					rightContent+="<div style='margin-top: 20px;margin-left: 30px;height: 40px;'>名为:<span style='font-size: 25px;padding-left: 10px;padding-right: 10px;'> " + from 
+												+ "</span>的拜访者给您发送了如下消息: <span style='font-style:oblique;font-size:18px;padding-left: 10px;padding-right: 10px;'>" 
+												+words + "</span>"
+												+"<span style='padding-left:10px;'><a href='javascript:void(0)' class='reply'>点击回复</a></span></div>"
+												+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
+					$('.right-content').append(rightContent) ;
+					//
+					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
+					$('.reply').attr('target',"_blank");
+					$('.reply').removeClass('reply');
+				}
+			}
 			
-		}
-		if($(this).attr('href')!='javascript:void(0)'){
-			messageAcceptNums = 0 ;
-			messageCon.length = 0 ;
-		}
-	});	
+		});
+	});
 </script>
 </body>
 </html>
