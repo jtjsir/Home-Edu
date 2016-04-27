@@ -88,7 +88,7 @@ public class SortUtil {
 						return -1 ;
 					}
 				}else if(1==order){
-					if(StringUtil.getPriceByType(stu1.getPrice(), levelType) < StringUtil.getPriceByType(stu2.getPrice(), levelType)){
+					if(StringUtil.getPriceByType(stu1.getPrice(), levelType) > StringUtil.getPriceByType(stu2.getPrice(), levelType)){
 						return -1 ;
 					}else{
 						return 1 ;
@@ -104,7 +104,7 @@ public class SortUtil {
 						return -1 ;
 					}
 				}else if(1==order){
-					if(StringUtil.getPriceByType(tea1.getPrice(), levelType) < StringUtil.getPriceByType(tea2.getPrice(), levelType)){
+					if(StringUtil.getPriceByType(tea1.getPrice(), levelType) > StringUtil.getPriceByType(tea2.getPrice(), levelType)){
 						return -1 ;
 					}else{
 						return 1 ;

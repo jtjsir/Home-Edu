@@ -120,7 +120,7 @@
 				<div style="height:50px;">
 					<span>辅导课程:<span id="sub"></span></span>
 				</div>
-				<div style="height:50px;">
+				<div style="height:50px;padding-top: 20px;">
 					<span>课程报价:<span id="price"></span></span>
 				</div>
 			</div>
@@ -209,7 +209,7 @@
 		$('#honor').html("<%=(detailUser.getHonor()==null?"未填写":detailUser.getHonor())%>") ;
 		$('#intro').html("<%=(detailUser.getIntroduction()==null?"未填写":detailUser.getIntroduction())%>") ;
 		$('#sub').html("<strong style='font-size:40px;'><%=(detailUser.getSubject()==null?"未填写":detailUser.getSubject())%></strong>") ;
-		$('#price').html("<strong style='font-size:40px;'><%=(detailUser.getPrice()==null?"未填写":detailUser.getPrice())%></strong>") ;
+		$('#price').html("<strong style='font-size:20px;'><%=(detailUser.getPrice()==null?"未填写":detailUser.getPrice())%></strong>") ;
 			<%
 					int isOnline = detailUser.getIsonline() ;
 			%>

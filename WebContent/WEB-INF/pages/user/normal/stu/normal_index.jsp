@@ -120,7 +120,7 @@
 				<div style="height:50px;">
 					<span>需求课程:<span id="sub"></span></span>
 				</div>
-				<div style="height:50px;">
+				<div style="height:50px;padding-top: 20px;">
 					<span>课程报价:<span id="price"></span></span>
 				</div>
 			</div>
@@ -148,10 +148,10 @@
 		//判断是否有用户已经登录
 		var index_text1 = $('.navbar-right a[name="text1"]') ;
 		var index_text2 = $('.navbar-right a[name="text2"]') ;
-		index_text1.val(<%=user.getUsername()%>);
+		index_text1.text(<%=user.getUsername()%>);
 		index_text1.attr("href","<%=basePath%>/user/detail/tea/index") ;
 		//退出返回到登录界面
-		index_text2.val('退出');
+		index_text2.text('退出');
 		index_text2.attr("href","<%=basePath%>/login/out");
 		<%
 			}
@@ -207,7 +207,7 @@
 		$('#realname').html("<%=(detailUser.getRealName()==null?"未填写":detailUser.getRealName())%>") ;
 		$('#intro').html("<%=(detailUser.getIntroduction()==null?"未填写":detailUser.getIntroduction())%>") ;
 		$('#sub').html("<strong style='font-size:40px;'><%=(detailUser.getSubject()==null?"未填写":detailUser.getSubject())%></strong>") ;
-		$('#price').html("<strong style='font-size:40px;'><%=(detailUser.getPrice()==null?"未填写":detailUser.getPrice())%></strong>") ;
+		$('#price').html("<strong style='font-size:20px;'><%=(detailUser.getPrice()==null?"未填写":detailUser.getPrice())%></strong>") ;
 			<%
 					int isOnline = detailUser.getIsonline() ;
 			%>

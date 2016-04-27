@@ -204,9 +204,12 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args){
+		String content = priceContact("11","12","13") ;
+		System.err.println(priceContact("11","12","13"));
+		System.err.println(getPrices(content)[0]); 
 //		System.err.println(StringUtil.filterHTMLLabel("<div><p>jingtj</p></div>"));
 //		System.err.println(StringUtil.encodeParam("tea", "GBK")) ;
-		System.err.println(StringUtil.exchangePos("char_byte", "_"));
+//		System.err.println(StringUtil.exchangePos("char_byte", "_"));
 	}
 	
 	/**

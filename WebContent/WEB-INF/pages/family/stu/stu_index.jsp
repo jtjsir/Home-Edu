@@ -618,9 +618,9 @@
 			var classAttr = $('.sort_menu #sort_price').attr('class') ;
 			if(null==classAttr||""==classAttr||"undefined"==classAttr){
 				order = 1 ;
-				$('.sort_menu #sort_age').addClass('dropup');
+				$('.sort_menu #sort_price').addClass('dropup');
 			}else{
-				$('.sort_menu #sort_age').removeClass('dropup');
+				$('.sort_menu #sort_price').removeClass('dropup');
 			}
 			$.ajax({
 				url:"/baseweb_homeEDU/family/stutea/sort",
