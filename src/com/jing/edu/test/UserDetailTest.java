@@ -26,14 +26,14 @@ public class UserDetailTest extends BaseTest{
 	@Test
 	public void insertPhoto(){
 		UserDetailTea tea = new UserDetailTea() ;
-		tea.setName("xiaosen");
-		tea.setRealName("小森");
-		tea.setType(1);
-		tea.setLevel("大学");
+		tea.setName("zhengqian");
+		tea.setRealName("郑倩");
+		tea.setType(2);
+		tea.setLevel("小五");
 		tea.setIntroduction("a good man");
-		tea.setSchool("杭州电子科技大学");
+		tea.setSchool("小学");
 		tea.setHonor("获得多项荣誉");
-		File file = new File("src/testgirl.jpg") ;
+		File file = new File("src/girl.jpg") ;
 		byte[] image = new byte[(int)file.length()] ;
 		try {
 			new FileInputStream(file).read(image, 0, image.length) ;
@@ -43,7 +43,7 @@ public class UserDetailTest extends BaseTest{
 			e.printStackTrace();
 		}
 		tea.setImage(image);
-		tea.setSubject("小学数学,初中数学,高中数学");
+		tea.setSubject("小学数学,小学语文,小学英语");
 		tea.setIsonline(0);
 		tea.setPrice("6元/分");
 		tea.setCity("浙江杭州");

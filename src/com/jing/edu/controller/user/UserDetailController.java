@@ -150,9 +150,8 @@ public class UserDetailController {
 	public String redirectToTeaIndex(HttpServletRequest request) {
 		//默认没有用户的具体信息
 		String hasDetail = "0" ;
-//		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
-		String testUsername = "jingtj" ;
-		boolean isdetail = detailService.isUserDetail(testUsername, UserType.TEACHER) ;
+		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
+		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER) ;
 		if(isdetail){
 			hasDetail = "1" ;
 		}

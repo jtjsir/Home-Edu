@@ -180,16 +180,18 @@
 		</div>
 	</div>
 	<div class="underline"></div>
-	<div class="sort_menu" style="height:20px;">
-  		<span style="margin-left: 86px;" id="sort_price"><a href="javascript(0)">价格<span class="caret"></span></a></span>
-  		<span style="margin-left: 20px;">|</span>
-  		<span style="margin-left: 30px; " id="sort_comment"><a href="javascript(0)">关注<span class="caret"></span></a></span>
-  		<span style="margin-left: 20px;">|</span>
-  		<span style="margin-left: 30px;" id="sort_age"><a href="javascript(0)">年龄<span class="caret"></span></a></span>
-  		<span style="margin-left: 20px;">|</span>
+	<div class="sort_wrap">
+		<div class="sort_menu" style="height:20px;">
+  			<span style="margin-left: 86px;" id="sort_price"><a href="javascript:void(0)" style="text-decoration:none;">价格<span class="caret"></span></a></span>
+  			<span style="margin-left: 20px;">|</span>
+  			<span style="margin-left: 30px; " id="sort_comment"><a href="javascript:void(0)" style="text-decoration:none;">关注<span class="caret"></span></a></span>
+  			<span style="margin-left: 20px;">|</span>
+  			<span style="margin-left: 30px;" id="sort_age"><a href="javascript:void(0)" style="text-decoration:none;">年龄<span class="caret"></span></a></span>
+  			<span style="margin-left: 20px;">|</span>
+		</div>
+		<!-- underline -->
+		<div style="border: solid 1px #795548; margin: 10px auto 2px auto;width: 90%;"></div>
 	</div>
-	<!-- underline -->
-	<div style="border: wavy 1px #795548; margin: 10px auto 2px auto;width: 90%;"></div>
 	<div class="wrap_content">
 		<div class="row infowrap"></div>
 	</div>
@@ -210,6 +212,56 @@
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+	//第一次访问首先请求后台图片数据
+	$(function(){
+		$.ajax({
+			url:"/baseweb_homeEDU/family/stutea/infos",
+			type:"GET",
+			data:{
+				userType:"stu",
+				page:"1"
+			},
+			success:function(data){
+				var stuOb = JSON.parse(data) ;
+				//得到查询资源的条目数
+				var stuLen = stuOb.size;
+				if(stuLen===0){
+					$('.sort_wrap').attr('hidden',true);
+					$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
+					$('.pagebtn').html("<ul class='pagination'><li><a href='javascript:void(0)'><<</a></li><li><a href='javascript:void(0)'>>></a></li></ul>");
+				}else{
+					$('.sort_wrap').attr('hidden',false);
+					$('.wrap_content .infowrap').html('');
+					var pageLen = Math.ceil(stuOb.count/4);
+					if(stuLen>=4){
+						stuLen = 4 ;
+					}
+					for(var i = 0;i < stuLen;i++){
+						var str = "<div class='col-md-3 infoborder'>";
+						var onestu = stuOb.familys[i] ;
+						str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+						+ "<p>姓名:"+ onestu.realname + "</p>"
+						+ "<p>学历:"+ onestu.level + "</p>"
+						+ "<p>授课内容:"+ onestu.subjects + "</p>"
+						;
+						str+="</div>" ;
+						$('.wrap_content .infowrap').append(str) ;
+					}
+					//生成page标签页
+					var pageStr = "<ul class='pagination normalpage'><li><a id='page_1'><<</a></li>" ;
+					for(var j= 0 ; j < pageLen ; j++){
+						pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
+					}
+					pageStr+="<li><a id='page_" +pageLen  + "'>>></a></li></ul>" ;
+					console.log(pageStr);
+					$('.pagebtn').html('');
+					$('.pagebtn').append(pageStr) ;
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript">
 	//共有的js代码
 	$(function(){
 		<%
@@ -220,7 +272,7 @@
 		var index_text1 = $('.navbar-right a[name="text1"]') ;
 		var index_text2 = $('.navbar-right a[name="text2"]') ;
 		index_text1.val(<%=user.getUsername()%>);
-		index_text1.attr("href","<%=basePath%>/user/detail/tea/index") ;
+		index_text1.attr("href","<%=basePath%>/user/detail/stu/index") ;
 		//退出返回到登录界面
 		index_text2.val('退出');
 		index_text2.attr("href","<%=basePath%>/login/out");
@@ -249,10 +301,11 @@
 					//得到查询资源的条目数
 					var stuLen = stuOb.size;
 					if(stuLen===0){
-						$('.sort_menu').hidden();
+						$('.sort_wrap').attr('hidden',true);
 						contentDiv.html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
+						$('.sort_wrap').attr('hidden',false);
 						contentDiv.html('');
 						var pageLen = Math.ceil((stuOb.count-1) / 4);
 						if(stuLen>=4){
@@ -270,7 +323,7 @@
 							contentDiv.append(str) ;
 						}
 						//生成page标签页
-						var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+						var pageStr = "<ul class='pagination normalpage'><li><a id='page_1'><<</a></li>" ;
 						for(var j= 0 ; j < pageLen ; j++){
 							pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 						}
@@ -310,10 +363,11 @@
 					//得到查询资源的条目数
 					var stuLen = stuOb.size;
 					if(stuLen===0){
-						$('.sort_menu').hidden();
+						$('.sort_wrap').attr('hidden',true);
 						contentDiv.html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
+						$('.sort_wrap').attr('hidden',false);
 						contentDiv.html('');
 						var pageLen = Math.ceil((stuOb.count-1) / 4);
 						if(stuLen>=4){
@@ -332,7 +386,7 @@
 						}
 						
 						//生成page标签页
-						var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+						var pageStr = "<ul class='pagination normalpage'><li><a id='page_1'><<</a></li>" ;
 						for(var j= 0 ; j < pageLen ; j++){
 							pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 						}
@@ -359,32 +413,33 @@
 				},
 				success:function(data){
 						console.log(data) ;
-						var teaOb = JSON.parse(data) ;
+						var stuOb = JSON.parse(data) ;
 						//得到查询资源的条目数
-						var teaLen = teaOb.size;
-						if(teaLen===0){
-							$('.sort_menu').hidden();
+						var stuLen = stuOb.size;
+						if(stuLen===0){
+							$('.sort_wrap').attr('hidden',true);
 							contentDiv.html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 							$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 						}else{
+							$('.sort_wrap').attr('hidden',false);
 							contentDiv.html('');
-							var pageLen = Math.ceil(teaOb.count/4);
-							if(teaLen>=4){
-								teaLen = 4 ;
+							var pageLen = Math.ceil(stuOb.count/4);
+							if(stuLen>=4){
+								stuLen = 4 ;
 							}
-							for(var i = 0;i < teaLen;i++){
+							for(var i = 0;i < stuLen;i++){
 								var str = "<div class='col-md-3 infoborder'>";
-								var oneTea = teaOb.familys[i] ;
-								str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ oneTea.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+oneTea.imgpath+ "'>" + "</img>" + "</a>" 
-								+ "<p>姓名:"+ oneTea.realname + "</p>"
-								+ "<p>学历:"+ oneTea.level + "</p>"
-								+ "<p>授课内容:"+ oneTea.subjects + "</p>"
+								var onestu = stuOb.familys[i] ;
+								str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+								+ "<p>姓名:"+ onestu.realname + "</p>"
+								+ "<p>学历:"+ onestu.level + "</p>"
+								+ "<p>授课内容:"+ onestu.subjects + "</p>"
 								;
 								str+="</div>" ;
 								contentDiv.append(str) ;
 							}
 							//生成page标签页
-							var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+							var pageStr = "<ul class='pagination normalpage'><li><a id='page_1'><<</a></li>" ;
 							for(var j= 0 ; j < pageLen ; j++){
 								pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 							}
@@ -415,33 +470,34 @@
 					},
 					type:"GET",
 					success:function(data){
-						var teaOb = JSON.parse(data) ;
+						var stuOb = JSON.parse(data) ;
 						//得到查询资源的条目数
-						var teaLen = teaOb.size;
-						if(teaLen===0){
-							$('.sort_menu').hidden();
+						var stuLen = stuOb.size;
+						if(stuLen===0){
+							$('.sort_wrap').attr('hidden',true);
 							$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 							$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 						}else{
+							$('.sort_wrap').attr('hidden',false);
 							$('.wrap_content .infowrap').html('');
-							var pageLen = Math.ceil(teaOb.count/4);
-							if(teaLen>=4){
-								teaLen = 4 ;
+							var pageLen = Math.ceil(stuOb.count/4);
+							if(stuLen>=4){
+								stuLen = 4 ;
 							}
-							for(var i = 0;i < teaLen;i++){
+							for(var i = 0;i < stuLen;i++){
 								var str = "<div class='col-md-3 infoborder'>";
-								var oneTea = teaOb.familys[i] ;
-								str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ oneTea.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+oneTea.imgpath+ "'>" + "</img>" + "</a>" 
-								+ "<p>姓名:"+ oneTea.realname + "</p>"
-								+ "<p>学历:"+ oneTea.level + "</p>"
-								+ "<p>授课内容:"+ oneTea.subjects + "</p>"
+								var onestu = stuOb.familys[i] ;
+								str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+								+ "<p>姓名:"+ onestu.realname + "</p>"
+								+ "<p>学历:"+ onestu.level + "</p>"
+								+ "<p>授课内容:"+ onestu.subjects + "</p>"
 								;
 								str+="</div>" ;
 								$('.wrap_content .infowrap').append(str) ;
 							}
 							
 							//生成page标签页
-							var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+							var pageStr = "<ul class='pagination normalpage'><li><a id='page_1'><<</a></li>" ;
 							for(var j= 0 ; j < pageLen ; j++){
 								pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 							}
@@ -454,8 +510,12 @@
 				});
 			}
 		});
-		
-		$('.pagebtn').on('click','a',function(event){
+	});
+</script>
+<script type="text/javascript">
+	$(function(){
+		//普通page标签按钮点击事件		
+		$(document).on('click','.pagebtn .normalpage a',function(event){
 			var id = $(this).attr('id') ;
 			var page = id.substring(id.indexOf('_') + 1,id.length) ;
 			$.ajax({
@@ -466,26 +526,77 @@
 					page:page
 				},
 				success:function(data){
-					var teaOb = JSON.parse(data) ;
+					var stuOb = JSON.parse(data) ;
 					//得到查询资源的条目数
-					var teaLen = teaOb.size;
-					if(teaLen===0){
-						$('.sort_menu').hidden();
+					var stuLen = stuOb.size;
+					if(stuLen===0){
+						$('.sort_wrap').attr('hidden',true);
 						$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
-						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
+						$('.pagebtn').html("<ul class='pagination'><li><a href='javascript:void(0)'><<</a></li><li><a href='javascript:void(0)'>>></a></li></ul>");
 					}else{
+						$('.sort_wrap').attr('hidden',false);
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil(teaOb.count/4);
-						if(teaLen>=4){
-							teaLen = 4 ;
+						var pageLen = Math.ceil(stuOb.count/4);
+						if(stuLen>=4){
+							stuLen = 4 ;
 						}
-						for(var i = 0;i < teaLen;i++){
+						for(var i = 0;i < stuLen;i++){
 							var str = "<div class='col-md-3 infoborder'>";
-							var oneTea = teaOb.familys[i] ;
-							str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ oneTea.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+oneTea.imgpath+ "'>" + "</img>" + "</a>" 
-							+ "<p>姓名:"+ oneTea.realname + "</p>"
-							+ "<p>学历:"+ oneTea.level + "</p>"
-							+ "<p>授课内容:"+ oneTea.subjects + "</p>"
+							var onestu = stuOb.familys[i] ;
+							str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+							+ "<p>姓名:"+ onestu.realname + "</p>"
+							+ "<p>学历:"+ onestu.level + "</p>"
+							+ "<p>授课内容:"+ onestu.subjects + "</p>"
+							;
+							str+="</div>" ;
+							$('.wrap_content .infowrap').append(str) ;
+						}
+					}
+				}
+			});
+		});
+		
+		//sortpage标签按钮点击事件
+		$(document).on('click','.pagebtn .sortpage a',function(event){
+			//获取sort_type和order
+			var sort_type_order = $('.pagebtn .sortpage').attr('id') ;
+			var sort_type = sort_type_order.substring(0,sort_type_order.lastIndexOf('_'));
+			var order = sort_type_order.substring(sort_type_order.lastIndexOf('_') + 1,sort_type_order.length);
+			//获取page值
+			var id = $(this).attr('id') ;
+			var page = id.substring(id.indexOf('_') + 1,id.length) ;
+			
+			$.ajax({
+				url:"/baseweb_homeEDU/family/stutea/sort",
+				type:"GET",
+				data:{
+					userType:"stu",
+					page:page,
+					sort_type:sort_type,
+					order:order
+				},
+				success:function(data){
+					var stuOb = JSON.parse(data) ;
+					//得到查询资源的条目数
+					var stuLen = stuOb.size;
+					if(stuLen===0){
+						$('.sort_wrap').attr('hidden',true);
+						$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
+						$('.pagebtn').html("<ul class='pagination'><li><a href='javascript:void(0)'><<</a></li><li><a href='javascript:void(0)'>>></a></li></ul>");
+					}else{
+						$('.sort_wrap').attr('hidden',false);
+						$('.wrap_content .infowrap').html('');
+						var pageLen = Math.ceil(stuOb.count/4);
+						if(stuLen>=4){
+							stuLen = 4 ;
+						}
+						for(var i = 0;i < stuLen;i++){
+							var str = "<div class='col-md-3 infoborder'>";
+							var onestu = stuOb.familys[i] ;
+							str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+							+ "<p>姓名:"+ onestu.realname + "</p>"
+							+ "<p>学历:"+ onestu.level + "</p>"
+							+ "<p>授课内容:"+ onestu.subjects + "</p>"
 							;
 							str+="</div>" ;
 							$('.wrap_content .infowrap').append(str) ;
@@ -496,6 +607,7 @@
 		});
 	});
 </script>
+
 <script type="text/javascript">
 	//sort_type响应
 	$(function(){
@@ -514,38 +626,39 @@
 				url:"/baseweb_homeEDU/family/stutea/sort",
 				type:"GET",
 				data:{
-					userType:"tea",
+					userType:"stu",
 					page:"1",
 					sort_type:"sort_price",
 					order:order
 				},
 				success:function(data){
-					var teaOb = JSON.parse(data) ;
+					var stuOb = JSON.parse(data) ;
 					//得到查询资源的条目数
-					var teaLen = teaOb.size;
-					if(teaLen===0){
-						$('.sort_menu').hidden();
+					var stuLen = stuOb.size;
+					if(stuLen===0){
+						$('.sort_wrap').attr('hidden',true);
 						$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
+						$('.sort_wrap').attr('hidden',false);
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil(teaOb.count/4);
-						if(teaLen>=4){
-							teaLen = 4 ;
+						var pageLen = Math.ceil(stuOb.count/4);
+						if(stuLen>=4){
+							stuLen = 4 ;
 						}
-						for(var i = 0;i < teaLen;i++){
+						for(var i = 0;i < stuLen;i++){
 							var str = "<div class='col-md-3 infoborder'>";
-							var oneTea = teaOb.familys[i] ;
-							str+="<a href='<%=basePath%>/user/normal/tea/index?name="+ oneTea.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+oneTea.imgpath+ "'>" + "</img>" + "</a>" 
-							+ "<p>姓名:"+ oneTea.realname + "</p>"
-							+ "<p>学历:"+ oneTea.level + "</p>"
-							+ "<p>授课内容:"+ oneTea.subjects + "</p>"
+							var onestu = stuOb.familys[i] ;
+							str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+							+ "<p>姓名:"+ onestu.realname + "</p>"
+							+ "<p>学历:"+ onestu.level + "</p>"
+							+ "<p>授课内容:"+ onestu.subjects + "</p>"
 							;
 							str+="</div>" ;
 							$('.wrap_content .infowrap').append(str) ;
 						}
 						//生成page标签页
-						var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+						var pageStr = "<ul class='pagination sortpage' id='sort_price_" + order + "'><li><a id='page_1'><<</a></li>" ;
 						for(var j= 0 ; j < pageLen ; j++){
 							pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 						}
@@ -572,38 +685,39 @@
 				url:"/baseweb_homeEDU/family/stutea/sort",
 				type:"GET",
 				data:{
-					userType:"tea",
+					userType:"stu",
 					page:"1",
 					sort_type:"sort_age",
 					order:order
 				},
 				success:function(data){
-					var teaOb = JSON.parse(data) ;
+					var stuOb = JSON.parse(data) ;
 					//得到查询资源的条目数
-					var teaLen = teaOb.size;
-					if(teaLen===0){
-						$('.sort_menu').hidden();
+					var stuLen = stuOb.size;
+					if(stuLen===0){
+						$('.sort_wrap').attr('hidden',true);
 						$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
+						$('.sort_wrap').attr('hidden',false);
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil(teaOb.count/4);
-						if(teaLen>=4){
-							teaLen = 4 ;
+						var pageLen = Math.ceil(stuOb.count/4);
+						if(stuLen>=4){
+							stuLen = 4 ;
 						}
-						for(var i = 0;i < teaLen;i++){
+						for(var i = 0;i < stuLen;i++){
 							var str = "<div class='col-md-3 infoborder'>";
-							var oneTea = teaOb.familys[i] ;
-							str+="<a href='<%=basePath%>/user/normal/tea/index?name="+ oneTea.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+oneTea.imgpath+ "'>" + "</img>" + "</a>" 
-							+ "<p>姓名:"+ oneTea.realname + "</p>"
-							+ "<p>学历:"+ oneTea.level + "</p>"
-							+ "<p>授课内容:"+ oneTea.subjects + "</p>"
+							var onestu = stuOb.familys[i] ;
+							str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+							+ "<p>姓名:"+ onestu.realname + "</p>"
+							+ "<p>学历:"+ onestu.level + "</p>"
+							+ "<p>授课内容:"+ onestu.subjects + "</p>"
 							;
 							str+="</div>" ;
 							$('.wrap_content .infowrap').append(str) ;
 						}
 						//生成page标签页
-						var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+						var pageStr = "<ul class='pagination sortpage' id='sort_age_" + order + "'><li><a id='page_1'><<</a></li>" ;
 						for(var j= 0 ; j < pageLen ; j++){
 							pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 						}
@@ -630,38 +744,39 @@
 				url:"/baseweb_homeEDU/family/stutea/sort",
 				type:"GET",
 				data:{
-					userType:"tea",
+					userType:"stu",
 					page:"1",
 					sort_type:"sort_notice",
 					order:order
 				},
 				success:function(data){
-					var teaOb = JSON.parse(data) ;
+					var stuOb = JSON.parse(data) ;
 					//得到查询资源的条目数
-					var teaLen = teaOb.size;
-					if(teaLen===0){
-						$('.sort_menu').hidden();
+					var stuLen = stuOb.size;
+					if(stuLen===0){
+						$('.sort_menu').attr('hidden',true);
 						$('.wrap_content .infowrap').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>搜索的资源还未出现~~</p>");
 						$('.pagebtn').html("<ul class='pagination'><li><a href='#'><<</a></li><li><a href='#'>>></a></li></ul>");
 					}else{
+						$('.sort_wrap').attr('hidden',false);
 						$('.wrap_content .infowrap').html('');
-						var pageLen = Math.ceil(teaOb.count/4);
-						if(teaLen>=4){
-							teaLen = 4 ;
+						var pageLen = Math.ceil(stuOb.count/4);
+						if(stuLen>=4){
+							stuLen = 4 ;
 						}
-						for(var i = 0;i < teaLen;i++){
+						for(var i = 0;i < stuLen;i++){
 							var str = "<div class='col-md-3 infoborder'>";
-							var oneTea = teaOb.familys[i] ;
-							str+="<a href='<%=basePath%>/user/normal/tea/index?name="+ oneTea.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+oneTea.imgpath+ "'>" + "</img>" + "</a>" 
-							+ "<p>姓名:"+ oneTea.realname + "</p>"
-							+ "<p>学历:"+ oneTea.level + "</p>"
-							+ "<p>授课内容:"+ oneTea.subjects + "</p>"
+							var onestu = stuOb.familys[i] ;
+							str+="<a href='<%=basePath%>/user/normal/stu/index?name="+ onestu.name + "'>" + "<img alt='还未上传头像' class='img-rounded' src='"+onestu.imgpath+ "'>" + "</img>" + "</a>" 
+							+ "<p>姓名:"+ onestu.realname + "</p>"
+							+ "<p>学历:"+ onestu.level + "</p>"
+							+ "<p>授课内容:"+ onestu.subjects + "</p>"
 							;
 							str+="</div>" ;
 							$('.wrap_content .infowrap').append(str) ;
 						}
 						//生成page标签页
-						var pageStr = "<ul class='pagination'><li><a id='page_1'><<</a></li>" ;
+						var pageStr = "<ul class='pagination sortpage' id='sort_notice_" + order + "'><li><a id='page_1'><<</a></li>" ;
 						for(var j= 0 ; j < pageLen ; j++){
 							pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
 						}

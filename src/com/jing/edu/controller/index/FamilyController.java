@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.jing.edu.model.EduType.SortType;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.service.FamilyService;
+import com.jing.edu.service.util.FamilyUtil;
 
 @Controller
 @RequestMapping(value = "/family")
@@ -153,7 +154,10 @@ public class FamilyController {
 		String userType = request.getParameter("userType");
 		String page = request.getParameter("page");
 		String content = request.getParameter("content") ;
-		String gradeSub = this.filterGradeSubKeys(content) ;
+		String gradeSub = FamilyUtil.filterGradeSubKeys(content) ;
+		if(gradeSub.length()>=2){
+			request.getSession().setAttribute("grade", gradeSub.substring(0, 2));
+		}
 		// 将查询到的json数据返回给前台
 		String familys = null;
 		if (UserType.STUDENT.getName().equals(userType)) {
@@ -305,41 +309,5 @@ public class FamilyController {
 			}
 		}
 
-	}
-	
-	private String filterGradeSubKeys(String content){
-		StringBuffer gradeSubBuffer = new StringBuffer() ;
-		if(content.contains("小学")){
-			gradeSubBuffer.append("小学") ;
-		}else if(content.contains("初中")){
-			gradeSubBuffer.append("初中") ;
-		}else if (content.contains("高中")) {
-			gradeSubBuffer.append("高中") ;
-		}
-		if(content.contains("数学")){
-			gradeSubBuffer.append("数学");
-		}else if(content.contains("语文")){
-			gradeSubBuffer.append("语文") ;
-		}else if(content.contains("英语")){
-			gradeSubBuffer.append("英语") ;
-		}else if(content.contains("科学")){
-			gradeSubBuffer.append("科学") ;
-		}else if(content.contains("物理")){
-			gradeSubBuffer.append("物理") ;
-		}else if(content.contains("化学")){
-			gradeSubBuffer.append("化学") ;
-		}else if(content.contains("生物")){
-			gradeSubBuffer.append("生物") ;
-		}else if(content.contains("历史")){
-			gradeSubBuffer.append("历史") ;
-		}else if(content.contains("政治")){
-			gradeSubBuffer.append("政治") ;
-		}else if(content.contains("地理")){
-			gradeSubBuffer.append("地理") ;
-		}
-		if(gradeSubBuffer.toString().equals("")){
-			gradeSubBuffer.append("傻逼") ;
-		}
-		return gradeSubBuffer.toString() ;
 	}
 }

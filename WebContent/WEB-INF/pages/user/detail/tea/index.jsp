@@ -400,7 +400,7 @@
 		var messageCon = new Array();
 		
 		goEasy.subscribe({
-			channel:"channel_chat_jingtj" ,
+			channel:"channel_chat" +<%=((User)request.getSession().getAttribute("user")).getUsername()%>,
 			onMessage:function(result){
 				//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
 				var displayCon = result.content.replace(/&quot;/g,"\"");
@@ -439,21 +439,18 @@
 				}
 				var pageLen = Math.ceil(messageAcceptNums / 4);
 				//生成page标签页
-				var pageStr = "<div style='height: 200px;width:500px;margin:0 auto;text-align: center;' class='pagebtn'><ul class='pagination'><li><a id='page_1' href='javascript:void(0)'><<</a></li>" ;
+				var pageStr = "<div style='height: 200px;width:500px;margin:0 auto;text-align: center;' class='pagebtn'><ul class='pagination'><li><a id='page_1' href='javascript:void(0)' class='abtn'><<</a></li>" ;
 				for(var j= 0 ; j < pageLen ; j++){
-					pageStr+="<li><a id='page_" + (j+1) + "'>" +(j+1) +  "</a></li>" ;
+					pageStr+="<li><a id='page_" + (j+1) + "' class='abtn'>" +(j+1) +  "</a></li>" ;
 				}
-				pageStr+="<li><a id='page_" +pageLen  + "'>>></a></li></ul></div>" ;
+				pageStr+="<li><a id='page_" +pageLen  + "' class='abtn'>>></a></li></ul></div>" ;
 				$('.right-content').append(pageStr) ;
 			}
 		});	
-
-	});
-</script>
-<script type="text/javascript">
-	$(function(){
+		
 		//page按钮的事件
-		$('.right-content .pagebtn .pagination li').on("click","a",function(event){
+		$(document).on("click",'.abtn',function(event){
+			$('.right-content').html('');
 			console.log('click it now') ;
 			var id = $(this).attr('id') ;
 			var page = parseInt(id.substring(id.indexOf('_') + 1,id.length) );
@@ -500,7 +497,14 @@
 					$('.reply').removeClass('reply');
 				}
 			}
-			
+			var pageLen = Math.ceil(messageAcceptNums / 4);
+			//生成page标签页
+			var pageStr = "<div style='height: 200px;width:500px;margin:0 auto;text-align: center;' class='pagebtn'><ul class='pagination'><li><a id='page_1' href='javascript:void(0)' class='abtn'><<</a></li>" ;
+			for(var j= 0 ; j < pageLen ; j++){
+				pageStr+="<li><a id='page_" + (j+1) + "' class='abtn'>" +(j+1) +  "</a></li>" ;
+			}
+			pageStr+="<li><a id='page_" +pageLen  + "' class='abtn'>>></a></li></ul></div>" ;
+			$('.right-content').append(pageStr) ;
 		});
 	});
 </script>

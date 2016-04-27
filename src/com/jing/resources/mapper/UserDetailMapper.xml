@@ -30,7 +30,7 @@
 			#{image,javaType=byte[],jdbcType=BLOB,typeHandler=org.apache.ibatis.type.BlobTypeHandler},
 			#{subject},
 			#{isonline},
-			{price},
+			#{price},
 			#{city})
 		</if>		
 	</insert>

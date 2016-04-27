@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jing.edu.model.User;
 import com.jing.edu.service.UserNormalService;
 /**
  * 用户详细信息展示页面
@@ -28,6 +29,9 @@ public class UserNormalIndexController {
 		if(userNormalService.getUser(name)!=null){
 			request.setAttribute("normalUser", userNormalService.getUser(name));
 		}
+		User user = new User() ;
+		user.setUsername(name);
+		request.getSession().setAttribute("user", user);
 		return "/user/normal/tea/normal_index" ;
 	}
 	

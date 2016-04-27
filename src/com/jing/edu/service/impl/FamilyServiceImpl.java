@@ -97,7 +97,7 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 	}
 
 	@Override
-	public String queryPageStuFamily(String userType, String gradeSubject, String basePath, String page) {
+	public String queryPageStuFamily(String gradeSubject, String userType, String basePath, String page) {
 		PageSet pageSet = new PageSet();
 		pageSet.setSize(4);
 		pageSet.setPage(Integer.valueOf(page));
@@ -161,20 +161,22 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 		//得到所有的stu/tea详细信息数据
 		List<? extends UserDetail> detailusers = null;
 		int typeNum = 0 ;
+		int count = 0 ;
 		if (userType.equals(UserType.STUDENT.getName())) {
 			typeNum = UserType.STUDENT.getTypeNum() ;
-			detailusers = userDetailDao.queryStuInfos(city, gradeSubject, 0, -1);
+			detailusers = userDetailDao.queryStuInfos(city, gradeSubject, 0, 1000);
+			count = userDetailDao.queryCountStuInfos(city, gradeSubject);
 		} else if (userType.equals(UserType.TEACHER.getName())) {
 			typeNum = UserType.TEACHER.getTypeNum() ;
-			detailusers = userDetailDao.queryTeaInfos(city, gradeSubject, 0, -1);
+			detailusers = userDetailDao.queryTeaInfos(city, gradeSubject, 0, 1000);
+			count = userDetailDao.queryCountTeaInfos(city, gradeSubject);
 		}
 		//配置偏移量
 		int pageNum = Integer.valueOf(page);
 		int startOffset = (pageNum - 1) * 4;
-		int endOffset = pageNum * 4;
+		int endOffset = pageNum * 4 <= count ?(pageNum * 4):count;
 		
 		int ordernum = Integer.valueOf(order);
-		int count = userDetailDao.queryCountStuInfos(city, gradeSubject);
 		switch (sortType) {
 		case SORT_PRICE:
 			LevelType levelType = null;
@@ -197,14 +199,14 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 			SortUtil.sortByAge(baseSortUsers, ordernum);
 			List<UserDetail> ageFamily = FamilyUtil.reAddAgeList(baseSortUsers, detailusers) ;
 			List<? extends UserDetail> subAgeList = FamilyUtil.subList(ageFamily, startOffset, endOffset);
-			this.packToJsonStr(userType, basePath, subAgeList, count) ;
+			result = this.packToJsonStr(userType, basePath, subAgeList, count) ;
 			break;
 		case SORT_NOTICE:
 			List<UserNotice> userNotices = noticeDao.readNoticeByType(typeNum) ;
 			SortUtil.sortByNotice(userNotices, ordernum);
 			List<UserDetail> noticeFamily = FamilyUtil.reAddNoticeList(userNotices, detailusers) ;
 			List<? extends UserDetail> subNoticeList = FamilyUtil.subList(noticeFamily, startOffset, endOffset);
-			this.packToJsonStr(userType, basePath, subNoticeList, count) ;
+			result = this.packToJsonStr(userType, basePath, subNoticeList, count) ;
 			break;
 		default:
 			this.getLogger().debug("没有相应的排序方法与之相对");
