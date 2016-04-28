@@ -9,8 +9,10 @@ package com.jing.edu.model;
 public class UserNotice {
 	private int id;
 	private String username;
+	private String fromname;
 	private int type;
-	private int notice;
+	private int isnotice;
+	private int noticeNums ;
 
 	public int getId() {
 		return id;
@@ -36,12 +38,28 @@ public class UserNotice {
 		this.type = type;
 	}
 
-	public int getNotice() {
-		return notice;
+	public int getIsnotice() {
+		return isnotice;
 	}
 
-	public void setNotice(int notice) {
-		this.notice = notice;
+	public void setIsnotice(int isnotice) {
+		this.isnotice = isnotice;
 	}
 
+	public String getFromname() {
+		return fromname;
+	}
+
+	public void setFromname(String fromname) {
+		this.fromname = fromname;
+	}
+
+	public int getNoticeNums() {
+		return noticeNums;
+	}
+
+	public void setNoticeNums(int noticeNums) {
+		this.noticeNums = noticeNums;
+	}
+	
 }

@@ -128,13 +128,13 @@ public class SortUtil {
 		public int compare(UserNotice o1, UserNotice o2) {
 			int comp = 0 ;
 			if(0==order){
-				if(o1.getNotice() > o2.getNotice()){
+				if(o1.getNoticeNums() > o2.getNoticeNums()){
 					comp = 1 ;
 				}else {
 					comp =  -1 ;
 				}
 			}else if(1==order){
-				if(o1.getNotice() > o2.getNotice()){
+				if(o1.getNoticeNums() > o2.getNoticeNums()){
 					comp = -1 ;
 				}else{
 					comp = 1 ;

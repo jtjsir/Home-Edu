@@ -14,6 +14,7 @@ import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.model.User;
 import com.jing.edu.model.UserDetailStu;
 import com.jing.edu.model.UserDetailTea;
+import com.jing.edu.model.UserNotice;
 import com.jing.edu.service.LoginRegisterService;
 import com.jing.edu.service.UserNormalService;
 
@@ -47,7 +48,7 @@ public class LoginController {
 				if (null != tea) {
 					normalService.updateIsonline(username, UserType.TEACHER.getName(), 1);
 				} else {
-					//添加详细信息初始化
+					// 添加详细信息初始化
 					tea = new UserDetailTea(username, null, type, user.getLevel(), null, null, null, 1, null, null,
 							null, null);
 					normalService.addDetail(tea);
@@ -57,12 +58,20 @@ public class LoginController {
 				if (null != stu) {
 					normalService.updateIsonline(username, UserType.STUDENT.getName(), 1);
 				} else {
-					//添加详细信息初始化
+					// 添加详细信息初始化
 					stu = new UserDetailStu(username, null, type, user.getLevel(), null, null, null, 1, null, null,
 							null);
 					normalService.addDetail(stu);
 				}
 			}
+			// 增加notice表记录
+			UserNotice userNotice = new UserNotice();
+			userNotice.setFromname(username);
+			userNotice.setUsername(username);
+			userNotice.setIsnotice(1);
+			userNotice.setType(type);
+			normalService.updateNotices(userNotice);
+
 			session.setAttribute("user", user);
 			redirectName = "redirect:/index";
 		}

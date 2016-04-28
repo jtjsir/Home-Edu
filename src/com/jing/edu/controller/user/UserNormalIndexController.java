@@ -44,6 +44,9 @@ public class UserNormalIndexController {
 		if(userNormalService.getUser(name)!=null){
 			request.setAttribute("normalUser", userNormalService.getUser(name));
 		}
+		User user = new User() ;
+		user.setUsername(name);
+		request.getSession().setAttribute("user", user);
 		return "/user/normal/stu/normal_index" ;
 	}
 }

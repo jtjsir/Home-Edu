@@ -3,21 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jing.edu.mapper.joggle.UserNoticeDao">
 	<select id="readNoticeNums" parameterType="String" resultType="int">
-		select notice from core_sort_notice where username=#{username}
+		select count(username) from core_sort_notice where username=#{username}
 	</select>
 	
 	<select id="readNoticeByType" resultType="UserNotice">
-		select * from core_sort_notice where type=#{type}
+		select count(username) as noticeNums,username,type,isnotice from core_sort_notice where type=#{0} and isnotice=1 group by username
 	</select>
 	
-	<insert id="insertNoticeNums">
-		insert into core_sort_notice(username,notice) values(#{0},#{1});
+	<select id="readNoticeByName" resultType="UserNotice">
+		select * from core_sort_notice where username=#{0} and fromname=#{1}
+	</select>
+	
+	<insert id="insertNotice" parameterType="UserNotice">
+		insert into core_sort_notice(username,fromname,type,isnotice) values(#{username},#{fromname},#{type},#{isnotice});
 	</insert>
 	
-	<update id="updateNoticeNums">
+	<update id="updateNotice" parameterType="UserNotice">
 		update core_sort_notice
 		set
-		notice=#{1}
-		where username=#{0}
+		isnotice=#{isnotice}
+		where username=#{username} and fromname=#{fromname}
 	</update>
 </mapper>

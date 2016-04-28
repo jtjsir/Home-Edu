@@ -8,9 +8,11 @@ public interface UserNoticeDao {
 
 	public int readNoticeNums(String username) ;
 	
-	public void insertNoticeNums(String username,int noticeNums);
+	public void insertNotice(UserNotice notice);
 	
-	public void updateNoticeNums(String username,int noticeNums);
+	public void updateNotice(UserNotice userNotice);
 	
 	public List<UserNotice> readNoticeByType(int type);
+	
+	public UserNotice readNoticeByName(String username,String fromname);
 }

@@ -76,7 +76,7 @@
 				</div>
 				<div>
 					<span>城市:<span id="city"></span></span>
-					<span>性别:<span><%=((User)request.getAttribute("normalUser")).getSex() %></span></span>
+					<span style="padding-left:20px;">性别:<span><%=((User)request.getAttribute("normalUser")).getSex() %></span></span>
 				</div>
 			</div>
 			<div style="width:54%;float:left;margin-left: 120px;margin-top:10px;font-size: 16px;">
@@ -84,7 +84,10 @@
 				<p>实际名字:<span id="realname"></span></p>
 				<p>学历:<span><%=((User)request.getAttribute("normalUser")).getLevel() %></span></p>
 				<p>学校:<span id="school"></span></p>
-				<div style="height:92px;margin-top:50px;padding-top:32px;">
+				<div><span>~~~~~~~</span><button  type="button" class="btn btn-default iconbtn" data-toggle="tooltip" data-placement="top" title="为其点赞,点赞之后也可取消" id="image_disable"><img alt="点赞图标" src="<%=basePath %>/images/common/icon_disable.png"></button><span>~~~~~~~</span>
+					<span>已有点赞数:  <span style="font-size: 20px;font-style: oblique;" id="noticeNums"></span></span>
+				</div>
+				<div style="height:92px;margin-top:-7px;padding-top:32px;">
 					<button class="btn btn-primary btn-danger subscribebtn" style="width: 44%;height: 65%;">立即预约</button>
 					<%
 							String chatbtnPath = basePath + "/user/chat/index" + "?from=" +	
@@ -249,6 +252,64 @@
 				$('.chatbtn').attr('disabled',true);
 			}
 		}) ;
+	});
+</script>
+<script type="text/javascript">
+	$(function(){
+		//点赞数请求
+		$.ajax({
+			url:"/baseweb_homeEDU/user/normal/notice/read",
+			data:{
+				username:'<%=((User)request.getAttribute("normalUser")).getUsername()%>',
+				fromname:'<%=((User)request.getSession().getAttribute("user")).getUsername()%>'
+			},
+			success:function(data){
+				var backData = JSON.parse(data) ;
+				//数字显示
+				$('#noticeNums').text(backData.count) ;
+				//图片更改
+				var imgpath = backData.isnoticed==true?"<%=basePath %>/images/common/icon_highlighted.png":"<%=basePath %>/images/common/icon_disable.png" ;
+				var iconid = backData.isnoticed==true?"image_highlighted":"image_disable" ;
+				$('.iconbtn img').attr('src',imgpath) ;
+				$('.iconbtn').attr('id',iconid) ;
+			},
+			error:function(data){
+				console.log(data) ;
+			}
+		});
+		
+		//处理点赞图片的点击事件	
+		$('.iconbtn').click(function(){
+			var iconid = $(this).attr('id') ;
+			var isnotice = 0 ;
+			if(iconid=='image_disable'){
+				$('.iconbtn img').attr('src','<%=basePath %>/images/common/icon_highlighted.png') ;
+				$(this).attr('id','image_highlighted');
+				//修改显示数字
+				var data = parseInt($('#noticeNums').text()) ;
+				data++ ;
+				$('#noticeNums').text(data) ;
+				isnotice = 1 ;
+			}else if(iconid=='image_highlighted'){
+				$('.iconbtn img').attr('src','<%=basePath %>/images/common/icon_disable.png') ;
+				$(this).attr('id','image_disable');
+				
+				var data = parseInt($('#noticeNums').text()) ;
+				data-- ;
+				$('#noticeNums').text(data) ;
+				isnotice = 0 ;
+			}
+				//请求后台更改数据
+				$.ajax({
+					url:"/baseweb_homeEDU/user/normal/notice/update",
+					data:{
+						username:'<%=((User)request.getAttribute("normalUser")).getUsername()%>',
+						fromname:'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',
+						type:<%=((User)request.getAttribute("normalUser")).getType()%>,
+						isnotice:isnotice
+					}
+				});
+		});
 	});
 </script>
 </body>

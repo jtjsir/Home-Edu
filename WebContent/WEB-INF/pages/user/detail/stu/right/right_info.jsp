@@ -18,7 +18,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=basePath %>/html/common/common.css">
-	<title>TEA_DETAIL_INFO</title>
+	<title>STU_DETAIL_INFO</title>
 	<style type="text/css">
 		body{
 		}

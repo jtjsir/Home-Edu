@@ -336,6 +336,11 @@
 		$('#ad-carousel').carousel({
 			interval:4000
 		});
+	});
+</script>
+<script type="text/javascript">
+	//共有的js代码
+	$(function(){
 		<%
 			User user = (User)request.getSession().getAttribute("user") ;
 			if(user!=null){
@@ -343,15 +348,15 @@
 		//判断是否有用户已经登录
 		var index_text1 = $('.navbar-right a[name="text1"]') ;
 		var index_text2 = $('.navbar-right a[name="text2"]') ;
-		index_text1.val(<%=user.getUsername()%>);
+		index_text1.text('<%=user.getUsername()%>');
 		index_text1.attr("href","<%=basePath%>/user/detail/tea/index") ;
 		//退出返回到登录界面
-		index_text2.val('退出');
+		index_text2.text('退出');
 		index_text2.attr("href","<%=basePath%>/login/out");
 		<%
 			}
 		%>
-	});
+});
 </script>
 </body>
 </html>
