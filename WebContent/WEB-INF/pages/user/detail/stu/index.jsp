@@ -113,10 +113,11 @@
 <div class="wrap-content">
 	<div class="left-border">
 		<ul class="nav nav-tabs nav-stacked">
-			<li class="active"><a href="#personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
-			<li ><a href="#personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
-			<li ><a href="#set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
-			<li ><a href="#"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
+			<li ><a href="javascript:void(0)" class="personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
+			<li ><a href="javascript:void(0)" class="personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
+			<li ><a href="javascript:void(0)" class="set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
+			<li ><a href="javascript:void(0)" class="recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
+			<li ><a href="javascript:void(0)" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
 		</ul>
 	</div>
 	<div class="right-wrap">
@@ -178,7 +179,9 @@
 		%>
 		$('.right-content').html("<div style='text-align: center;margin-top: 80px;'><h2>还没完善自己的个人信息,点击设置进一步完善或者修改吧~</h2><img alt='' src='<%=basePath %>/images/user/detail/index/cry.jpg' class=''></div>");
 		<%}%>
-		$('.left-border a[href="#set-info"]').click(function(event){
+		
+		//个人信息设置修改点击事件
+		$('.left-border .set-info').click(function(event){
 			$.ajax({
 				url:"/baseweb_homeEDU/user/detail/stu/index/right/info",
 				type:"GET",
@@ -189,8 +192,8 @@
 			});
 		});	
 		
-		
-		$('.left-border a[href="#personal-info"]').click(function(event){
+		//个人信息点击事件
+		$('.left-border .personal-info').click(function(event){
 			$.ajax({
 				url:"/baseweb_homeEDU/user/detail/content/personinfoHTML",
 				type:"GET",
@@ -266,7 +269,7 @@
 			if(null!=stuUser){
 		%>
 	//消息按钮响应事件
-	$('.left-border a[href="#personal-message"]').click(function(event){
+	$('.left-border .personal-message').click(function(event){
 		$.ajax({
 			url:"/baseweb_homeEDU/user/detail/content/informMessageHTML",
 			type:"GET",
@@ -278,7 +281,7 @@
 			url:"/baseweb_homeEDU/user/detail/record/inform/getmessage",
 			type:"GET",
 			data:{
-				"userid":"<%=stuUser.getId()%>",
+				"username":"<%=stuUser.getUsername()%>",
 				"usertype":"stu"
 			},
 			success:function(data){
@@ -286,28 +289,15 @@
 				if(data===null){
 					$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无消息数据~~</p>");
 				}else{
-//					$.each(data,function(i,item){
-	//					console.log(item.username + '-----' + item.level);
-		//				var row = $('#template').clone();
-			//			row.find('#messageid').text(i+1);
-				//		row.find('#username').text(item.username);
-					//	row.find('#age').text(item.age) ;
-					//	row.find('#sex').text(item.sex) ;
-					//	row.find('#level').text(item.level) ;
-					//	row.find('#operate').html("<span>前往</span>|<span>忽略</span>");
-					//});
 					var teaOb = JSON.parse(data) ;
 					var len = teaOb.records.length;
 					var contentBody = $('#contentBody') ;
 					for(var i = 0;i < len;i++){
 						var teaContent = "<tr>" ;
 						var oneTea = teaOb.records[i] ;
-						var ignorePath = "<%=basePath%>/user/detail/record/inform/setignore?stuid=" + "<%=stuUser.getId()%>" +"&teacherid="+oneTea.id
-						+"&guideby=1";
-						//console.log(teaOb.records[i].username + "----" + teaOb.records[i].level);
 						teaContent+="<td>" + (i+1) +"</td>"+"<td>" + oneTea.username+"</td>" +"<td>" + oneTea.age+"</td>"
 						+"<td>" +oneTea.sex + "</td>" + "<td>" + oneTea.level + "</td>" + "<td>"
-						+"<span>前往</span>|<span><a href='"+ ignorePath + "'>忽略</a></span>" + "</td>";
+						+"<span><a href='javascript:void(0)' class='acceptbtn' id='" + oneStu.username+  "'>接受</a></span>|<span><a href='javascript:void(0)' class='ignorebtn' id='" + oneTea.username+  "'>忽略</a></span>" + "</td>";
 						contentBody.append(teaContent);
 					}
 				}
@@ -318,8 +308,38 @@
 		});
 	});
 	
+	//忽略按钮的点击事件
+	$(document).on('click','.ignorebtn',function(){
+		var teaname = $(this).attr('id') ;
+		var ignorePath = "<%=basePath%>/user/detail/record/inform/setisignore?stuname=" + <%=stuUser.getUsername()%> +"&teaname="+teaname
+		+"&guideby=1" +"&isdelete=1";
+		
+		$.ajax({
+			url:ignorePath,
+			success:function(){
+				//该行隐藏
+				$(this).parent().attr('hidden',true);
+			}
+		});
+	});
+	
+	//接受按钮的点击事件
+	$(document).on('click','.acceptbtn',function(){
+		var teaname = $(this).attr('id') ;
+		var ignorePath = "<%=basePath%>/user/detail/record/inform/setisignore?stuname=" + <%=stuUser.getUsername()%> +"&teaname="+teaname
+		+"&guideby=1" +"&isdelete=0";
+		
+		$.ajax({
+			url:ignorePath,
+			success:function(){
+				//该行隐藏
+				$(this).parent().attr('hidden',true);
+			}
+		});
+	});
+	
 	//推荐按钮响应事件
-	$('.left-border a[href="#recommend-info"]').click(function(event){
+	$('.left-border .recommend-info').click(function(event){
 		$.ajax({
 			url:"/baseweb_homeEDU/user/detail/content/resRecommendHTML",
 			type:"GET",
@@ -414,7 +434,7 @@
 		var messageCon = new Array();
 		
 		goEasy.subscribe({
-			channel:"channel_chat" +<%=((User)request.getSession().getAttribute("user")).getUsername()%>,
+			channel:"channel_chat" +'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',
 			onMessage:function(result){
 				//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
 				var displayCon = result.content.replace(/&quot;/g,"\"");

@@ -196,8 +196,8 @@
 <script type="text/javascript">
 	$(function(){
 		<%
-			int stuid = ((User)request.getAttribute("normalUser")).getId() ;
-			int teacherid = ((User)request.getSession().getAttribute("user")).getId() ;
+			String stuname = ((User)request.getAttribute("normalUser")).getUsername() ;
+			String teaname = ((User)request.getSession().getAttribute("user")).getUsername() ;
 			int stuType = ((User)request.getAttribute("normalUser")).getType() ;
 			int teaType = ((User)request.getSession().getAttribute("user")).getType() ;
 		%>
@@ -234,8 +234,8 @@
 						url:"/baseweb_homeEDU/user/detail/record/addSubcribe",
 						type:"GET",
 						data:{
-							stuid:<%=stuid%>,
-							teacherid:<%=teacherid%>,
+							stuname:'<%=stuname%>',
+							teaname:'<%=teaname%>',
 							guideby:1,
 							isdelete:0
 						}

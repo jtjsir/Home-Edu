@@ -15,9 +15,9 @@
 				c.username as tusername,c.type as ttype,c.sex as tsex,c.age as tage,c.email as temail,c.phone as tphone,c.level as tlevel
 		from core_stuteacher_record a left join base_user b  on a.stuid=b.id
 		left join base_user c on a.teacherid=c.id
-		where a.stuid=#{stuid} and a.guideby=1 and a.isdelete=0
+		where a.stuname=#{stuname} and a.guideby=1 and a.isdelete=0
 	</select>
-	<resultMap type="StuTeacherRecord" id="recordMapByStudent">
+	<resultMap type="UserRecord" id="recordMapByStudent">
 		<id property="id" column="recordid"/>
 		<association property="student" javaType="User">
 			<id property="id" column="sid" />
@@ -53,9 +53,9 @@
 		from core_stuteacher_record a 
 		left join base_user b  on a.stuid=b.id
 		left join base_user c on a.teacherid=c.id
-		where a.teacherid=#{teaid} and a.guideby=0 and a.isdelete=0
+		where a.teaname=#{teaname} and a.guideby=0 and a.isdelete=0
 	</select>
-	<resultMap type="StuTeacherRecord" id="recordMapByTeacher">
+	<resultMap type="UserRecord" id="recordMapByTeacher">
 		<id property="id" column="recordid"/>
 		<association property="student" javaType="User">
 			<id property="id" column="sid" />
@@ -93,7 +93,7 @@
 	
 	<update id="updateIsdelete">
 		update core_stuteacher_record
-		set isdelete=1
-		where stuid=#{0} and teacherid=#{1} and guideby=#{2}
+		set isdelete=#{3}
+		where stuname=#{0} and teaname=#{1} and guideby=#{2}
 	</update>
 </mapper>

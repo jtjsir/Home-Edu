@@ -14,10 +14,12 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
+import com.jing.edu.common.util.EmailUtil;
 import com.jing.edu.common.util.StringUtil;
+import com.jing.edu.mapper.joggle.UserDao;
 import com.jing.edu.mapper.joggle.UserRecordDao;
 import com.jing.edu.model.EduType.UserType;
-import com.jing.edu.model.StuTeacherRecord;
+import com.jing.edu.model.UserRecord;
 import com.jing.edu.model.User;
 import com.jing.edu.model.UserDetailStu;
 import com.jing.edu.model.UserDetailTea;
@@ -37,13 +39,15 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	@Resource
 	public UserRecordDao userRecordDao;
 
+	@Resource
+	public UserDao userDao;
+
 	/**
 	 * 根据stuid查询数据库得出相应的教师请求记录
 	 */
 	@Override
-	public String queryRecordsByStudent(String stuid) {
-		int id = Integer.valueOf(stuid);
-		List<StuTeacherRecord> records = userRecordDao.queryRecordsByStudent(id);
+	public String queryRecordsByStudent(String stuname) {
+		List<UserRecord> records = userRecordDao.queryRecordsByStudent(stuname);
 		JSONObject headOb = new JSONObject();
 		if (records != null) {
 			// 转换为jsonArray
@@ -76,9 +80,8 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	 * 根据teaid查询数据库得出相应的学生请求记录
 	 */
 	@Override
-	public String queryRecordsByTeacher(String teaid) {
-		int id = Integer.valueOf(teaid);
-		List<StuTeacherRecord> records = userRecordDao.queryRecordsByTeacher(id);
+	public String queryRecordsByTeacher(String teaname) {
+		List<UserRecord> records = userRecordDao.queryRecordsByTeacher(teaname);
 		//
 		JSONObject headOb = new JSONObject();
 		if (records != null) {
@@ -117,18 +120,46 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	 * 设置该条消息为忽略状态
 	 */
 	@Override
-	public void setRecordIngnored(String stuid, String teacherid, String guideby) {
-		int stu = Integer.valueOf(stuid);
-		int teacher = Integer.valueOf(teacherid);
+	public void setRecordIsIngnored(String detailPath, String stuname, String teaname, String guideby,
+			String isdelete) {
 		int guide = Integer.valueOf(guideby);
+		// 邮箱反馈给订阅者
+		String email = null;
+		StringBuffer content = new StringBuffer();
+		if ("1".equals(isdelete)) {
+			userRecordDao.updateIsdelete(stuname, teaname, guide, 1);
+			if (0 == guide) {
+				email = userDao.queryUserByName(stuname).getEmail();
+				// 拼装订阅失败内容
+				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(stuname)
+						.append("</a></strong> 用户,").append("您订阅 ").append(teaname).append(" 用户的请求已被其推回</p>")
+						.append("<p>").append("时间: ").append(StringUtil.getNowFormatTime());
+			} else {
+				email = userDao.queryUserByName(teaname).getEmail();
+				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(teaname)
+						.append("</strong> 用户,").append("您订阅 ").append(stuname).append(" 用户的请求已被其推回</p>").append("<p>")
+						.append("时间: ").append(StringUtil.getNowFormatTime());
+			}
+		} else {
+			if (0 == guide) {
+				email = userDao.queryUserByName(stuname).getEmail();
+				// 拼装订阅失败内容
+				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(stuname)
+						.append("</strong> 用户,").append("您订阅 ").append(teaname).append(" 用户的请求已被其接受</p>").append("<p>")
+						.append("时间: ").append(StringUtil.getNowFormatTime());
+			} else {
+				email = userDao.queryUserByName(teaname).getEmail();
+				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(teaname)
+						.append("</strong> 用户,").append("您订阅 ").append(stuname).append(" 用户的请求已被其接受</p>").append("<p>")
+						.append("时间: ").append(StringUtil.getNowFormatTime());
+			}
+		}
 
-		userRecordDao.updateIsdelete(stu, teacher, guide);
+		EmailUtil.sendEmail(email, content.toString());
 	}
 
 	/**
-	 * username-被推荐的用户名
-	 * subject-根据课程推荐
-	 * searchType-查找的类别
+	 * username-被推荐的用户名 subject-根据课程推荐 searchType-查找的类别
 	 */
 	@Override
 	public String queryRecordsBySubject(String username, String subject, String searchType) {
@@ -136,7 +167,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 		if (subject != null) {
 			String[] res = StringUtil.seperateSubject(subject);
 			Random random = new Random();
-			result = res[random.nextInt(3)];
+			result = res[random.nextInt(res.length)];
 			JSONArray contentArray = new JSONArray();
 			JSONObject headOb = new JSONObject();
 			if (UserType.TEACHER.getName().equals(searchType)) {
@@ -157,7 +188,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 						e.printStackTrace();
 					}
 					this.getLogger().debug(username + "　收到的推荐资源信息为: " + headOb.toString());
-					return headOb.toString() ;
+					return headOb.toString();
 				}
 			} else if (UserType.STUDENT.getName().equals(searchType)) {
 				List<UserDetailTea> teas = userRecordDao.queryTeaRecordsBySubject(result);
@@ -177,7 +208,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 						e.printStackTrace();
 					}
 					this.getLogger().debug(username + "　收到的推荐资源信息为: " + headOb.toString());
-					return headOb.toString() ;
+					return headOb.toString();
 				}
 			}
 		}
@@ -189,17 +220,14 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	 */
 	@Override
 	public void addSubscribtion(Map<String, String> paramMap) {
-		String stu = paramMap.get("stuid") ;
-		int stuid = Integer.valueOf(stu) ;
-		int teacherid = Integer.valueOf(paramMap.get("teacherid")) ;
-		int guideby = Integer.valueOf(paramMap.get("guideby")) ;
-		//默认为0
-		int isdelete = 0 ;
-		if(paramMap.get("isdelete")!=null){
-			isdelete = Integer.valueOf(paramMap.get("isdelete")) ;
+		int guideby = Integer.valueOf(paramMap.get("guideby"));
+		// 默认为0
+		int isdelete = 0;
+		if (paramMap.get("isdelete") != null) {
+			isdelete = Integer.valueOf(paramMap.get("isdelete"));
 		}
-		userRecordDao.insertUserRecord(stuid, teacherid, guideby, isdelete);
-		
+		userRecordDao.insertUserRecord(paramMap.get("stuname"), paramMap.get("teaname"), guideby, isdelete);
+
 	}
 
 }

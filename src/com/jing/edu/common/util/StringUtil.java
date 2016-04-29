@@ -117,9 +117,15 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String[] seperateSubject(String subject) {
-		String[] result = new String[3];
+		int size =1 ;
+		String testStr = subject ;
+		while(testStr.indexOf(",")!=-1){
+			testStr = testStr.substring(testStr.indexOf(",") + 1) ;
+			size++ ;
+		}
+		String[] result = new String[size];
 		if (subject == null) {
-			return null;
+			result = null ;
 		} else {
 			int index = subject.indexOf(",");
 			if (index == -1) {
@@ -204,12 +210,13 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args){
-		String content = priceContact("11","12","13") ;
-		System.err.println(priceContact("11","12","13"));
-		System.err.println(getPrices(content)[0]); 
+//		String content = priceContact("11","12","13") ;
+//		System.err.println(priceContact("11","12","13"));
+//		System.err.println(getPrices(content)[0]); 
 //		System.err.println(StringUtil.filterHTMLLabel("<div><p>jingtj</p></div>"));
 //		System.err.println(StringUtil.encodeParam("tea", "GBK")) ;
 //		System.err.println(StringUtil.exchangePos("char_byte", "_"));
+		System.out.println(StringUtil.seperateSubject("小学数学,小学语文,初中数学,初中英语,高中语文")[4]);
 	}
 	
 	/**

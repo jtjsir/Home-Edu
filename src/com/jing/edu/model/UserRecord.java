@@ -5,7 +5,7 @@ package com.jing.edu.model;
  * @author jing
  *
  */
-public class StuTeacherRecord {
+public class UserRecord {
 
 	private int id ;
 	private User student ;//对应stuid

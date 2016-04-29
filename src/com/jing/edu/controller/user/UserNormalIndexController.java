@@ -30,7 +30,8 @@ public class UserNormalIndexController {
 			request.setAttribute("normalUser", userNormalService.getUser(name));
 		}
 		User user = new User() ;
-		user.setUsername(name);
+		user.setUsername("lifeng");
+		user.setType(2);
 		request.getSession().setAttribute("user", user);
 		return "/user/normal/tea/normal_index" ;
 	}
@@ -45,7 +46,8 @@ public class UserNormalIndexController {
 			request.setAttribute("normalUser", userNormalService.getUser(name));
 		}
 		User user = new User() ;
-		user.setUsername(name);
+		user.setUsername("jingtj");
+		user.setType(1);
 		request.getSession().setAttribute("user", user);
 		return "/user/normal/stu/normal_index" ;
 	}
