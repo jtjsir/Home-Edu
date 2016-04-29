@@ -20,6 +20,7 @@ import com.jing.edu.mapper.joggle.UserDao;
 import com.jing.edu.mapper.joggle.UserRecordDao;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.model.UserRecord;
+import com.jing.edu.model.record.STRecord;
 import com.jing.edu.model.User;
 import com.jing.edu.model.UserDetailStu;
 import com.jing.edu.model.UserDetailTea;
@@ -49,7 +50,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	public String queryRecordsByStudent(String stuname) {
 		List<UserRecord> records = userRecordDao.queryRecordsByStudent(stuname);
 		JSONObject headOb = new JSONObject();
-		if (records != null) {
+		if (records != null && records.size() > 0) {
 			// 转换为jsonArray
 			JSONArray teArray = new JSONArray();
 			int recordsLen = records.size();
@@ -60,6 +61,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 					teaObject.put("id", teaUser.getId());
 					teaObject.put("username", teaUser.getUsername());
 					teaObject.put("age", teaUser.getAge());
+					teaObject.put("sex", teaUser.getSex());
 					teaObject.put("level", teaUser.getLevel());
 					teArray.put(teaObject);
 				}
@@ -84,7 +86,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 		List<UserRecord> records = userRecordDao.queryRecordsByTeacher(teaname);
 		//
 		JSONObject headOb = new JSONObject();
-		if (records != null) {
+		if (records != null && records.size() > 0) {
 			JSONArray stuArray = new JSONArray();
 			int recordsLen = records.size();
 			try {
@@ -131,31 +133,35 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 			if (0 == guide) {
 				email = userDao.queryUserByName(stuname).getEmail();
 				// 拼装订阅失败内容
-				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(stuname)
-						.append("</a></strong> 用户,").append("您订阅 ").append(teaname).append(" 用户的请求已被其推回</p>")
-						.append("<p>").append("时间: ").append(StringUtil.getNowFormatTime());
+				content.append("<p>").append("亲爱的 <strong>").append(stuname).append("</strong> 用户,")
+						.append("您订阅 <strong><a href='").append(detailPath).append("'>").append(teaname)
+						.append(" </a></strong>用户的请求已被其推回</p>").append("<p>").append("时间: ")
+						.append(StringUtil.getNowFormatTime());
 			} else {
 				email = userDao.queryUserByName(teaname).getEmail();
-				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(teaname)
-						.append("</strong> 用户,").append("您订阅 ").append(stuname).append(" 用户的请求已被其推回</p>").append("<p>")
-						.append("时间: ").append(StringUtil.getNowFormatTime());
+				content.append("<p>").append("亲爱的 <strong>").append(teaname).append("</strong> 用户,")
+						.append("您订阅 <strong><a href='").append(detailPath).append("'>").append(stuname)
+						.append(" </a></strong>用户的请求已被其推回</p>").append("<p>").append("时间: ")
+						.append(StringUtil.getNowFormatTime());
 			}
 		} else {
 			if (0 == guide) {
 				email = userDao.queryUserByName(stuname).getEmail();
-				// 拼装订阅失败内容
-				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(stuname)
-						.append("</strong> 用户,").append("您订阅 ").append(teaname).append(" 用户的请求已被其接受</p>").append("<p>")
-						.append("时间: ").append(StringUtil.getNowFormatTime());
+				// 拼装订阅成功内容
+				content.append("<p>").append("亲爱的 <strong>").append(stuname).append("</strong> 用户,")
+						.append("您订阅 <strong><a href='").append(detailPath).append("'>").append(teaname)
+						.append(" </a></strong>用户的请求已被其接受</p>").append("<p>").append("时间: ")
+						.append(StringUtil.getNowFormatTime());
 			} else {
 				email = userDao.queryUserByName(teaname).getEmail();
-				content.append("<p>").append("亲爱的 <strong><a href='").append(detailPath).append("'>").append(teaname)
-						.append("</strong> 用户,").append("您订阅 ").append(stuname).append(" 用户的请求已被其接受</p>").append("<p>")
-						.append("时间: ").append(StringUtil.getNowFormatTime());
+				content.append("<p>").append("亲爱的 <strong>").append(teaname).append("</strong> 用户,")
+						.append("您订阅 <strong><a href='").append(detailPath).append("'>").append(stuname)
+						.append(" </a></strong>用户的请求已被其接受</p>").append("<p>").append("时间: ")
+						.append(StringUtil.getNowFormatTime());
 			}
 		}
-
-		EmailUtil.sendEmail(email, content.toString());
+		String title = "订阅信息反馈[在线家教网]";
+		EmailUtil.sendEmail(email, title, content.toString());
 	}
 
 	/**
@@ -221,13 +227,28 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	@Override
 	public void addSubscribtion(Map<String, String> paramMap) {
 		int guideby = Integer.valueOf(paramMap.get("guideby"));
-		// 默认为0
-		int isdelete = 0;
-		if (paramMap.get("isdelete") != null) {
-			isdelete = Integer.valueOf(paramMap.get("isdelete"));
+		STRecord record = userRecordDao.readRecord(paramMap.get("stuname"), paramMap.get("teaname"), guideby);
+		// 判断
+		if (null == record) {
+			userRecordDao.insertUserRecord(paramMap.get("stuname"), paramMap.get("teaname"), guideby, 0);
+		} else {
+			userRecordDao.updateIsdelete(paramMap.get("stuname"), paramMap.get("teaname"), guideby, 0);
 		}
-		userRecordDao.insertUserRecord(paramMap.get("stuname"), paramMap.get("teaname"), guideby, isdelete);
 
+	}
+
+	@Override
+	public boolean isSubsribed(String stuname, String teaname, String guideby) {
+		boolean flag = false;
+		int guide = Integer.valueOf(guideby);
+		STRecord record = userRecordDao.readRecord(stuname, teaname, guide);
+		// 不存在记录或者已经被忽略过
+		if (null == record || record.getIsdelete() == 1) {
+			flag = false;
+		} else {
+			flag = true;
+		}
+		return flag;
 	}
 
 }

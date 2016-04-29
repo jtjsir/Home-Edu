@@ -32,22 +32,22 @@ public class PassForgetController implements BaseLogger {
 
 	@Resource
 	LoginRegisterService service;
-	
+
 	@Override
 	public Logger getLogger() {
 		return this.passLogger;
 	}
 
-	//ajax请求
-	@RequestMapping(value = "/find/emailval",method=RequestMethod.POST)
+	// ajax请求
+	@RequestMapping(value = "/find/emailval", method = RequestMethod.POST)
 	public void processEmail(HttpServletRequest request, HttpServletResponse response) {
 		String email = request.getParameter("email");
-		String username =request.getParameter("username");
+		String username = request.getParameter("username");
 		getLogger().debug(StringUtil.getNowFormatTime() + " email为: " + email + " 正在验证数据库信息....");
 		boolean isExist = findService.isEmailExist(email, username);
 		if (isExist) {
 			User user = findService.getUserByEmail(email, username);
-			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() 
+			String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath() + "/password/accept/email?email=" + StringUtil.encodeParam(email, "GBK")
 					+ "&username=" + StringUtil.encodeParam(username, "GBK");
 			StringBuffer content = new StringBuffer();
@@ -55,7 +55,7 @@ public class PassForgetController implements BaseLogger {
 					.append("<a href='").append(url).append("'>点击this就能重置你的密码了</a><br>").append("时间: ")
 					.append(StringUtil.getNowFormatTime());
 			// 发送邮件到用户的Email
-			EmailUtil.sendEmail(user.getEmail(), content.toString());
+			EmailUtil.sendEmail(user.getEmail(), "密码找回[在线家教网]", content.toString());
 		} else {
 			getLogger().debug(
 					StringUtil.getNowFormatTime() + "email为: " + email + " 且username为: " + username + " 的用户并不存在与数据库中");
@@ -72,39 +72,41 @@ public class PassForgetController implements BaseLogger {
 
 	@RequestMapping(value = "/accept/email")
 	public String acceptPassReq(HttpServletRequest request, HttpServletResponse response) {
-		//跳转到重置密码页面
-		return "redirect:/index/reset?username=" + request.getParameter("username") ;
+		// 跳转到重置密码页面
+		return "redirect:/index/reset?username=" + request.getParameter("username");
 	}
 
 	@RequestMapping(value = "/reset/email")
 	public void resetPassword(HttpServletRequest request) {
-//		String email = StringUtil.decodeParam(request.getParameter("email"), "GBK") ;
-		String username = StringUtil.decodeParam(request.getParameter("username"), "GBK") ;
-		String password = request.getParameter("password") ;
-		String encodePassword = PassUtil.encodePass(password) ;
+		// String email = StringUtil.decodeParam(request.getParameter("email"),
+		// "GBK") ;
+		String username = StringUtil.decodeParam(request.getParameter("username"), "GBK");
+		String password = request.getParameter("password");
+		String encodePassword = PassUtil.encodePass(password);
 		findService.updatePassword(username, encodePassword);
-		getLogger().debug(StringUtil.getNowFormatTime()+username + " 更新密码成功!");
-		
+		getLogger().debug(StringUtil.getNowFormatTime() + username + " 更新密码成功!");
+
 	}
-	
+
 	/**
 	 * 提供密码寻找页面的username请求
+	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(value = "/findName")
-	public void validateUsername(HttpServletRequest request,HttpServletResponse response){
-		String username = request.getParameter("username") ;
-		
-		String resultInfo = "" ;
-		boolean isHavingUser = service.isHavingUser(username) ;
-		if(isHavingUser){
-			//表明数据库中含有username
-			resultInfo = "<span style='color:red'>&radic;</span>" ;
-		}else{
-			resultInfo = "the username is not used yet,Please change" ;
+	public void validateUsername(HttpServletRequest request, HttpServletResponse response) {
+		String username = request.getParameter("username");
+
+		String resultInfo = "";
+		boolean isHavingUser = service.isHavingUser(username);
+		if (isHavingUser) {
+			// 表明数据库中含有username
+			resultInfo = "<span style='color:red'>&radic;</span>";
+		} else {
+			resultInfo = "the username is not used yet,Please change";
 		}
-		
+
 		try {
 			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().write(resultInfo);

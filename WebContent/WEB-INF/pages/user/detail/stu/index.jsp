@@ -286,7 +286,7 @@
 			},
 			success:function(data){
 				console.log(data);
-				if(data===null){
+				if(data===null||data==""){
 					$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无消息数据~~</p>");
 				}else{
 					var teaOb = JSON.parse(data) ;
@@ -297,7 +297,7 @@
 						var oneTea = teaOb.records[i] ;
 						teaContent+="<td>" + (i+1) +"</td>"+"<td>" + oneTea.username+"</td>" +"<td>" + oneTea.age+"</td>"
 						+"<td>" +oneTea.sex + "</td>" + "<td>" + oneTea.level + "</td>" + "<td>"
-						+"<span><a href='javascript:void(0)' class='acceptbtn' id='" + oneStu.username+  "'>接受</a></span>|<span><a href='javascript:void(0)' class='ignorebtn' id='" + oneTea.username+  "'>忽略</a></span>" + "</td>";
+						+"<span><a href='javascript:void(0)' class='acceptbtn' id='" + oneTea.username+  "'>接受</a></span>|<span><a href='javascript:void(0)' class='ignorebtn' id='" + oneTea.username+  "'>忽略</a></span>" + "</td>";
 						contentBody.append(teaContent);
 					}
 				}
@@ -311,14 +311,19 @@
 	//忽略按钮的点击事件
 	$(document).on('click','.ignorebtn',function(){
 		var teaname = $(this).attr('id') ;
-		var ignorePath = "<%=basePath%>/user/detail/record/inform/setisignore?stuname=" + <%=stuUser.getUsername()%> +"&teaname="+teaname
-		+"&guideby=1" +"&isdelete=1";
-		
 		$.ajax({
-			url:ignorePath,
-			success:function(){
-				//该行隐藏
-				$(this).parent().attr('hidden',true);
+			url: "<%=basePath%>/user/detail/record/inform/setisignore",
+			data:{
+				stuname:'<%=stuUser.getUsername()%>',
+				teaname:teaname,
+				guideby:1,
+				isdelete:1
+			},
+			success:function(data){
+				if(data=="OK"){
+					//该行隐藏
+					$('.ignorebtn').parent().parent().parent().attr('hidden',true);
+				}
 			}
 		});
 	});
@@ -326,14 +331,19 @@
 	//接受按钮的点击事件
 	$(document).on('click','.acceptbtn',function(){
 		var teaname = $(this).attr('id') ;
-		var ignorePath = "<%=basePath%>/user/detail/record/inform/setisignore?stuname=" + <%=stuUser.getUsername()%> +"&teaname="+teaname
-		+"&guideby=1" +"&isdelete=0";
-		
 		$.ajax({
-			url:ignorePath,
-			success:function(){
-				//该行隐藏
-				$(this).parent().attr('hidden',true);
+			url: "<%=basePath%>/user/detail/record/inform/setisignore",
+			data:{
+				stuname:'<%=stuUser.getUsername()%>',
+				teaname:teaname,
+				guideby:1,
+				isdelete:1
+			},
+			success:function(data){
+				if(data=="OK"){
+					//该行隐藏
+					$('.acceptbtn').parent().parent().parent().attr('hidden',true);
+				}
 			}
 		});
 	});
@@ -355,7 +365,7 @@
 			},
 			success:function(data){
 				console.log(data);
-				if(data===null){
+				if(data===null||data==""){
 					$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无推荐数据~~</p>");
 				}else{
 					var teaOb = JSON.parse(data) ;
@@ -395,7 +405,7 @@
 				},
 				success:function(data){
 					console.log(data);
-					if(data===null){
+					if(data===null||data==""){
 						$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无推荐数据,请完善您的详细资料~~</p>");
 					}else{
 						var teaOb = JSON.parse(data) ;

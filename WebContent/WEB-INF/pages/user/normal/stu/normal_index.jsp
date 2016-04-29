@@ -87,7 +87,7 @@
 				<div><span>~~~~~~~</span><button  type="button" class="btn btn-default iconbtn" data-toggle="tooltip" data-placement="top" title="为其点赞,点赞之后也可取消" id="image_disable"><img alt="点赞图标" src="<%=basePath %>/images/common/icon_disable.png"></button><span>~~~~~~~</span>
 					<span>已有点赞数:  <span style="font-size: 20px;font-style: oblique;" id="noticeNums"></span></span>
 				</div>
-				<div style="height:92px;margin-top:50px;padding-top:32px;">
+				<div style="height:92px;margin-top:-7px;padding-top:32px;">
 					<button class="btn btn-primary btn-danger subscribebtn" style="width: 44%;height: 65%;">立即预约</button>
 					<%
 							String chatbtnPath = basePath + "/user/chat/index" + "?from=" +	
@@ -168,18 +168,20 @@
 		type:"GET",
 		data:{
 			userType:"stu",
+			city:'<%=request.getParameter("city")%>',
+			grade:'<%=request.getParameter("grade")%>',
+			subject:'<%=request.getParameter("subject")%>',
 			page:"1"
 		},
 		success:function(data){
 			var stuOb = JSON.parse(data) ;
 			//得到查询资源的条目数
 			var stuLen = stuOb.size;
-			if(teaLen==0){
+			if(stuLen==0){
 				$('.similarStus').html('尚无推荐') ;
 			}else{
 				var disableName = "<%=name%>" ;
-				console.log(disableName) ;
-				for(var j = 0; j <teaLen;j++){
+				for(var j = 0; j <stuLen;j++){
 					var onestu = stuOb.familys[j] ;
 					var name = onestu.name ;
 					if(name!=disableName){
@@ -225,6 +227,24 @@
 		$('#sub').html("未填写") ;
 		$('#price').html("未填写") ;
 		<%}%>
+		
+		//判断是否已经预约过或者已被忽略
+		$.ajax({
+			url:"/baseweb_homeEDU/user/detail/record/subscribe/judge",
+			data:{
+				stuname:'<%=stuname%>',
+				teaname:'<%=teaname%>',
+				guideby:1
+			},
+			success:function(data){
+				//已经订阅过
+				if("YES"==data){
+					//对该用户显示已经预约
+					$('.subscribebtn').attr('disabled',true) ;
+					$('.subscribebtn').attr('value','已经预约') ;
+				}
+			}
+		});
 		
 		//立即预约按钮的点击事件
 		$('.subscribebtn').on('click',function(){

@@ -21,8 +21,10 @@ import com.jing.edu.model.UserDetailTea;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.service.CourseService;
 import com.jing.edu.service.UserDetailService;
+
 /**
  * 教师或者学生的个人中心Controller
+ * 
  * @author jing
  *
  */
@@ -34,8 +36,8 @@ public class UserDetailController {
 	public UserDetailService detailService;
 
 	@Resource
-	public CourseService courseService ;
-	
+	public CourseService courseService;
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveUserInfo(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("imageFile") MultipartFile file) {
@@ -75,7 +77,7 @@ public class UserDetailController {
 				String school = request.getParameter("school");
 
 				UserDetailTea detailTea = new UserDetailTea();
-				Course course = new Course() ;
+				Course course = new Course();
 				try {
 					detailTea.setCity(city);
 					detailTea.setHonor(honor);
@@ -89,7 +91,7 @@ public class UserDetailController {
 					detailTea.setSubject(subjects);
 					detailTea.setType(1);
 					detailTea.setImage(file.getBytes());
-					
+
 					course.setTeacherId(Integer.valueOf(request.getParameter("id")));
 					course.setGrade(level);
 					course.setName(subjects);
@@ -100,23 +102,23 @@ public class UserDetailController {
 				}
 				// 上传到数据库
 				detailService.insertDetailInfo(detailTea);
-				//更新到course表以便教师页面显示
+				// 更新到course表以便教师页面显示
 				courseService.insertCourse(course);
-				
+
 				request.getSession().setAttribute("userDetail", detailTea);
 				request.getSession().setAttribute("result", "上传图片与信息成功~");
 				redirectStr = "redirect:/user/detail/tea/index";
-				
+
 			} else if ("stu".equals(type)) {
 				String city = request.getParameter("city");
 				String introduction = request.getParameter("introduction");
-				String address = request.getParameter("address") ;
+				String address = request.getParameter("address");
 				// 价格
 				String smallprice = request.getParameter("small-price");
 				String mediumprice = request.getParameter("medium-price");
 				String seniorprice = request.getParameter("senior-price");
 				String price = StringUtil.priceContact(smallprice, mediumprice, seniorprice);
-				
+
 				UserDetailStu detailStu = new UserDetailStu();
 				try {
 					detailStu.setAddress(address);
@@ -148,12 +150,16 @@ public class UserDetailController {
 
 	@RequestMapping(value = "/tea/index")
 	public String redirectToTeaIndex(HttpServletRequest request) {
-		//默认没有用户的具体信息
-		String hasDetail = "0" ;
-		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
-		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER) ;
-		if(isdetail){
-			hasDetail = "1" ;
+		// 默认没有用户的具体信息
+		String hasDetail = "0";
+		// test count
+		User user = new User();
+		user.setUsername("jingtj");
+		request.getSession().setAttribute("user", user);
+		String username = ((User) request.getSession().getAttribute("user")).getUsername();
+		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER);
+		if (isdetail) {
+			hasDetail = "1";
 		}
 		request.setAttribute("hasDetail", hasDetail);
 		return "user/detail/tea/index";
@@ -161,12 +167,16 @@ public class UserDetailController {
 
 	@RequestMapping(value = "/stu/index")
 	public String redirectToStuIndex(HttpServletRequest request) {
-		//默认没有用户的具体信息
-		String hasDetail = "0" ;
-		String username = ((User)request.getSession().getAttribute("user")).getUsername() ;
-		boolean isdetail = detailService.isUserDetail(username, UserType.STUDENT) ;
-		if(isdetail){
-			hasDetail = "1" ;
+		// 默认没有用户的具体信息
+		String hasDetail = "0";
+		// test count
+		User user = new User();
+		user.setUsername("lifeng");
+		request.getSession().setAttribute("user", user);
+		String username = ((User) request.getSession().getAttribute("user")).getUsername();
+		boolean isdetail = detailService.isUserDetail(username, UserType.STUDENT);
+		if (isdetail) {
+			hasDetail = "1";
 		}
 		request.setAttribute("hasDetail", hasDetail);
 		return "user/detail/stu/index";

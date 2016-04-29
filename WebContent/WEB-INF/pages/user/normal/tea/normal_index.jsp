@@ -168,6 +168,9 @@
 		type:"GET",
 		data:{
 			userType:"tea",
+			city:'<%=request.getParameter("city")%>',
+			grade:'<%=request.getParameter("grade")%>',
+			subject:'<%=request.getParameter("subject")%>',
 			page:"1"
 		},
 		success:function(data){
@@ -229,6 +232,24 @@
 		$('#sub').html("未填写") ;
 		$('#price').html("未填写") ;
 		<%}%>
+		
+		//判断是否已经预约过或者已被忽略
+		$.ajax({
+			url:"/baseweb_homeEDU/user/detail/record/subscribe/judge",
+			data:{
+				stuname:'<%=stuname%>',
+				teaname:'<%=teaname%>',
+				guideby:0
+			},
+			success:function(data){
+				//已经订阅过
+				if("YES"==data){
+					//对该用户显示已经预约
+					$('.subscribebtn').attr('disabled',true) ;
+					$('.subscribebtn').attr('value','已经预约') ;
+				}
+			}
+		});
 		
 		//立即预约按钮的点击事件
 		$('.subscribebtn').on('click',function(){

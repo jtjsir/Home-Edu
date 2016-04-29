@@ -105,17 +105,17 @@ public class FamilyController {
 		String userType = request.getParameter("userType");
 		String page = request.getParameter("page");
 
-		if (city == null) {
+		if (city == null || city.equals("null")) {
 			city = (String) request.getSession().getAttribute("city");
 		} else {
 			request.getSession().setAttribute("city", city);
 		}
-		if (grade == null) {
+		if (grade == null || grade.equals("null")) {
 			grade = (String) request.getSession().getAttribute("grade");
 		} else {
 			request.getSession().setAttribute("grade", grade);
 		}
-		if (subject == null) {
+		if (subject == null || subject.equals("null")) {
 			subject = (String) request.getSession().getAttribute("subject");
 		} else {
 			request.getSession().setAttribute("subject", subject);
@@ -125,9 +125,9 @@ public class FamilyController {
 		String gradeSubject = grade + subject;
 		String familys = null;
 		if (UserType.STUDENT.getName().equals(userType)) {
-			familys = familyService.queryStuFamily(city, gradeSubject,userType, basePath, page);
+			familys = familyService.queryStuFamily(city, gradeSubject, userType, basePath, page);
 		} else if (UserType.TEACHER.getName().equals(userType)) {
-			familys = familyService.queryTeaFamily(city, gradeSubject,userType, basePath, page);
+			familys = familyService.queryTeaFamily(city, gradeSubject, userType, basePath, page);
 		}
 
 		response.setContentType("text/html;charset=utf-8");
@@ -153,17 +153,17 @@ public class FamilyController {
 
 		String userType = request.getParameter("userType");
 		String page = request.getParameter("page");
-		String content = request.getParameter("content") ;
-		String gradeSub = FamilyUtil.filterGradeSubKeys(content) ;
-		if(gradeSub.length()>=2){
+		String content = request.getParameter("content");
+		String gradeSub = FamilyUtil.filterGradeSubKeys(content);
+		if (gradeSub.length() >= 2) {
 			request.getSession().setAttribute("grade", gradeSub.substring(0, 2));
 		}
 		// 将查询到的json数据返回给前台
 		String familys = null;
 		if (UserType.STUDENT.getName().equals(userType)) {
-			familys = familyService.queryPageStuFamily(gradeSub, userType,basePath,page);
+			familys = familyService.queryPageStuFamily(gradeSub, userType, basePath, page);
 		} else if (UserType.TEACHER.getName().equals(userType)) {
-			familys = familyService.queryPageTeaFamily(gradeSub,userType, basePath, page);
+			familys = familyService.queryPageTeaFamily(gradeSub, userType, basePath, page);
 		}
 
 		response.setContentType("text/html;charset=utf-8");
@@ -251,7 +251,7 @@ public class FamilyController {
 			}
 		}
 	}
-	
+
 	@RequestMapping(value = "/stutea/sort")
 	public void displaySortInfos(HttpServletRequest request, HttpServletResponse response) {
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -283,17 +283,20 @@ public class FamilyController {
 		// 将查询到的json数据返回给前台
 		String gradeSubject = grade + subject;
 		String familys = null;
-		String sortType = request.getParameter("sort_type") ;
-		String order = request.getParameter("order") ;
-		if(SortType.SORT_PRICE.getKeyname().equals(sortType)){
-			//price排序
-			familys = familyService.querySortFamily(city, gradeSubject, userType, basePath, page, grade,order,SortType.SORT_PRICE) ;
-		}else if(SortType.SORT_AGE.getKeyname().equals(sortType)){
-			//age排序
-			familys = familyService.querySortFamily(city, gradeSubject, userType, basePath, page, grade,order,SortType.SORT_AGE) ;
-		}else if(SortType.SORT_NOTICE.getKeyname().equals(sortType)){
-			//notice排序
-			familys = familyService.querySortFamily(city, gradeSubject, userType, basePath, page, grade,order,SortType.SORT_NOTICE) ;
+		String sortType = request.getParameter("sort_type");
+		String order = request.getParameter("order");
+		if (SortType.SORT_PRICE.getKeyname().equals(sortType)) {
+			// price排序
+			familys = familyService.querySortFamily(city, gradeSubject, userType, basePath, page, grade, order,
+					SortType.SORT_PRICE);
+		} else if (SortType.SORT_AGE.getKeyname().equals(sortType)) {
+			// age排序
+			familys = familyService.querySortFamily(city, gradeSubject, userType, basePath, page, grade, order,
+					SortType.SORT_AGE);
+		} else if (SortType.SORT_NOTICE.getKeyname().equals(sortType)) {
+			// notice排序
+			familys = familyService.querySortFamily(city, gradeSubject, userType, basePath, page, grade, order,
+					SortType.SORT_NOTICE);
 		}
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter writer = null;

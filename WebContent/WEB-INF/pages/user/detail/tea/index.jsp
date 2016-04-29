@@ -286,7 +286,7 @@
 				},
 				success:function(data){
 					console.log(data);
-					if(data===null){
+					if(data===null||data==""){
 						$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无消息数据~~</p>");
 					}else{
 						var stuOb = JSON.parse(data) ;
@@ -311,14 +311,19 @@
 		//忽略按钮的点击事件
 		$(document).on('click','.ignorebtn',function(){
 			var stuname = $(this).attr('id') ;
-			var ignorePath = "<%=basePath%>/user/detail/record/inform/setisignore?stuname=" + stuname +"&teaname="+"<%=teaUser.getUsername()%>"
-			+"&guideby=0" +"&isdelete=1";
-			
 			$.ajax({
-				url:ignorePath,
-				success:function(){
-					//该行隐藏
-					$(this).parent().attr('hidden',true);
+				url:"<%=basePath%>/user/detail/record/inform/setisignore",
+				data:{
+					stuname:stuname,
+					teaname:'<%=teaUser.getUsername()%>',
+					guideby:0,
+					isdelete:1
+				},
+				success:function(data){
+					if(data=="OK"){
+						//该行隐藏
+						$('.ignorebtn').parent().parent().parent().attr('hidden',true);
+					}
 				}
 			});
 		});
@@ -326,14 +331,19 @@
 		//接受按钮的点击事件
 		$(document).on('click','.acceptbtn',function(){
 			var stuname = $(this).attr('id') ;
-			var ignorePath = "<%=basePath%>/user/detail/record/inform/setisignore?stuname=" + stuname +"&teaname="+"<%=teaUser.getUsername()%>"
-			+"&guideby=0"+"&isdelete=0";
-			
 			$.ajax({
-				url:ignorePath,
-				success:function(){
-					//该行隐藏
-					$(this).parent().attr('hidden',true);
+				url:"<%=basePath%>/user/detail/record/inform/setisignore",
+				data:{
+					stuname:stuname,
+					teaname:'<%=teaUser.getUsername()%>',
+					guideby:0,
+					isdelete:1
+				},
+				success:function(data){
+					if(data=="OK"){
+						//该行隐藏
+						$('.acceptbtn').parent().parent().parent().attr('hidden',true);
+					}
 				}
 			});
 		});
@@ -355,7 +365,7 @@
 			},
 			success:function(data){
 				console.log(data);
-				if(data===null){
+				if(data===null||data==""){
 					$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无推荐数据,请完善您的详细资料~~</p>");
 				}else{
 					var stuOb = JSON.parse(data) ;
@@ -395,7 +405,7 @@
 				},
 				success:function(data){
 					console.log(data);
-					if(data===null){
+					if(data===null||data==""){
 						$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无推荐数据,请完善您的详细资料~~</p>");
 					}else{
 						var stuOb = JSON.parse(data) ;

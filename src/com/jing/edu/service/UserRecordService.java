@@ -13,4 +13,6 @@ public interface UserRecordService {
 	String queryRecordsBySubject(String username,String subject,String searchType) ;
 	
 	void setRecordIsIngnored(String detailPath,String stuname,String teachername,String guideby,String isdelete);
+	
+	boolean isSubsribed(String stuname,String teaname,String guideby);
 }

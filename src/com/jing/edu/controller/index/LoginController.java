@@ -64,7 +64,7 @@ public class LoginController {
 					normalService.addDetail(stu);
 				}
 			}
-			// 增加notice表记录
+			// 增加notice表记录 自己给自己点赞
 			UserNotice userNotice = new UserNotice();
 			userNotice.setFromname(username);
 			userNotice.setUsername(username);
