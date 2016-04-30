@@ -21,7 +21,7 @@ public class UserInterceptor implements HandlerInterceptor{
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession(true) ;
+		HttpSession session = request.getSession() ;
 		if(session.getAttribute("user")==null){
 			//sesson不存在跳转到登录页面
 			response.sendRedirect(request.getContextPath() + "/index_login.jsp");

@@ -131,10 +131,7 @@
 				<label class="label-error" id="label-pass" hidden>&times;请输入正确的密码</label>
 				<input type="password" class="form-control" placeholder="请输入你的密码" name="password" id="password"><br>
 				<label class="radio-inline">
-					<input type="radio" name="userType" value="0" checked>管理员
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="userType" value="1">教师
+					<input type="radio" name="userType" value="1" checked>教师
 				</label>
 				<label class="radio-inline">
 					<input type="radio" name="userType" value="2">学生
@@ -145,7 +142,7 @@
 			<p class="elseInfo">
 				还没有HomeEdu账号？
 				<a href="<%=basePath%>/index/register">免费注册</a>
-				<a href="#">忘记密码</a>
+				<a href="<%=basePath%>/index/find">忘记密码</a>
 			</p>
 		</div>
 	</div>

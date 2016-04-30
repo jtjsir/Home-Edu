@@ -95,9 +95,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<%=basePath%>/index">首页</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="<%=basePath %>/family/index/tea">老师部营</a></li>
+				<li><a href="<%=basePath %>/family/index/tea" target="_blank">老师部营</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="<%=basePath %>/family/index/stu">学生部营</a></li>
+				<li><a href="<%=basePath %>/family/index/stu" target="_blank">学生部营</a></li>
 				<li><a href="#">|</a></li>
 				<li><a href="#">about us</a></li>
 			</ul>
@@ -114,10 +114,10 @@
 	<div class="left-border">
 		<ul class="nav nav-tabs nav-stacked">
 			<li ><a href="javascript:void(0)" class="personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
-			<li ><a href="javascript:void(0)" class="personal-message"><span class="glyphicon glyphicon-envelope"></span>订阅消息</a></li>
+			<li ><a href="javascript:void(0)" class="personal-message"><span class="glyphicon glyphicon-envelope"></span>预约消息</a></li>
 			<li ><a href="javascript:void(0)" class="set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
 			<li ><a href="javascript:void(0)" class="recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
-			<li ><a href="javascript:void(0)" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@<span class="badge"></span></a></li>
+			<li ><a href="javascript:void(0)" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@[只支持在线监听]<span class="badge"></span></a></li>
 		</ul>
 	</div>
 	<div class="right-wrap">
@@ -167,6 +167,16 @@
 		<%
 			}
 		%>
+		
+		<%
+			String result = (String)request.getSession().getAttribute("result") ;
+			if(result!=null){
+		%>
+			$('.modal-body').html('<%=result%>') ;
+			$('#result_modal').modal('show');
+		<%
+			request.getSession().removeAttribute("result") ;
+		}%>
 });
 </script>
 <script type="text/javascript">
@@ -188,9 +198,62 @@
 				success:function(data){
 					$('.right-content').addClass("set_content");
 					$('.right-content').html(data) ;
+					<%
+					Object userDetail = request.getSession().getAttribute("userDetail") ;
+					if(user!=null&&userDetail==null){
+							User normalUser = (User)user ;				
+							//表明还没有完善过详细资料
+				%>
+					$('.info_input input[name="username"]').attr({
+						'value':'<%=normalUser.getUsername()%>',
+						'disabled':'disabled'
+					}) ;	
+					$('.info_input input[name="level"]').attr({
+						'value':'<%=normalUser.getLevel()%>',
+						'disabled':'disabled'
+					});
+				<%}%>
+				
+				<%if(userDetail!=null&&user!=null){
+					UserDetailStu stuDetail = (UserDetailStu)userDetail ;
+				%>	
+					$('.info_input input[name="username"]').attr({
+						'value':'<%=stuDetail.getName()%>',
+						'disabled':'disabled'
+					});
+					$('.info_input input[name="realname"]').attr({
+						'value':'<%=stuDetail.getRealName()%>',
+						'disabled':'disabled'
+					});
+					$('.info_input input[name="level"]').attr({
+						'value':'<%=stuDetail.getLevel()%>',
+						'disabled':'disabled'
+					});
+					$('.info_input textarea[name="introduction"]').html('<%=stuDetail.getIntroduction()%>');
+					$('.info_input input[name="city"]').val('<%=stuDetail.getCity()%>');
+					<%
+						}
+					%>
 				}
 			});
 		});	
+		
+		//设置页面提交按钮的事件
+		$(document).on('click','.info_submit input',function(){
+			//图片校验
+			var fileWrap = $('.info_input input[name="imageFile"]') ;
+			if(fileWrap.val()==""){
+				alert("请输入上传的头像图片!");
+				fileWrap.focus();
+				return false;
+			}else{
+				var disableParams = "&username="  + $('.info_input input[name="username"]').attr('value') 
+															+ "&realname=" + $('.info_input input[name="realname"]').attr('value')
+															+"&level=" + $('.info_input input[name="level"]').attr('value');
+				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=stu&id=<%=user.getId() %>' + disableParams).submit();
+				$('.right-content').removeClass("set_content");
+			}
+		});
 		
 		//个人信息点击事件
 		$('.left-border .personal-info').click(function(event){
@@ -199,70 +262,47 @@
 				type:"GET",
 				success:function(data){
 					$('.right-content').html(data) ;
+					<%
+					Object userindex = request.getSession().getAttribute("user") ;
+					Object detail = request.getSession().getAttribute("userDetail") ;
+					if(userindex!=null&&detail==null){
+						User normalUser =(User) userindex ;
+				%>
+				$('#username').html('<%=normalUser.getUsername()%>');
+				$('#realname').html('未填写');
+				$('#type').html('<%=normalUser.getType()%>') ;
+				$('#sex').html('<%=normalUser.getSex()%>') ;
+				$('#city').html('未填写') ;
+				$('#school').html('未填写') ;
+				$('#level').html('<%=normalUser.getLevel()%>') ;
+				$('#subjects').html('未填写') ;
+				$('#intro').html('未填写') ;
+				$('#honor').html('未填写') ;
+				<%}%>
+				<%
+					if(detail!=null&&userindex!=null){
+						User normalUser =(User) userindex ;
+						UserDetailStu stuDetail = (UserDetailStu)detail ;
+				%>
+				$('#username').html('<%=normalUser.getUsername()%>');
+				$('#realname').html('<%=stuDetail.getRealName()%>');
+				$('#type').html('<%=(normalUser.getType()==1?"教师":"学生")%>') ;
+				$('#sex').html('<%=normalUser.getSex()%>') ;
+				$('#city').html('<%=stuDetail.getCity()%>') ;
+				$('#school').html('未填写') ;
+				$('#level').html('<%=normalUser.getLevel()%>') ;
+				$('#subjects').html('<%=stuDetail.getSubject()%>') ;
+				$('#intro').html('<%=stuDetail.getIntroduction()%>') ;
+				$('#honor').html('未填写') ;
+				
+				//ajax请求图片
+				var imgpath = "<%=basePath%>/family/stu/photo?imgid=" + "<%=normalUser.getUsername()%>" ;
+				$('img[alt="empty_person"]').attr("src",imgpath); 
+			
+				<%}%>
 				}
 			});
-		<%
-			Object userindex = request.getSession().getAttribute("user") ;
-			Object userDetail = request.getSession().getAttribute("userDetail") ;
-			if(userindex!=null&&userDetail==null){
-				User normalUser =(User) userindex ;
-		%>
-		$('#username').html('<%=normalUser.getUsername()%>');
-		$('#realname').html('未填写');
-		$('#type').html('<%=normalUser.getType()%>') ;
-		$('#sex').html('<%=normalUser.getSex()%>') ;
-		$('#city').html('未填写') ;
-		$('#school').html('未填写') ;
-		$('#level').html('<%=normalUser.getLevel()%>') ;
-		$('#subjects').html('未填写') ;
-		$('#intro').html('未填写') ;
-		$('#honor').html('未填写') ;
-		<%}%>
-		<%
-			if(userDetail!=null&&userindex!=null){
-				User normalUser =(User) userindex ;
-				UserDetailStu stuDetail = (UserDetailStu)userDetail ;
-		%>
-		$('#username').html('<%=normalUser.getUsername()%>');
-		$('#realname').html('<%=stuDetail.getRealName()%>');
-		$('#type').html('<%=normalUser.getType()%>') ;
-		$('#sex').html('<%=normalUser.getSex()%>') ;
-		$('#city').html('<%=stuDetail.getCity()%>') ;
-		$('#school').html('未填写') ;
-		$('#level').html('<%=normalUser.getLevel()%>') ;
-		$('#subjects').html('<%=stuDetail.getSubject()%>') ;
-		$('#intro').html('<%=stuDetail.getIntroduction()%>') ;
-		$('#honor').html('未填写') ;
-		<%
-		String whichFolder = null ;
-		if(stuDetail.getSubject().contains("小学")){
-			whichFolder = "smallsch" ;
-		}else if(stuDetail.getSubject().contains("初中")){
-			whichFolder = "mediumsch" ;
-		}else if(stuDetail.getSubject().contains("高中")){
-			whichFolder = "seniorsch" ;
-		}
-		
-		String photoname = stuDetail.getRealName() + "_" +stuDetail.getLevel() +"_" + stuDetail.getSubject() ;
-		%>
-		var photoFile = "/baseweb_homeEDU/uploads/stu/" + '<%=whichFolder%>' + "/" + '<%=photoname%>' + ".jpg";
-		$('img[alt="empty_person"]').attr("src",photoFile);
-	
-		<%}%>
 		});
-		
-		
-		<%
-			String result = (String)request.getSession().getAttribute("result") ;
-			if(result!=null){
-		%>
-		$('.modal-body').html('<%=result%>') ;
-		$('#result_modal').modal('show');
-		<%
-			request.getSession().removeAttribute("result") ;
-		}%>
-		
-		
 		
 		<%
 			User stuUser = (User)request.getSession().getAttribute("user") ;
@@ -361,7 +401,7 @@
 			url:"/baseweb_homeEDU/user/detail/record/recommend/getmessage",
 			type:"GET",
 			data:{
-				"usertype":"stu"
+				"userType":"stu"
 			},
 			success:function(data){
 				console.log(data);
@@ -370,19 +410,30 @@
 				}else{
 					var teaOb = JSON.parse(data) ;
 					var len = teaOb.recommRecords.length;
+					if(len==0){
+						$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无推荐数据~~</p>");
+						var changebt = "<div style='float:right;margin-bottom: 2px;font-size: 15px;height:50px;margin-right: 55px;' class='changebt'><a href='javascript:void(0)'><span class='glyphicon glyphicon-repeat'></span>换一换</a></div>" ;
+						var underline = "<div style='border: solid 1px #007;margin:20px auto 2px auto;width:90%;'></div>" ;
+						$('.right-content').append(underline) ;
+						$('.right-content').append(changebt) ;
+					}else{
 					var contentBody = $('#contentBody') ;
 					for(var i = 0;i < len;i++){
 						var onetea = teaOb.recommRecords[i] ;
 						var username = onetea.username ;
 						var price = onetea.price ;
 						var level = onetea.level ;
-						var content = "<div style='height:200px;padding:10px 0 10px 10px'><span style='margin-right:10px;'>昵称:" +username+"</span><span style='margin-right:10px;'>报价: " + price + "</span><span style='margin-right:10px;'>学历: " + level + "</span><span style='margin-right:10px;'><a href='#'>Read More</a></span></div>" ;
+						var content = "<div style='height:100px;padding:50px 0 10px 30px'><span style='margin-right:10px;'>昵称:<span style='font-weight:bold;font-style:oblique;'>" +username
+						+"</span></span><span style='margin-right:10px;'>报价: <span style='font-weight:bold;font-style:oblique;'>" + price 
+						+ "</span></span><span style='margin-right:10px;'>学历:<span style='font-weight:bold;font-style:oblique;'> " + level 
+						+ "</span></span><span style='margin-right:10px;'><span style='font-weight:bold;font-style:oblique;'><a href='<%=basePath%>/user/normal/tea/index?name=" + username +"'>Read More</a></span></span></div>" ;
 						var underline = "<div style='border: solid 1px #007;margin:20px auto 2px auto;width:90%;'></div>" ;
 						contentBody.append(content) ;
 						contentBody.append(underline) ;
 					}
-					var changebt = "<div style='float:right;margin-bottom: 2px;font-size: 15px;height:100px' class='changebt'><a href='#'><span class='glyphicon glyphicon-repeat'></span>换一换</a></div>" ;
+					var changebt = "<div style='float:right;margin-bottom: 2px;font-size: 15px;height:50px;margin-right: 55px;' class='changebt'><a href='javascript:void(0)'><span class='glyphicon glyphicon-repeat'></span>换一换</a></div>" ;
 					contentBody.append(changebt) ;
+					}
 				}
 			},
 			error:function(data){
@@ -396,7 +447,14 @@
 <script type="text/javascript">
 	//换一换按钮的js操作
 	$(function(){
-		$('.changebt').on('click','a',function(event){
+		$(document).on('click','.changebt a',function(event){
+			$.ajax({
+				url:"/baseweb_homeEDU/user/detail/content/resRecommendHTML",
+				type:"GET",
+				success:function(data){
+					$('.right-content').html(data) ;
+				}
+			});
 			$.ajax({
 				url:"/baseweb_homeEDU/user/detail/record/recommend/getmessage",
 				type:"GET",
@@ -410,20 +468,30 @@
 					}else{
 						var teaOb = JSON.parse(data) ;
 						var len = teaOb.recommRecords.length;
+						if(len==0){
+							$('.right-content').html("<p style='text-align: center;margin-top: 80px;font-size:24px;'>尚无推荐数据~~</p>");
+							var changebt = "<div style='float:right;margin-bottom: 2px;font-size: 15px;height:50px;margin-right: 55px;' class='changebt'><a href='javascript:void(0)'><span class='glyphicon glyphicon-repeat'></span>换一换</a></div>" ;
+							var underline = "<div style='border: solid 1px #007;margin:20px auto 2px auto;width:90%;'></div>" ;
+							$('.right-content').append(underline) ;
+							$('.right-content').append(changebt) ;
+						}else{
 						var contentBody = $('#contentBody') ;
-						contentBody.html('');
 						for(var i = 0;i < len;i++){
 							var onetea = teaOb.recommRecords[i] ;
 							var username = onetea.username ;
 							var price = onetea.price ;
 							var level = onetea.level ;
-							var content = "<div style='height:100px;padding:50px 0 10px 30px'><span style='margin-right:10px;'>昵称:" +username+"</span><span style='margin-right:10px;'>报价: " + price + "</span><span style='margin-right:10px;'>学历: " + level + "</span><span style='margin-right:10px;'><a href='#'>Read More</a></span></div>" ;
+							var content = "<div style='height:100px;padding:50px 0 10px 30px'><span style='margin-right:10px;'>昵称:<span style='font-weight:bold;font-style:oblique;'>" +username
+							+"</span></span><span style='margin-right:10px;'>报价: <span style='font-weight:bold;font-style:oblique;'>" + price 
+							+ "</span></span><span style='margin-right:10px;'>学历:<span style='font-weight:bold;font-style:oblique;'> " + level 
+							+ "</span></span><span style='margin-right:10px;'><span style='font-weight:bold;font-style:oblique;'><a href='<%=basePath%>/user/normal/tea/index?name=" + username +"'>Read More</a></span></span></div>" ;
 							var underline = "<div style='border: solid 1px #007;margin:20px auto 2px auto;width:90%;'></div>" ;
 							contentBody.append(content) ;
 							contentBody.append(underline) ;
 						}
-						var changebt = "<div style='float:right;margin-bottom: 2px;font-size: 15px;height:100px' class='changebt'><a href='#'><span class='glyphicon glyphicon-repeat'></span>换一换</a></div>" ;
+						var changebt = "<div style='float:right;margin-bottom: 2px;font-size: 15px;height:50px;margin-right: 55px;' class='changebt'><a href='javascript:void(0)'><span class='glyphicon glyphicon-repeat'></span>换一换</a></div>" ;
 						contentBody.append(changebt) ;
+						}
 					}
 				},
 				error:function(data){

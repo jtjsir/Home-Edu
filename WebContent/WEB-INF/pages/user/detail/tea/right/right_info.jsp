@@ -69,14 +69,16 @@
 			<div class="form-group">
 				<div class="info_text"><span class="glyphicon glyphicon-send">Introduction(自我简介)</span></div>
 				<div class="info_input">
-					<textarea rows="5"  class="form-control" name="introduction" placeholder="请输入自己的相关简介" value="test_introduction">
+					<textarea rows="5"  class="form-control" name="introduction" alt="请输入自己的相关简介" >
+						test_introduction
 					</textarea>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="info_text"><span class="glyphicon glyphicon-thumbs-up">Honor(荣誉)</span></div>
 				<div class="info_input">
-					<textarea rows="5"  class="form-control" name="honor" placeholder="请输入自己的相关荣誉" value="test_honor">
+					<textarea rows="5"  class="form-control" name="honor" alt="请输入自己的相关荣誉" >
+						test_honor
 					</textarea>
 				</div>
 			</div>
@@ -138,14 +140,14 @@
 					<div class="info_input">
 						小学: <input type="text" placeholder="单位:元/小时;默认为0" name="small-price" >
 						初中: <input type="text" placeholder="单位:元/小时;默认为0" name="medium-price">
-						高中： <input type="text" placeholder="单位:元/小时;默认为0" name="senior-price">
+						高中:<input type="text" placeholder="单位:元/小时;默认为0" name="senior-price">
 					</div>
 			</div>
 			<div class="form-group">
 					<div class="info_text"><span class="glyphicon glyphicon-map-marker">Location(位置)</span></div>
 					<div class="info_input">
 						城市: <input class="form-control" name="city" type="text" value="杭州市" placeholder="默认:杭州市/浙江杭州市">
-						学校: <input class="form-control" name="school" type="text" value="test_school">
+						学校: <input class="form-control" name="school" type="text" value="杭州电子科技大学">
 					</div>
 			</div>
 			<div class="form-group">
@@ -164,63 +166,5 @@
 	</div>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		<%
-			Object userDetail = request.getSession().getAttribute("userDetail") ;
-			if(user!=null&&userDetail==null){
-					User normalUser = (User)user ;				
-					//表明还没有完善过详细资料
-		%>
-			$('.info_input input[name="username"]').attr({
-				'value':'<%=normalUser.getUsername()%>',
-				'disabled':'disabled'
-			}) ;	
-			$('.info_input input[name="level"]').attr({
-				'value':'<%=normalUser.getLevel()%>',
-				'disabled':'disabled'
-			});
-		<%}%>
-		
-		<%if(userDetail!=null&&user!=null){
-			UserDetailTea teaDetail = (UserDetailTea)userDetail ;
-		%>	
-			$('.info_input input[name="username"]').attr({
-				'value':'<%=teaDetail.getName()%>',
-				'disabled':'disabled'
-			});
-			$('.info_input input[name="realname"]').attr({
-				'value':'<%=teaDetail.getRealName()%>',
-				'disabled':'disabled'
-			});
-			$('.info_input input[name="level"]').attr({
-				'value':'<%=teaDetail.getLevel()%>',
-				'disabled':'disabled'
-			});
-			$('.info_input input[name="introduction"]').attr({
-				'value':'<%=teaDetail.getIntroduction()%>'
-			});
-			$('.info_input input[name="city"]').attr({
-				'value':'<%=teaDetail.getCity()%>'
-			});
-			<%
-				}
-			%>
-	});
-</script>
-<script type="text/javascript">
-	$(function(){
-		$('.info_sumbit').on('click','input',function(){
-			//图片校验
-			var image = $('.info_input[name="imageFile"]') ;
-			if(image.value==""||image.value==null){
-				$(".info_input name['imageFile']").focus();
-				alert("请输入上传的头像图片!");
-			}else{
-				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=tea&id=<%=user.getId() %>').submit();
-			}
-		});
-	});
-</script>
 </body>
 </html>

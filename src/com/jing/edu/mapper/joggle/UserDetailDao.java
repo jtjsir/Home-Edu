@@ -32,4 +32,6 @@ public interface UserDetailDao {
 	UserDetailTea queryTeaInfo(String username);
 	
 	void setIsonline(Map<String, Object> onlineMap);
+	
+	void updateDetail(UserDetail userDetail) ;
 }

@@ -97,4 +97,23 @@
 			where name=#{username}
 		</if>
 	</update>
+	
+	<update id="updateDetail">
+		<if test="type==1">
+			update detail_user_teacher
+			set
+			realname=#{realname},type=#{type},level=#{level},introduction=#{introduction},school=#{school},
+			honor=#{honor},image=#{image,javaType=byte[],jdbcType=BLOB,typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+			subject=#{subject},price=#{price},city=#{city}
+			where name=#{name}
+		</if>
+		<if test="type==2">
+			update detail_user_student
+			set
+			realname=#{realname},type=#{type},level=#{level},introduction=#{introduction},address=#{address},
+			image=#{image,javaType=byte[],jdbcType=BLOB,typeHandler=org.apache.ibatis.type.BlobTypeHandler},
+			subject=#{subject},price=#{price},city=#{city}
+			where name=#{name}
+		</if>
+	</update>
 </mapper>

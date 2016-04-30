@@ -6,13 +6,13 @@
 					<div style="float: left;width:210px;padding-top: 10px;">
 						<img alt="empty_person" src="/baseweb_homeEDU/images/user/detail/index/empty_person.png" class="img-rounded">
 					</div>
-					<div style="float: left;width: 150px;padding-top: 23px;padding-left: 18px;font-size: 16px;">
-						<p>昵称: <lable id="username"></lable></p>
-						<p>真实姓名: <lable id="realname"></lable></p>
-						<p>类型: <lable id="type"></lable></p>
-						<p>性别: <lable id="sex"></lable></p>
-						<p>城市: <lable id="city"></lable></p>
-						<p>学校: <lable id="school"></lable></p>
+					<div style="float: left;width: 300px;padding-top: 23px;padding-left: 18px;font-size: 16px;">
+						<p>昵称: <lable id="username"style="font-style: oblique;font-weight: bold;"></lable></p>
+						<p>真实姓名: <lable id="realname" style="font-style: oblique;font-weight: bold;"></lable></p>
+						<p>类型: <lable id="type" style="font-style: oblique;font-weight: bold;"></lable></p>
+						<p>性别: <lable id="sex" style="font-style: oblique;font-weight: bold;"></lable></p>
+						<p>城市: <lable id="city" style="font-style: oblique;font-weight: bold;"></lable></p>
+						<p>学校: <lable id="school" style="font-style: oblique;font-weight: bold;"></lable></p>
 					</div>
 				</div>
 			</div>
@@ -20,11 +20,11 @@
 					<div style="width: 100px;">
 						<p class="glyphicon glyphicon-flag"></p>教育资料
 					</div>
-					<div style="width: 150px;margin-top: 10px;">
-						<p id="level">学历: </p>
+					<div style="width: 500px;margin-top: 10px;margin-left:70px;">
+						<p>学历: <span id="level" style="font-style: oblique;font-weight: bold;"></span></p>
 					</div>
-					<div style="width: 150px;margin-top: 10px;">
-						<p id="subjects">所选科目: </p>
+					<div style="width: 500px;margin-top: 10px;margin-left:70px;">
+						<p>所选科目: <span id="subjects" style="font-style: oblique;font-weight: bold;"></span></p>
 					</div>
 			</div>
 			<div style="height: 180px;border-bottom: 2px solid #ccc;">
@@ -32,9 +32,9 @@
 						<p class="glyphicon glyphicon-flag"></p>自我简介与荣誉
 					</div>
 					<div style="width: 150px;margin-top: 10px; float: left;">
-						简介: <textarea rows="6" cols="50" style="margin-left: 30px" disabled="disabled" id="intro"></textarea>
+						简介: <textarea rows="6" cols="50" style="margin-left: 30px;font-style: oblique;font-weight: bold;" disabled="disabled" id="intro"></textarea>
 					</div>
 					<div style="width: 150px;margin-top: 10px;margin-left: 370px;float: left;">
-						荣誉: <textarea rows="6" cols="50" style="margin-left: 30px" disabled="disabled" id="honor"></textarea>
+						荣誉: <textarea rows="6" cols="50" style="margin-left: 30px;font-style: oblique;font-weight: bold;" disabled="disabled" id="honor"></textarea>
 					</div>
 			</div>

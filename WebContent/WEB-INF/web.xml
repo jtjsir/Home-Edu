@@ -41,9 +41,9 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- 设置session过期时间 15mins -->
+  <!-- 设置session过期时间 30mins -->
   <session-config>
-  	<session-timeout>15</session-timeout>
+  	<session-timeout>30</session-timeout>
   </session-config>
   
   <welcome-file-list>

@@ -77,7 +77,7 @@ public class PassForgetController implements BaseLogger {
 	}
 
 	@RequestMapping(value = "/reset/email")
-	public void resetPassword(HttpServletRequest request) {
+	public void resetPassword(HttpServletRequest request,HttpServletResponse response) {
 		// String email = StringUtil.decodeParam(request.getParameter("email"),
 		// "GBK") ;
 		String username = StringUtil.decodeParam(request.getParameter("username"), "GBK");
@@ -85,6 +85,18 @@ public class PassForgetController implements BaseLogger {
 		String encodePassword = PassUtil.encodePass(password);
 		findService.updatePassword(username, encodePassword);
 		getLogger().debug(StringUtil.getNowFormatTime() + username + " 更新密码成功!");
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter writer = null ;
+		try {
+			writer = response.getWriter() ;
+			writer.write(StringUtil.getNowFormatTime() + username + " 更新密码成功!");
+			writer.flush();
+		} catch (Exception e) {
+			getLogger().error(e.getStackTrace());
+		}finally {
+			writer.close();
+		}
 
 	}
 

@@ -29,8 +29,8 @@ public class ImageUtil {
 		boolean flag = true;
 
 		double size = imageSize / 1024.0;
-		// 上传的图片不可大于2M且不可小于400KB
-		if (size > 2 * 1024.0 || size < 400.0) {
+		// 上传的图片不可大于2M且不可小于7KB
+		if (size > 2 * 1024.0 || size < 7.0) {
 			flag = false;
 		}
 

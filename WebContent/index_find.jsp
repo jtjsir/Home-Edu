@@ -117,7 +117,7 @@
 						},
 						success:function(data){
 							if(data==null||data==''){
-								alert('重置链接已经发送到您的邮箱，请注意查收。点击 <span>确定</span> 按钮之后将跳转到登录页面');
+								alert('重置链接已经发送到您的邮箱，请注意查收。点击 确定  按钮之后将跳转到登录页面');
 								window.location.href = "<%=basePath%>/index/login" ;
 							}else{
 								console.log(data);

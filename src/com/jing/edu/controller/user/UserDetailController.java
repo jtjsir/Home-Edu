@@ -42,10 +42,10 @@ public class UserDetailController {
 	public String saveUserInfo(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("imageFile") MultipartFile file) {
 		String redirectStr = null;
+		String type = request.getParameter("userType");
 		// 判断图片是否合格
 		boolean flag = detailService.validatePhoto(file.getSize());
 		if (flag) {
-			String type = request.getParameter("userType");
 			String level = request.getParameter("level");
 			String username = request.getParameter("username");
 			String realname = request.getParameter("realname");
@@ -100,11 +100,11 @@ public class UserDetailController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				// 上传到数据库
-				detailService.insertDetailInfo(detailTea);
-				// 更新到course表以便教师页面显示
-				courseService.insertCourse(course);
-
+				if(detailService.isUserDetail(username, UserType.TEACHER)){
+					detailService.update(detailTea);
+				}else{
+					detailService.insertDetailInfo(detailTea);
+				}
 				request.getSession().setAttribute("userDetail", detailTea);
 				request.getSession().setAttribute("result", "上传图片与信息成功~");
 				redirectStr = "redirect:/user/detail/tea/index";
@@ -135,14 +135,18 @@ public class UserDetailController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				// 上传到数据库
-				detailService.insertDetailInfo(detailStu);
+				if(detailService.isUserDetail(username, UserType.STUDENT)){
+					detailService.update(detailStu);
+				}else{
+					detailService.insertDetailInfo(detailStu);
+				}
 				request.getSession().setAttribute("userDetail", detailStu);
-				request.setAttribute("result", "上传图片与信息成功~");
+				request.getSession().setAttribute("result", "上传图片与信息成功~");
 				redirectStr = "redirect:/user/detail/stu/index";
 			}
 		} else {
-			request.getSession().setAttribute("result", "上传的图片不符合要求，请重试~");
+			redirectStr = "redirect:/user/detail/" + type + "/index" ;
+			request.getSession().setAttribute("result", "上传的图片不可大于2M且不可小于7KB");
 		}
 
 		return redirectStr;
@@ -152,10 +156,6 @@ public class UserDetailController {
 	public String redirectToTeaIndex(HttpServletRequest request) {
 		// 默认没有用户的具体信息
 		String hasDetail = "0";
-		// test count
-		User user = new User();
-		user.setUsername("jingtj");
-		request.getSession().setAttribute("user", user);
 		String username = ((User) request.getSession().getAttribute("user")).getUsername();
 		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER);
 		if (isdetail) {
@@ -169,10 +169,6 @@ public class UserDetailController {
 	public String redirectToStuIndex(HttpServletRequest request) {
 		// 默认没有用户的具体信息
 		String hasDetail = "0";
-		// test count
-		User user = new User();
-		user.setUsername("lifeng");
-		request.getSession().setAttribute("user", user);
 		String username = ((User) request.getSession().getAttribute("user")).getUsername();
 		boolean isdetail = detailService.isUserDetail(username, UserType.STUDENT);
 		if (isdetail) {

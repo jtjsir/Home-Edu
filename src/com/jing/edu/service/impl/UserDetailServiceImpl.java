@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
 import com.jing.edu.common.util.ImageUtil;
+import com.jing.edu.common.util.StringUtil;
 import com.jing.edu.mapper.joggle.UserDetailDao;
 import com.jing.edu.model.EduType.UserType;
 import com.jing.edu.model.UserDetail;
@@ -70,6 +71,12 @@ public class UserDetailServiceImpl implements UserDetailService,BaseLogger {
 		}else{
 			return false ;
 		}
+	}
+
+	@Override
+	public void update(UserDetail detail) {
+		userdetailDao.updateDetail(detail);
+		logger.debug(StringUtil.getNowFormatTime() + " " + detail.getName() + "更新数据成功！");
 	}
 
 }

@@ -12,4 +12,6 @@ public interface UserDetailService {
 	public void addPhotoToServer(String rootPath,String userType,String realname,String subjects,String level,byte[] images);
 	
 	public boolean isUserDetail(String username,UserType userType);
+	
+	public void update(UserDetail detail) ;
 }

@@ -44,7 +44,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	public UserDao userDao;
 
 	/**
-	 * 根据stuid查询数据库得出相应的教师请求记录
+	 * 根据stuname查询数据库得出相应的教师请求记录
 	 */
 	@Override
 	public String queryRecordsByStudent(String stuname) {
@@ -79,7 +79,7 @@ public class UserRecordServiceImpl implements UserRecordService, BaseLogger {
 	}
 
 	/**
-	 * 根据teaid查询数据库得出相应的学生请求记录
+	 * 根据teaname查询数据库得出相应的学生请求记录
 	 */
 	@Override
 	public String queryRecordsByTeacher(String teaname) {

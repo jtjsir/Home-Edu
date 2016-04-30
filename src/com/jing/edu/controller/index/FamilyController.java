@@ -192,12 +192,14 @@ public class FamilyController {
 		OutputStream writer = null;
 		try {
 			InputStream is = familyService.getPhoto(imgid, UserType.TEACHER.getName());
-			bis = new BufferedInputStream(is);
-			writer = response.getOutputStream();
-			byte[] data = new byte[1024];
-			int dataLen = 0;
-			while ((dataLen = bis.read(data)) != -1) {
-				writer.write(data, 0, dataLen);
+			if(null!=is){
+				bis = new BufferedInputStream(is);
+				writer = response.getOutputStream();
+				byte[] data = new byte[1024];
+				int dataLen = 0;
+				while ((dataLen = bis.read(data)) != -1) {
+					writer.write(data, 0, dataLen);
+				}
 			}
 			writer.flush();
 			is.close();

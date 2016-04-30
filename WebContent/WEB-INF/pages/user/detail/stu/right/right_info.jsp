@@ -131,14 +131,14 @@
 					<div class="info_input">
 						小学: <input type="text" placeholder="单位:元/小时;默认为0" name="small-price" >
 						初中: <input type="text" placeholder="单位:元/小时;默认为0" name="medium-price">
-						高中： <input type="text" placeholder="单位:元/小时;默认为0" name="senior-price">
+						高中:<input type="text" placeholder="单位:元/小时;默认为0" name="senior-price">
 					</div>
 			</div>
 			<div class="form-group">
 					<div class="info_text"><span class="glyphicon glyphicon-map-marker">Location(位置)</span></div>
 					<div class="info_input">
 						城市: <input class="form-control" name="city" type="text" value="杭州市" placeholder="默认:杭州市/浙江杭州市">
-						地址: <input class="form-control" name="address" type="text" value="test_address">
+						地址: <input class="form-control" name="address" type="text" value="杭州下沙江干区">
 					</div>
 			</div>
 			<div class="form-group">
@@ -157,63 +157,5 @@
 	</div>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		<%
-			Object userDetail = request.getSession().getAttribute("userDetail") ;
-			if(user!=null&&userDetail==null){
-					User normalUser = (User)user ;				
-					//表明还没有完善过详细资料
-		%>
-			$('.info_input input[name="username"]').attr({
-				'value':'<%=normalUser.getUsername()%>',
-				'disabled':'disabled'
-			}) ;	
-			$('.info_input input[name="level"]').attr({
-				'value':'<%=normalUser.getLevel()%>',
-				'disabled':'disabled'
-			});
-		<%}%>
-		
-		<%if(userDetail!=null&&user!=null){
-			UserDetailStu stuDetail = (UserDetailStu)userDetail ;
-		%>	
-			$('.info_input input[name="username"]').attr({
-				'value':'<%=stuDetail.getName()%>',
-				'disabled':'disabled'
-			});
-			$('.info_input input[name="realname"]').attr({
-				'value':'<%=stuDetail.getRealName()%>',
-				'disabled':'disabled'
-			});
-			$('.info_input input[name="level"]').attr({
-				'value':'<%=stuDetail.getLevel()%>',
-				'disabled':'disabled'
-			});
-			$('.info_input input[name="introduction"]').attr({
-				'value':'<%=stuDetail.getIntroduction()%>'
-			});
-			$('.info_input input[name="city"]').attr({
-				'value':'<%=stuDetail.getCity()%>'
-			});
-			<%
-				}
-			%>
-	});
-</script>
-<script type="text/javascript">
-	$(function(){
-		$('.info_sumbit').on('click','input',function(){
-			//图片校验
-			var image = $('.info_input[name="imageFile"]') ;
-			if(image.value==""||image.value==null){
-				$(".info_input name['imageFile']").focus();
-				alert("请输入上传的头像图片!");
-			}else{
-				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=stu&id=<%=user.getId()%>').submit();
-			}
-		});
-	});
-</script>
 </body>
 </html>
