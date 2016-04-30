@@ -48,9 +48,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<%=basePath%>/index">首页</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="#">老师部营</a></li>
+				<li><a href="<%=basePath %>/family/index/tea">老师部营</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="#">学生部营</a></li>
+				<li><a href="<%=basePath %>/family/index/stu">学生部营</a></li>
 				<li><a href="#">|</a></li>
 				<li><a href="#">about us</a></li>
 			</ul>
@@ -255,7 +255,7 @@
 		$('.subscribebtn').on('click',function(){
 			if(<%=stuType%>==2&&<%=teaType%>==1){
 				$.ajax({
-					url:"/baseweb_homeEDU/user/detail/record/addSubcribe",
+					url:"/baseweb_homeEDU/user/detail/record/subscribe/add",
 					type:"GET",
 					data:{
 						stuname:'<%=stuname%>',

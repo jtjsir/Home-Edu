@@ -134,14 +134,22 @@ public class UserRecordController {
 			if (tea == null) {
 				putInfo = "";
 			} else {
-				putInfo = userRecordService.queryRecordsBySubject(tea.getName(), tea.getSubject(), userType);
+				if(tea.getName()!=null && tea.getSubject()!=null){
+					putInfo = userRecordService.queryRecordsBySubject(tea.getName(), tea.getSubject(), userType);
+				}else{
+					putInfo = "" ;
+				}
 			}
 		} else if (UserType.STUDENT.getName().equals(userType)) {
 			UserDetailStu stu = (UserDetailStu) request.getSession().getAttribute("userDetail");
 			if (stu == null) {
 				putInfo = "";
 			} else {
-				putInfo = userRecordService.queryRecordsBySubject(stu.getName(), stu.getSubject(), userType);
+				if(null!=stu.getName() && null!=stu.getSubject()){
+					putInfo = userRecordService.queryRecordsBySubject(stu.getName(), stu.getSubject(), userType);
+				}else{
+					putInfo = "" ;
+				}
 			}
 		}
 
@@ -161,7 +169,7 @@ public class UserRecordController {
 		}
 	}
 
-	@RequestMapping(value = "/addSubcribe")
+	@RequestMapping(value = "/subscribe/add")
 	public void addSubscribtion(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, String> paramMap = new HashMap<>();
 		String stuname = request.getParameter("stuname");

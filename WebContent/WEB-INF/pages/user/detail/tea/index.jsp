@@ -95,9 +95,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<%=basePath%>/index">首页</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="#">老师部营</a></li>
+				<li><a href="<%=basePath %>/family/index/tea">老师部营</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="#">学生部营</a></li>
+				<li><a href="<%=basePath %>/family/index/stu">学生部营</a></li>
 				<li><a href="#">|</a></li>
 				<li><a href="#">about us</a></li>
 			</ul>

@@ -53,6 +53,8 @@ public class LoginController {
 							null, null);
 					normalService.addDetail(tea);
 				}
+				request.getSession().setAttribute("userDetail", tea);
+				redirectName = "redirect:/user/detail/" + UserType.TEACHER.getName() + "/index" ;
 			} else if (type == 2) {
 				UserDetailStu stu = normalService.getStuDetail(username);
 				if (null != stu) {
@@ -63,6 +65,8 @@ public class LoginController {
 							null);
 					normalService.addDetail(stu);
 				}
+				redirectName = "redirect:/user/detail/" + UserType.STUDENT.getName() + "/index";
+				request.getSession().setAttribute("userDetail", stu);
 			}
 			// 增加notice表记录 自己给自己点赞
 			UserNotice userNotice = new UserNotice();
@@ -73,7 +77,6 @@ public class LoginController {
 			normalService.updateNotices(userNotice);
 
 			session.setAttribute("user", user);
-			redirectName = "redirect:/index";
 		}
 
 		return redirectName;
