@@ -138,9 +138,9 @@
 			<div class="form-group">
 					<div class="info_text"><span class="glyphicon glyphicon-euro">Price(价格)</span></div>
 					<div class="info_input">
-						小学: <input type="text" placeholder="单位:元/小时;默认为0" name="small-price" >
-						初中: <input type="text" placeholder="单位:元/小时;默认为0" name="medium-price">
-						高中:<input type="text" placeholder="单位:元/小时;默认为0" name="senior-price">
+						小学: <input type="text" placeholder="单位:元/小时;默认为0" name="small-price" value="0">
+						初中: <input type="text" placeholder="单位:元/小时;默认为0" name="medium-price" value="0">
+						高中:<input type="text" placeholder="单位:元/小时;默认为0" name="senior-price" value="0">
 					</div>
 			</div>
 			<div class="form-group">
@@ -158,7 +158,7 @@
 			</div>
 			<div class="form-group">
 				<div class="info_submit">
-					<input type="submit" class="form-control btn btn-danger" value="提交个人详细信息">
+					<input type="button" class="form-control btn btn-danger" value="提交个人详细信息">
 				</div>
 			</div>
 			

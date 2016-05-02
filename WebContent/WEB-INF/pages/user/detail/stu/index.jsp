@@ -240,6 +240,17 @@
 		
 		//设置页面提交按钮的事件
 		$(document).on('click','.info_submit input',function(){
+			//checkbox不可为空
+			var subjects = $('.info_input input[name="subjects"]') ;
+			var isNull = 0 ;
+			for(var i = 0; i < subjects.length; i++){
+				if(subjects.eq(i).attr('checked')=="checked"){
+					isNull++ ;break ;
+				}
+			}
+			if(isNull==0){
+				alert("授课内容的选项不可为空!");
+			}
 			//图片校验
 			var fileWrap = $('.info_input input[name="imageFile"]') ;
 			if(fileWrap.val()==""){

@@ -184,33 +184,33 @@
 		<div class="tab-pane active" id="tab-smallsch">
 			<div class="row infowrap">
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname1</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=jingtj"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:jingtj</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname2_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname2</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liubo"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liubo</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname3_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname3</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liuming"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liuming</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname4_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname4</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liuying"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname2_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liuying</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 			</div>
 			<span class="change-logo">
 				<!-- 点击一次使图片资源再次请求一次 -->
-				<a href="">
+				<a href="<%=basePath %>/family/index/tea">
 					<span class="glyphicon glyphicon-user"></span>
 					<span class="logo-text">查看更多>></span>
 				</a>
@@ -219,33 +219,33 @@
 		<div class="tab-pane" id="tab-mediumsch">
 			<div class="row infowrap">
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/mediumsch/realname1_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname1</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=jingtj"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:jingtj</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/mediumsch/realname2_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname2</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liubo"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liubo</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/mediumsch/realname3_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname3</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liuming"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liuming</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/mediumsch/realname4_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname4</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liuying"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname2_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liuying</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 			</div>
 			<span class="change-logo">
 				<!-- 点击一次使图片资源再次请求一次 -->
-				<a href="">
+				<a href="<%=basePath %>/family/index/tea">
 					<span class="glyphicon glyphicon-user"></span>
 					<span class="logo-text">查看更多>></span>
 				</a>
@@ -254,33 +254,33 @@
 		<div class="tab-pane" id="tab-seniorsch">
 			<div class="row infowrap">
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/seniorsch/realname1_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname1</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=jingtj"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:jingtj</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/seniorsch/realname2_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname2</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liubo"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liubo</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/seniorsch/realname3_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname3</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liuming"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liuming</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/tea/seniorsch/realname4_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname4</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/tea/index?name=liuying"><img alt="" src="<%=basePath%>/upload_photos/tea/smallsch/realname2_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:liuying</p>
+					<p>学历:大四</p>
+					<p>授课内容:小学数学,初中数学,高中数学 </p>
 				</div>
 			</div>
 			<span class="change-logo">
 				<!-- 点击一次使图片资源再次请求一次 -->
-				<a href="">
+				<a href="<%=basePath %>/family/index/tea">
 					<span class="glyphicon glyphicon-user"></span>
 					<span class="logo-text">查看更多>></span>
 				</a>
@@ -291,32 +291,32 @@
 <p class="underline" />
 <div class="container stucontent">
 	<div class="stuheader">
-		<span class="stu_request_title">学员请求</span><span class="stu-more"><a href=""><span class="glyphicon glyphicon-user"></span>查看更多>></a></span>
+		<span class="stu_request_title">学员请求</span><span class="stu-more"><a href="<%=basePath %>/family/index/stu"><span class="glyphicon glyphicon-user"></span>查看更多>></a></span>
 	</div>
 	<div class="row infowrap">
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/stu/smallsch/realname1_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname1</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/stu/index?name=lifeng"><img alt="" src="<%=basePath%>/upload_photos/stu/smallsch/realname3_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:lifeng</p>
+					<p>学历:初一</p>
+					<p>授课内容:初中数学,初中语文,初中英语 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/stu/mediumsch/realname1_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname1</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/stu/index?name=lvzq"><img alt="" src="<%=basePath%>/upload_photos/stu/mediumsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:lvzq</p>
+					<p>学历:初一</p>
+					<p>授课内容:初中数学,初中语文,初中英语 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/stu/seniorsch/realname1_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname1</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/stu/index?name=wanghk"><img alt="" src="<%=basePath%>/upload_photos/stu/seniorsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:wanghk</p>
+					<p>学历:高二</p>
+					<p>授课内容:高中数学,高中语文,高中英语 </p>
 				</div>
 				<div class="col-md-3 infoborder">
-					<a href=""><img alt="" src="<%=basePath%>/upload_photos/stu/seniorsch/realname2_level_subjects.jpg" class="img-rounded"></a>
-					<p>姓名:realname2</p>
-					<p>学历:level</p>
-					<p>授课内容:subjects </p>
+					<a href="<%=basePath %>/user/normal/stu/index?name=wuwei"><img alt="" src="<%=basePath%>/upload_photos/stu/seniorsch/realname1_level_subjects.jpg" class="img-rounded"></a>
+					<p>姓名:wuwei</p>
+					<p>学历:高二</p>
+					<p>授课内容:高中数学,高中语文,高中英语 </p>
 				</div>
 		</div>
 </div>
