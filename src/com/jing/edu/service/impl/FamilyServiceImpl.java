@@ -36,12 +36,12 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 
 	@Resource
 	public UserDetailDao userDetailDao;
-	
+
 	@Resource
-	public UserDao userDao ;
-	
+	public UserDao userDao;
+
 	@Resource
-	public UserNoticeDao noticeDao ;
+	public UserNoticeDao noticeDao;
 
 	/**
 	 * 根据City+grade+Subject关键字查询数据库将返回的字符串转换为json字符串
@@ -84,12 +84,12 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 		InputStream is = null;
 		if (UserType.TEACHER.getName().equals(userType)) {
 			UserDetailTea tea = userDetailDao.queryTeaInfo(imgid);
-			if (tea != null) {
+			if (tea != null && (tea.getImage() != null)) {
 				is = new ByteArrayInputStream(tea.getImage());
 			}
 		} else if (UserType.STUDENT.getName().equals(userType)) {
 			UserDetailStu stu = userDetailDao.queryStuInfo(imgid);
-			if (stu != null) {
+			if (stu != null && (stu.getImage() != null)) {
 				is = new ByteArrayInputStream(stu.getImage());
 			}
 		}
@@ -157,25 +157,25 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 	public String querySortFamily(String city, String gradeSubject, String userType, String basePath, String page,
 			String grade, String order, SortType sortType) {
 		String result = null;
-		
-		//得到所有的stu/tea详细信息数据
+
+		// 得到所有的stu/tea详细信息数据
 		List<? extends UserDetail> detailusers = null;
-		int typeNum = 0 ;
-		int count = 0 ;
+		int typeNum = 0;
+		int count = 0;
 		if (userType.equals(UserType.STUDENT.getName())) {
-			typeNum = UserType.STUDENT.getTypeNum() ;
+			typeNum = UserType.STUDENT.getTypeNum();
 			detailusers = userDetailDao.queryStuInfos(city, gradeSubject, 0, 1000);
 			count = userDetailDao.queryCountStuInfos(city, gradeSubject);
 		} else if (userType.equals(UserType.TEACHER.getName())) {
-			typeNum = UserType.TEACHER.getTypeNum() ;
+			typeNum = UserType.TEACHER.getTypeNum();
 			detailusers = userDetailDao.queryTeaInfos(city, gradeSubject, 0, 1000);
 			count = userDetailDao.queryCountTeaInfos(city, gradeSubject);
 		}
-		//配置偏移量
+		// 配置偏移量
 		int pageNum = Integer.valueOf(page);
 		int startOffset = (pageNum - 1) * 4;
-		int endOffset = pageNum * 4 <= count ?(pageNum * 4):count;
-		
+		int endOffset = pageNum * 4 <= count ? (pageNum * 4) : count;
+
 		int ordernum = Integer.valueOf(order);
 		switch (sortType) {
 		case SORT_PRICE:
@@ -195,18 +195,18 @@ public class FamilyServiceImpl implements FamilyService, BaseLogger {
 			result = this.packToJsonStr(userType, basePath, subList, count);
 			break;
 		case SORT_AGE:
-			List<User> baseSortUsers = userDao.queryUsersByType(typeNum) ;
+			List<User> baseSortUsers = userDao.queryUsersByType(typeNum);
 			SortUtil.sortByAge(baseSortUsers, ordernum);
-			List<UserDetail> ageFamily = FamilyUtil.reAddAgeList(baseSortUsers, detailusers) ;
+			List<UserDetail> ageFamily = FamilyUtil.reAddAgeList(baseSortUsers, detailusers);
 			List<? extends UserDetail> subAgeList = FamilyUtil.subList(ageFamily, startOffset, endOffset);
-			result = this.packToJsonStr(userType, basePath, subAgeList, count) ;
+			result = this.packToJsonStr(userType, basePath, subAgeList, count);
 			break;
 		case SORT_NOTICE:
-			List<UserNotice> userNotices = noticeDao.readNoticeByType(typeNum) ;
+			List<UserNotice> userNotices = noticeDao.readNoticeByType(typeNum);
 			SortUtil.sortByNotice(userNotices, ordernum);
-			List<UserDetail> noticeFamily = FamilyUtil.reAddNoticeList(userNotices, detailusers) ;
+			List<UserDetail> noticeFamily = FamilyUtil.reAddNoticeList(userNotices, detailusers);
 			List<? extends UserDetail> subNoticeList = FamilyUtil.subList(noticeFamily, startOffset, endOffset);
-			result = this.packToJsonStr(userType, basePath, subNoticeList, count) ;
+			result = this.packToJsonStr(userType, basePath, subNoticeList, count);
 			break;
 		default:
 			this.getLogger().debug("没有相应的排序方法与之相对");

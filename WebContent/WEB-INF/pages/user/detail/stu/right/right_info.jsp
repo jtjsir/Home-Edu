@@ -131,7 +131,7 @@
 					<div class="info_input">
 						小学: <input type="text" placeholder="单位:元/小时;默认为0" name="small-price" value="0">
 						初中: <input type="text" placeholder="单位:元/小时;默认为0" name="medium-price" value="0">
-						高中:<input type="text" placeholder="单位:元/小时;默认为0" name="senior-price" value="0">
+						高中: <input type="text" placeholder="单位:元/小时;默认为0" name="senior-price" value="0">
 					</div>
 			</div>
 			<div class="form-group">

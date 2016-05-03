@@ -93,9 +93,9 @@
 							String chatbtnPath = basePath + "/user/chat/index" + "?from=" +	
 																		StringUtil.encodeParam(((User)request.getSession().getAttribute("user")).getUsername(), "GBK") + "&to=" + 
 																		StringUtil.encodeParam(((User)request.getAttribute("normalUser")).getUsername(), "GBK") + "&type=" + 
-																		StringUtil.encodeParam("stu", "GBK");
+																		StringUtil.encodeParam("tea", "GBK");
 					%>
-					<a href="<%=chatbtnPath %>"><button class="btn btn-primary chatbtn" style="width: 44%;height: 65%;">发起聊天</button></a>
+					<a href="<%=chatbtnPath %>" target="_blank"><button class="btn btn-primary chatbtn" style="width: 44%;height: 65%;">发起聊天</button></a>
 			</div>
 			</div>
 		</div>

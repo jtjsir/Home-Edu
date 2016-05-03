@@ -222,15 +222,15 @@
 						'disabled':'disabled'
 					});
 					$('.info_input input[name="realname"]').attr({
-						'value':'<%=stuDetail.getRealName()%>',
-						'disabled':'disabled'
+						'value':'<%=(stuDetail.getRealName()==null?"":stuDetail.getRealName())%>',
+						'disabled':<%=(stuDetail.getRealName()==null?false:true)%>
 					});
 					$('.info_input input[name="level"]').attr({
 						'value':'<%=stuDetail.getLevel()%>',
 						'disabled':'disabled'
 					});
-					$('.info_input textarea[name="introduction"]').html('<%=stuDetail.getIntroduction()%>');
-					$('.info_input input[name="city"]').val('<%=stuDetail.getCity()%>');
+					$('.info_input textarea[name="introduction"]').html('<%=(stuDetail.getIntroduction()==null?"":stuDetail.getIntroduction())%>');
+					$('.info_input input[name="city"]').val('<%=(stuDetail.getCity()==null?"杭州市":stuDetail.getCity())%>');
 					<%
 						}
 					%>
@@ -240,11 +240,16 @@
 		
 		//设置页面提交按钮的事件
 		$(document).on('click','.info_submit input',function(){
+			//realname特殊判断
+			var realname = $('.info_input input[name="realname"]').val();
+			if(realname==null||realname==""){
+				alert("真实名一项不可为空,一旦提交不可修改!");
+			}
 			//checkbox不可为空
 			var subjects = $('.info_input input[name="subjects"]') ;
 			var isNull = 0 ;
 			for(var i = 0; i < subjects.length; i++){
-				if(subjects.eq(i).attr('checked')=="checked"){
+				if(subjects.eq(i).attr('checked')=="checked"||subjects.eq(i).attr('checked')==true){
 					isNull++ ;break ;
 				}
 			}
@@ -296,21 +301,22 @@
 						UserDetailStu stuDetail = (UserDetailStu)detail ;
 				%>
 				$('#username').html('<%=normalUser.getUsername()%>');
-				$('#realname').html('<%=stuDetail.getRealName()%>');
+				$('#realname').html('<%=(stuDetail.getRealName()==null?"未填写":stuDetail.getRealName())%>');
 				$('#type').html('<%=(normalUser.getType()==1?"教师":"学生")%>') ;
 				$('#sex').html('<%=normalUser.getSex()%>') ;
-				$('#city').html('<%=stuDetail.getCity()%>') ;
+				$('#city').html('<%=(stuDetail.getRealName()==null?"未填写":stuDetail.getCity())%>') ;
 				$('#school').html('未填写') ;
 				$('#level').html('<%=normalUser.getLevel()%>') ;
-				$('#subjects').html('<%=stuDetail.getSubject()%>') ;
-				$('#intro').html('<%=stuDetail.getIntroduction()%>') ;
+				$('#subjects').html('<%=(stuDetail.getSubject()==null?"未填写":stuDetail.getSubject())%>') ;
+				$('#intro').html('<%=(stuDetail.getIntroduction()==null?"未填写":stuDetail.getIntroduction())%>') ;
 				$('#honor').html('未填写') ;
 				
 				//ajax请求图片
 				var imgpath = "<%=basePath%>/family/stu/photo?imgid=" + "<%=normalUser.getUsername()%>" ;
-				$('img[alt="empty_person"]').attr("src",imgpath); 
-			
-				<%}%>
+				if(<%=(stuDetail.getImage()==null?false:true)%>){
+					$('img[alt="empty_person"]').attr("src",imgpath); 
+				}
+			<%}%>
 				}
 			});
 		});
@@ -523,7 +529,7 @@
 		var messageCon = new Array();
 		
 		goEasy.subscribe({
-			channel:"channel_chat" +'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',
+			channel:"channel_chat_" +'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',
 			onMessage:function(result){
 				//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
 				var displayCon = result.content.replace(/&quot;/g,"\"");
@@ -556,7 +562,7 @@
 												+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
 					$('.right-content').append(rightContent) ;
 					//
-					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=stu") ;
+					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
 					$('.reply').attr('target',"_blank");
 					$('.reply').removeClass('reply');
 				}

@@ -223,17 +223,17 @@
 						'disabled':'disabled'
 					});
 					$('.info_input input[name="realname"]').attr({
-						'value':'<%=teaDetail.getRealName()%>',
-						'disabled':'disabled'
+						'value':'<%=(teaDetail.getRealName()==null?"":teaDetail.getRealName())%>',
+						'disabled':<%=(teaDetail.getRealName()==null?false:true)%>
 					});
 					$('.info_input input[name="level"]').attr({
 						'value':'<%=teaDetail.getLevel()%>',
 						'disabled':'disabled'
 					});
-					$('.info_input textarea[name="introduction"]').html('<%=teaDetail.getIntroduction()%>');
-					$('.info_input textarea[name="honor"]').html('<%=teaDetail.getHonor()%>');
-					$('.info_input input[name="city"]').val('<%=teaDetail.getCity()%>');
-					$('.info_input input[name="school"]').val('<%=teaDetail.getSchool()%>');
+					$('.info_input textarea[name="introduction"]').html('<%=(teaDetail.getIntroduction()==null?"":teaDetail.getIntroduction())%>');
+					$('.info_input textarea[name="honor"]').html('<%=(teaDetail.getHonor()==null?"":teaDetail.getHonor())%>');
+					$('.info_input input[name="city"]').val('<%=(teaDetail.getCity()==null?"杭州市":teaDetail.getCity())%>');
+					$('.info_input input[name="school"]').val('<%=(teaDetail.getSchool()==null?"杭州电子科技大学":teaDetail.getSchool())%>');
 					<%
 						}
 					%>
@@ -243,11 +243,16 @@
 		
 		//设置页面提交按钮的事件
 		$(document).on('click','.info_submit input',function(){
+			//realname特殊判断
+			var realname = $('.info_input input[name="realname"]').val();
+			if(realname==null||realname==""){
+				alert("真实名一项不可为空,一旦提交不可修改!");
+			}
 			//checkbox不可为空
 			var subjects = $('.info_input input[name="subjects"]') ;
 			var isNull = 0 ;
 			for(var i = 0; i < subjects.length; i++){
-				if(subjects.eq(i).attr('checked')=="checked"){
+				if(subjects.eq(i).attr('checked')=="checked"||subjects.eq(i).attr('checked')==true){
 					isNull++ ;break ;
 				}
 			}
@@ -262,7 +267,7 @@
 				return false;
 			}else{
 				var disableParams = "&username="  + $('.info_input input[name="username"]').attr('value') 
-															+ "&realname=" + $('.info_input input[name="realname"]').attr('value')
+															+ "&realname=" + $('.info_input input[name="realname"]').val()
 															+"&level=" + $('.info_input input[name="level"]').attr('value');
 				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=tea&id=<%=user.getId() %>' + disableParams).submit();
 				$('.right-content').removeClass("personal_content");
@@ -299,19 +304,21 @@
 						UserDetailTea teaDetail = (UserDetailTea)userDetail ;
 				%>
 					$('#username').html('<%=normalUser.getUsername()%>');
-					$('#realname').html('<%=teaDetail.getRealName()%>');
+					$('#realname').html('<%=(teaDetail.getRealName()==null?"未填写":teaDetail.getRealName())%>');
 					$('#type').html('<%=(normalUser.getType()==1?"教师":"学生")%>') ;
 					$('#sex').html('<%=normalUser.getSex()%>') ;
-					$('#city').html('<%=teaDetail.getCity()%>') ;
-					$('#school').html('<%=teaDetail.getSchool()%>') ;
+					$('#city').html('<%=(teaDetail.getCity()==null?"未填写":teaDetail.getCity())%>') ;
+					$('#school').html('<%=(teaDetail.getSchool()==null?"未填写":teaDetail.getSchool())%>') ;
 					$('#level').html('<%=normalUser.getLevel()%>') ;
-					$('#subjects').html('<%=teaDetail.getSubject()%>') ;
-					$('#intro').html('<%=teaDetail.getIntroduction()%>') ;
-					$('#honor').html('<%=teaDetail.getHonor()%>') ;
+					$('#subjects').html('<%=(teaDetail.getSubject()==null?"未填写":teaDetail.getSubject())%>') ;
+					$('#intro').html('<%=(teaDetail.getIntroduction()==null?"未填写":teaDetail.getIntroduction())%>') ;
+					$('#honor').html('<%=(teaDetail.getHonor()==null?"未填写":teaDetail.getHonor())%>') ;
 					
 					//ajax请求图片
 					var imgpath = "<%=basePath%>/family/tea/photo?imgid=" + "<%=normalUser.getUsername()%>" ;
-					$('img[alt="empty_person"]').attr("src",imgpath); 
+					if(<%=(teaDetail.getImage()==null?false:true)%>){
+						$('img[alt="empty_person"]').attr("src",imgpath); 
+					}
 				<%}%>
 				}
 			});
@@ -528,7 +535,7 @@
 		var messageCon = new Array();
 		
 		goEasy.subscribe({
-			channel:"channel_chat" +'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',
+			channel:"channel_chat_" +'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',
 			onMessage:function(result){
 				//由于goeasy的传送过来的是已经转义过的字符，转换成json之前需得进行处理
 				var displayCon = result.content.replace(/&quot;/g,"\"");
@@ -600,7 +607,7 @@
 												+"<div style='border: solid 1px #795548; margin: 10px auto 2px auto;width: 98%;' />";
 					$('.right-content').append(rightContent) ;
 					//
-					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=tea") ;
+					$('.reply').attr('href','<%=basePath%>/user/chat/index?from=' + to + "&to=" + from + "&type=stu") ;
 					$('.reply').attr('target',"_blank");
 					$('.reply').removeClass('reply');
 				}

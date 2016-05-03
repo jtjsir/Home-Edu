@@ -111,10 +111,7 @@
 				<div class="input-group">
 					<span class="input-group-addon">Type</span>
 					<label class="radio-inline">
-						<input type="radio" name="type" value="0" checked>管理员
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="type" value="1">教师
+						<input type="radio" name="type" value="1" checked>教师
 					</label>
 					<label class="radio-inline">
 						<input type="radio" name="type" value="2">学生

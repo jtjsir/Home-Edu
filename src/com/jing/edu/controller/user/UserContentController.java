@@ -35,7 +35,7 @@ public class UserContentController {
 		BufferedReader bufferedReader = null ;
 		PrintWriter writer = null ;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(is)) ;
+			bufferedReader = new BufferedReader(new InputStreamReader(is,"utf-8")) ;
 			writer = response.getWriter() ;
 			String str = null ;
 			while((str = bufferedReader.readLine())!=null){
@@ -77,7 +77,7 @@ public class UserContentController {
 		BufferedReader bufferedReader = null ;
 		PrintWriter writer = null ;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(is)) ;
+			bufferedReader = new BufferedReader(new InputStreamReader(is,"utf-8")) ;
 			writer = response.getWriter() ;
 			String str = null ;
 			while((str = bufferedReader.readLine())!=null){
@@ -119,7 +119,7 @@ public class UserContentController {
 		BufferedReader bufferedReader = null ;
 		PrintWriter writer = null ;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(is)) ;
+			bufferedReader = new BufferedReader(new InputStreamReader(is,"utf-8")) ;
 			writer = response.getWriter() ;
 			String str = null ;
 			while((str = bufferedReader.readLine())!=null){

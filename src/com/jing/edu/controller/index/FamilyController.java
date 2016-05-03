@@ -200,9 +200,9 @@ public class FamilyController {
 				while ((dataLen = bis.read(data)) != -1) {
 					writer.write(data, 0, dataLen);
 				}
+				writer.flush();
+				is.close();
 			}
-			writer.flush();
-			is.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
