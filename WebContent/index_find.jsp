@@ -43,7 +43,7 @@
 				<li><a href="#">|</a></li>
 				<li><a href="<%=basePath %>/family/index/stu">学生部营</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="#">about us</a></li>
+				<li><a href="<%=basePath%>/index/about">about us</a></li>
 			</ul>
 			<form class="nav navbar-right">
 				<a href="<%=basePath %>/index/login" class="navbar-text" name="text1">登录</a>
