@@ -59,18 +59,14 @@ public class UserDetailServiceImpl implements UserDetailService,BaseLogger {
 	 * 判断userdetail在表中是否有记录
 	 */
 	@Override
-	public boolean isUserDetail(String username, UserType userType) {
-		Object userdetail = null ;
+	public UserDetail queryUserDetail(String username, UserType userType) {
+		UserDetail userdetail = null ;
 		if(UserType.STUDENT.equals(userType)){
 			userdetail = userdetailDao.queryStuInfo(username) ;
 		}else if(UserType.TEACHER.equals(userType)){
 			userdetail = userdetailDao.queryTeaInfo(username) ;
 		}
-		if(null!=userdetail){
-			return true ;
-		}else{
-			return false ;
-		}
+		return userdetail ;
 	}
 
 	@Override

@@ -56,9 +56,9 @@
 					<li><a href="<%=basePath%>/index/about">about us</a></li>
 				</ul>
 				<form class="nav navbar-right">
-					<a href="<%=basePath%>/index/login" class="navbar-text">登录</a> <span
+					<a href="<%=basePath%>/index/login" class="navbar-text" name="text1">登录</a> <span
 						class="navbar-text">|</span> <a
-						href="<%=basePath%>/index/register" class="navbar-text">注册</a>
+						href="<%=basePath%>/index/register" class="navbar-text" name="text2">注册</a>
 				</form>
 			</div>
 		</div>
@@ -88,7 +88,7 @@
 		</div>
 	</div>
 	<div class="wordgood">
-	<h3>Welcome To homeEDU! Be Happy!Be Useful!-------<span class="glyphicon glyphicon-send"></span>DogIfRich<span class="glyphicon glyphicon-send"></span></h3>
+		<h3>Welcome To homeEDU! Be Happy!Be Useful!-------<span class="glyphicon glyphicon-send"></span>DogIfRich<span class="glyphicon glyphicon-send"></span></h3>
 	</div>
 	<div class="footer">
 		<div class="bottom">Copyright &copy; 2015 by JingSir,All Right
@@ -103,12 +103,15 @@
 		<%
 			User user = (User)request.getSession().getAttribute("user") ;
 			if(user!=null){
+				String type = user.getType()==1?"tea":"stu" ;
+				String href = basePath + "/user/detail/" +type + "/index" ;
 		%>
 		//判断是否有用户已经登录
 		var index_text1 = $('.navbar-right a[name="text1"]') ;
 		var index_text2 = $('.navbar-right a[name="text2"]') ;
+		
 		index_text1.text('<%=user.getUsername()%>');
-		index_text1.attr("href","<%=basePath%>/user/detail/tea/index") ;
+		index_text1.attr("href","<%=href%>") ;
 		//退出返回到登录界面
 		index_text2.text('退出');
 		index_text2.attr("href","<%=basePath%>/login/out");

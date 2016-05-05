@@ -267,12 +267,15 @@
 		<%
 			User user = (User)request.getSession().getAttribute("user") ;
 			if(user!=null){
+				String type = user.getType()==1?"tea":"stu" ;
+				String href = basePath + "/user/detail/" +type + "/index" ;
 		%>
 		//判断是否有用户已经登录
 		var index_text1 = $('.navbar-right a[name="text1"]') ;
 		var index_text2 = $('.navbar-right a[name="text2"]') ;
+		
 		index_text1.text('<%=user.getUsername()%>');
-		index_text1.attr("href","<%=basePath%>/user/detail/tea/index") ;
+		index_text1.attr("href","<%=href%>") ;
 		//退出返回到登录界面
 		index_text2.text('退出');
 		index_text2.attr("href","<%=basePath%>/login/out");

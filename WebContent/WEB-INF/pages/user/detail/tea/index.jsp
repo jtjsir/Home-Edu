@@ -99,7 +99,7 @@
 				<li><a href="#">|</a></li>
 				<li><a href="<%=basePath %>/family/index/stu" target="_blank">学生部营</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="<%=basePath%>/index/about">about us</a></li>
+				<li><a href="<%=basePath%>/index/about" target="_blank">about us</a></li>
 			</ul>
 			<form class="nav navbar-right">
 				<a href="<%=basePath %>/index/login" class="navbar-text" name="text1">登录</a>
@@ -155,18 +155,22 @@
 		<%
 			User user = (User)request.getSession().getAttribute("user") ;
 			if(user!=null){
+				String type = user.getType()==1?"tea":"stu" ;
+				String href = basePath + "/user/detail/" +type + "/index" ;
 		%>
 		//判断是否有用户已经登录
 		var index_text1 = $('.navbar-right a[name="text1"]') ;
 		var index_text2 = $('.navbar-right a[name="text2"]') ;
+		
 		index_text1.text('<%=user.getUsername()%>');
-		index_text1.attr("href","<%=basePath%>/user/detail/tea/index") ;
+		index_text1.attr("href","<%=href%>") ;
 		//退出返回到登录界面
 		index_text2.text('退出');
 		index_text2.attr("href","<%=basePath%>/login/out");
 		<%
 			}
 		%>
+		
 		<%
 		//图片是否上传成功信息展示
 		String result = (String)request.getSession().getAttribute("result") ;
@@ -269,8 +273,8 @@
 				var disableParams = "&username="  + $('.info_input input[name="username"]').attr('value') 
 															+ "&realname=" + $('.info_input input[name="realname"]').val()
 															+"&level=" + $('.info_input input[name="level"]').attr('value');
-				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=tea&id=<%=user.getId() %>' + disableParams).submit();
 				$('.right-content').removeClass("personal_content");
+				$('.form-horizontal').attr('action','<%=basePath %>/user/detail/add?userType=tea&id=<%=user.getId() %>' + disableParams).submit();
 			}
 		});
 		

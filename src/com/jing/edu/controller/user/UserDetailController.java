@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jing.edu.common.util.StringUtil;
 import com.jing.edu.model.Course;
 import com.jing.edu.model.User;
+import com.jing.edu.model.UserDetail;
 import com.jing.edu.model.UserDetailStu;
 import com.jing.edu.model.UserDetailTea;
 import com.jing.edu.model.EduType.UserType;
@@ -100,9 +101,9 @@ public class UserDetailController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				if(detailService.isUserDetail(username, UserType.TEACHER)){
+				if (null != detailService.queryUserDetail(username, UserType.TEACHER)) {
 					detailService.update(detailTea);
-				}else{
+				} else {
 					detailService.insertDetailInfo(detailTea);
 				}
 				request.getSession().setAttribute("userDetail", detailTea);
@@ -135,9 +136,9 @@ public class UserDetailController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				if(detailService.isUserDetail(username, UserType.STUDENT)){
+				if (null != detailService.queryUserDetail(username, UserType.STUDENT)) {
 					detailService.update(detailStu);
-				}else{
+				} else {
 					detailService.insertDetailInfo(detailStu);
 				}
 				request.getSession().setAttribute("userDetail", detailStu);
@@ -145,7 +146,7 @@ public class UserDetailController {
 				redirectStr = "redirect:/user/detail/stu/index";
 			}
 		} else {
-			redirectStr = "redirect:/user/detail/" + type + "/index" ;
+			redirectStr = "redirect:/user/detail/" + type + "/index";
 			request.getSession().setAttribute("result", "上传的图片不可大于2M且不可小于7KB");
 		}
 
@@ -154,11 +155,11 @@ public class UserDetailController {
 
 	@RequestMapping(value = "/tea/index")
 	public String redirectToTeaIndex(HttpServletRequest request) {
-		// 默认没有用户的具体信息
+		// 默认没有完善用户的真实姓名
 		String hasDetail = "0";
 		String username = ((User) request.getSession().getAttribute("user")).getUsername();
-		boolean isdetail = detailService.isUserDetail(username, UserType.TEACHER);
-		if (isdetail) {
+		UserDetail detail = detailService.queryUserDetail(username, UserType.TEACHER);
+		if (null != detail && null != detail.getRealName()) {
 			hasDetail = "1";
 		}
 		request.setAttribute("hasDetail", hasDetail);
@@ -170,8 +171,8 @@ public class UserDetailController {
 		// 默认没有用户的具体信息
 		String hasDetail = "0";
 		String username = ((User) request.getSession().getAttribute("user")).getUsername();
-		boolean isdetail = detailService.isUserDetail(username, UserType.STUDENT);
-		if (isdetail) {
+		UserDetail detail = detailService.queryUserDetail(username, UserType.STUDENT);
+		if (null != detail && null != detail.getRealName()) {
 			hasDetail = "1";
 		}
 		request.setAttribute("hasDetail", hasDetail);
