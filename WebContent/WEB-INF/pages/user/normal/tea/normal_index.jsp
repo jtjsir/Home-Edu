@@ -88,7 +88,8 @@
 					<span>已有点赞数:  <span style="font-size: 20px;font-style: oblique;" id="noticeNums"></span></span>
 				</div>
 				<div style="height:92px;margin-top:-7px;padding-top:32px;">
-					<button class="btn btn-primary btn-danger subscribebtn" style="width: 44%;height: 65%;">立即预约</button>
+					<button class="btn btn-primary btn-danger subscribebtn" style="width: 44%;height: 65%;"
+					 data-toggle="tooltip" data-placement="bottom" title="来预约我吧">立即预约</button>
 					<%
 							String chatbtnPath = basePath + "/user/chat/index" + "?from=" +	
 																		StringUtil.encodeParam(((User)request.getSession().getAttribute("user")).getUsername(), "GBK") + "&to=" + 
@@ -141,6 +142,12 @@
 </div>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	//tooltip使用
+	$(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 <script type="text/javascript">
 	//共有的js代码
 	$(function(){
@@ -249,7 +256,7 @@
 				if("YES"==data){
 					//对该用户显示已经预约
 					$('.subscribebtn').attr('disabled',true) ;
-					$('.subscribebtn').attr('value','已经预约') ;
+					$('.subscribebtn').text('已经预约[邮箱反馈]') ;
 				}
 			}
 		});
@@ -269,7 +276,7 @@
 				});
 				//对该用户显示已经预约
 				$('.subscribebtn').attr('disabled',true) ;
-				$('.subscribebtn').attr('value','已经预约') ;
+				$('.subscribebtn').text('已经预约[邮箱反馈]') ;
 			}else{
 				//类型相同不可进行预约与聊天
 				$('.subscribebtn').attr('disabled',true) ;

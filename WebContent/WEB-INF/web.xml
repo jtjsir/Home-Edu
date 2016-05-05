@@ -41,10 +41,14 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <listener>
+  	<listener-class>com.jing.edu.servlet.EduSessionListener</listener-class>
+  </listener>
   <!-- 设置session过期时间 30mins -->
   <session-config>
   	<session-timeout>30</session-timeout>
   </session-config>
+  
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

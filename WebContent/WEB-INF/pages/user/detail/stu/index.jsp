@@ -113,11 +113,11 @@
 <div class="wrap-content">
 	<div class="left-border">
 		<ul class="nav nav-tabs nav-stacked">
-			<li ><a href="javascript:void(0)" class="personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
-			<li ><a href="javascript:void(0)" class="personal-message"><span class="glyphicon glyphicon-envelope"></span>预约消息</a></li>
-			<li ><a href="javascript:void(0)" class="set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
-			<li ><a href="javascript:void(0)" class="recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
-			<li ><a href="javascript:void(0)" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@[只支持在线监听]<span class="badge"></span></a></li>
+			<li data-toggle="tooltip" title="展示个人信息" data-placement="right"><a href="javascript:void(0)" class="personal-info"><span class="glyphicon glyphicon-user"></span>个人信息</a></li>
+			<li data-toggle="tooltip" title="被预约信息展示" data-placement="right"><a href="javascript:void(0)" class="personal-message"><span class="glyphicon glyphicon-envelope"></span>预约消息</a></li>
+			<li data-toggle="tooltip" title="个人信息更改" data-placement="right"><a href="javascript:void(0)" class="set-info"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
+			<li data-toggle="tooltip" title="推荐相对应的资源" data-placement="right"><a href="javascript:void(0)" class="recommend-info"><span class="glyphicon glyphicon-fire"></span>资源推荐</a></li>
+			<li data-toggle="tooltip" title="他人聊天消息推送" data-placement="right"><a href="javascript:void(0)" class="chat-info"><span class="glyphicon glyphicon-bell"></span>有人@[只支持在线监听]<span class="badge"></span></a></li>
 		</ul>
 	</div>
 	<div class="right-wrap">
@@ -149,6 +149,12 @@
 </div>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>/html/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	//tooltip使用
+	$(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 <script type="text/javascript">
 	//共有的js代码
 	$(function(){
