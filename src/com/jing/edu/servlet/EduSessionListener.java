@@ -37,7 +37,7 @@ public class EduSessionListener implements HttpSessionListener {
 			} else if (2 == user.getType()) {
 				normalService.updateIsonline(user.getUsername(), UserType.STUDENT.getName(), 0);
 			}
-
+			System.out.println(StringUtil.getNowFormatTime() +" " + user.getUsername() + " 已经下线");
 		}
 		System.out.println(StringUtil.getNowFormatTime() +" EduSessionListener监听到session已经销毁");
 	}

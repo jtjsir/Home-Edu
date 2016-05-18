@@ -107,10 +107,11 @@ public class FamilyUtil {
 	
 	public static List<UserDetail> reAddNoticeList(List<UserNotice> sortList,List<? extends UserDetail> willdetails){
 		int size = sortList.size() ;
+		int len = willdetails.size() ;
 		List<UserDetail> details = new ArrayList<>(size) ;
 		for(int i = 0 ; i < size ; i++){
 			String username = sortList.get(i).getUsername() ;
-			for(int j = 0 ; j < size ; j++){
+			for(int j = 0 ; j < len ; j++){
 				if(username.equals(willdetails.get(j).getName())){
 					UserDetail temp = willdetails.get(j) ;
 					details.add(temp) ;
