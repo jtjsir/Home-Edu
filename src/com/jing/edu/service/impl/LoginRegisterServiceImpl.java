@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.jing.edu.common.BaseLogger;
 import com.jing.edu.common.util.PassUtil;
+import com.jing.edu.mapper.joggle.RegisterUserDao;
 import com.jing.edu.mapper.joggle.UserDao;
+import com.jing.edu.model.RegisterUser;
 import com.jing.edu.model.User;
 import com.jing.edu.service.LoginRegisterService;
 
@@ -18,6 +20,9 @@ public class LoginRegisterServiceImpl implements LoginRegisterService,BaseLogger
 
 	@Resource
 	public UserDao userDao ;
+	
+	@Resource
+	public RegisterUserDao registerDao ;
 	
 	@Override
 	public boolean isUser(String username,String password,int type) {
@@ -75,6 +80,26 @@ public class LoginRegisterServiceImpl implements LoginRegisterService,BaseLogger
 		User user = null ;
 		user = userDao.queryUserByName(username) ;
 		return user;
+	}
+
+	@Override
+	public String insertRegisterTable(User user) {
+		RegisterUser registerUser = new RegisterUser() ;
+		registerUser.setAge(user.getAge());
+		registerUser.setEmail(user.getEmail());
+		registerUser.setLevel(user.getLevel());
+		registerUser.setPassword(PassUtil.encodePass(user.getPassword()));
+		registerUser.setPhone(user.getPhone());
+		registerUser.setSex(user.getSex());
+		registerUser.setType(user.getType());
+		registerUser.setUsername(user.getUsername());
+		
+		registerDao.insertUser(registerUser) ;
+		
+		String resultInfo = " 注册信息请求已经发送给管理员，请耐心等待审核!现在为您跳转到登录页面 " ;
+		this.getLogger().debug(" 向register_user表插入用户注册数据成功! ");
+		
+		return resultInfo ;
 	}
 
 }

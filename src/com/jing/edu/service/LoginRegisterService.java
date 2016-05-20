@@ -11,4 +11,6 @@ public interface LoginRegisterService {
 	public boolean isHavingUser(String username);
 	
 	public User queryUser(String username);
+	
+	public String  insertRegisterTable(User user) ;
 }

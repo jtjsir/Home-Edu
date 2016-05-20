@@ -80,8 +80,8 @@ public class PassUtil implements BaseLogger {
 
 
     public static void main(String[] args) {
-        System.out.println("加密前: " + "jing");
-        String s = PassUtil.encodePass("jing");
+        System.out.println("加密前: " + "lisi");
+        String s = PassUtil.encodePass("lisi");
         System.out.println("加密后: " + s);
 
         System.out.println("解密后: " + PassUtil.decodePass(s));

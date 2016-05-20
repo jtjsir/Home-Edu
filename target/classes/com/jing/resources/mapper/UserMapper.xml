@@ -38,4 +38,8 @@
 	<update id="updatePass">
 		update base_user set password=#{1} where username=#{0}
 	</update>
+	
+	<select id="queryOneUser" resultType="User">
+		select * from base_user where username=#{0} and type=#{1}
+	</select>
 </mapper>

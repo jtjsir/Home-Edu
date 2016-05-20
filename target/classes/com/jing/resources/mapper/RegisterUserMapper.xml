@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jing.edu.mapper.joggle.RegisterUserDao">
+	<select id="queryUserByName" parameterType="String" resultType="RegisterUser">
+		select * from register_user where username=#{username}
+	</select>
+	
+	<select id="queryUsersByType" resultType="RegisterUser">
+		select * from register_user where type=#{0}
+	</select>
+	
+	<insert id="insertUser" parameterType="RegisterUser">
+		insert into register_user(username,password,type,sex,age,email,phone,level) values(#{username},#{password},#{type},#{sex},#{age},#{email},#{phone},#{level})
+	</insert>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from register_user where id=#{id} 
+	</delete>
+	
+	
+	<select id="queryOneUser" resultType="RegisterUser">
+		select * from register_user where username=#{0} and type=#{1}
+	</select>
+</mapper>

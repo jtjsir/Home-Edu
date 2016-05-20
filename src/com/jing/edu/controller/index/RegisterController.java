@@ -43,6 +43,9 @@ public class RegisterController {
 		
 		// 插入数据库 并返回信息给前台
 		String resultInfo = service.register(user);
+		
+//		采用admin策略的代码
+//		String resultInfo = service.insertRegisterTable(user) ;
 		model.addAttribute("registerInfo", resultInfo);
 
 		return "redirect:/index/passToLogin";

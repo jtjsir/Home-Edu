@@ -47,6 +47,7 @@
     		<mvc:exclude-mapping path="/register/**"/>
     		<mvc:exclude-mapping path="/password/**"/>
     		<mvc:exclude-mapping path="/family/**"/>
+    		<mvc:exclude-mapping path="/admin/**"/>
     		<!-- 特殊user资源获取不拦截 -->
     		<mvc:exclude-mapping path="/user/detail/content/**"/>
     		<mvc:exclude-mapping path="/user/normal/notice/**"/>
