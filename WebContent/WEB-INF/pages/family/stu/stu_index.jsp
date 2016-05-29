@@ -104,9 +104,9 @@
 			<ul class="nav navbar-nav">
 				<li><a href="<%=basePath%>/index">首页</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="<%=basePath %>/family/index/tea">教师中心</a></li>
+				<li><a href="<%=basePath %>/family/index/tea">教师部营</a></li>
 				<li><a href="#">|</a></li>
-				<li><a href="<%=basePath %>/family/index/stu">学生中心</a></li>
+				<li><a href="<%=basePath %>/family/index/stu">学生部营</a></li>
 				<li><a href="#">|</a></li>
 				<li><a href="<%=basePath%>/index/about">about us</a></li>
 			</ul>
