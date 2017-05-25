@@ -215,7 +215,7 @@
 	//第一次访问首先请求后台图片数据
 	$(function(){
 		$.ajax({
-			url:"/baseweb_homeEDU/family/stutea/infos",
+			url:"<%=basePath %>/family/stutea/infos",
 			type:"GET",
 			data:{
 				userType:"stu",
@@ -292,7 +292,7 @@
 		$('.keyword_search .theme .content .city a').click(function(event){
 			var city= $(this).text() ;
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					city:city,
@@ -344,7 +344,7 @@
 			var grade= $(this).text()  ; 
 			//通过ajax请求得到相应的数据内容
 			$.ajax({
-				url:"/baseweb_homeEDU/family/content/getsubject",
+				url:"<%=basePath %>/family/content/getsubject",
 				type:"GET",
 				data:{
 					grade:grade
@@ -354,7 +354,7 @@
 				}
 			});
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					grade:grade,
@@ -407,7 +407,7 @@
 			var subject= $(this).text()  ;
 			console.log(subject) ;
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					subject:subject,
@@ -465,7 +465,7 @@
 				console.log('没有输入任何搜索信息') ;
 			}else{
 				$.ajax({
-					url:"/baseweb_homeEDU/family/all/stutea/infos",
+					url:"<%=basePath %>/family/all/stutea/infos",
 					data:{
 						content:content,
 						userType:"stu",
@@ -522,7 +522,7 @@
 			var id = $(this).attr('id') ;
 			var page = id.substring(id.indexOf('_') + 1,id.length) ;
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					userType:"stu",
@@ -570,7 +570,7 @@
 			var page = id.substring(id.indexOf('_') + 1,id.length) ;
 			
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"stu",
@@ -626,7 +626,7 @@
 				$('.sort_menu #sort_price').removeClass('dropup');
 			}
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"stu",
@@ -685,7 +685,7 @@
 				$('.sort_menu #sort_age').removeClass('dropup');
 			}
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"stu",
@@ -744,7 +744,7 @@
 				$('.sort_menu #sort_notice').removeClass('dropup');
 			}
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"stu",

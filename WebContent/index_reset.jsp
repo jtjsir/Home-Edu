@@ -61,7 +61,7 @@
 				<h2 style="float:left;font-size:20px;font-weight:normal;font-family: 'Microsoft YaHei'">密码重置</h2>
 		</div>
 	</div>
-	<div style="height:550px;width:900px;margin:0 auto;padding-top:100px;background:url(/baseweb_homeEDU/images/common/password_bg.jpg)">
+	<div style="height:550px;width:900px;margin:0 auto;padding-top:100px;background:url(/Home-Edu/images/common/password_bg.jpg)">
 		<div style="height:300px;width:450px;margin:0 auto;">
 			<p   id="newwordIt1"><span class="glyphicon glyphicon-eye-close" style="font-size:20px;margin-right:20px;"></span>
 					  <input type="password" placeholder="输入新密码" style="width: 250px;    height: 48px;"/>
@@ -93,7 +93,7 @@
 				var password = $('#newwordIt2 input').val() ;
 				var account = $('#username input').attr('value') ;
 				$.ajax({
-					url:"/baseweb_homeEDU/password/reset/email",
+					url:"<%=basePath %>/password/reset/email",
 					type:"get",
 					data:{
 						username:account,

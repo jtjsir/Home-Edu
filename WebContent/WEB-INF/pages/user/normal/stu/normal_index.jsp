@@ -173,7 +173,7 @@
 <script type="text/javascript">
 	//右侧相似学生的推荐请求
 	$.ajax({
-		url:"/baseweb_homeEDU/family/stutea/infos",
+		url:"<%=basePath %>/family/stutea/infos",
 		type:"GET",
 		data:{
 			userType:"stu",
@@ -239,7 +239,7 @@
 		
 		//判断是否已经预约过或者已被忽略
 		$.ajax({
-			url:"/baseweb_homeEDU/user/detail/record/subscribe/judge",
+			url:"<%=basePath %>/user/detail/record/subscribe/judge",
 			data:{
 				stuname:'<%=stuname%>',
 				teaname:'<%=teaname%>',
@@ -260,7 +260,7 @@
 				//判断类型是否不同
 				if(<%=stuType%>==2&&<%=teaType%>==1){
 					$.ajax({
-						url:"/baseweb_homeEDU/user/detail/record/subscribe/add",
+						url:"<%=basePath %>/user/detail/record/subscribe/add",
 						type:"GET",
 						data:{
 							stuname:'<%=stuname%>',
@@ -284,7 +284,7 @@
 	$(function(){
 		//点赞数请求
 		$.ajax({
-			url:"/baseweb_homeEDU/user/normal/notice/read",
+			url:"<%=basePath %>/user/normal/notice/read",
 			data:{
 				username:'<%=((User)request.getAttribute("normalUser")).getUsername()%>',
 				fromname:'<%=((User)request.getSession().getAttribute("user")).getUsername()%>'
@@ -327,7 +327,7 @@
 			}
 				//请求后台更改数据
 				$.ajax({
-					url:"/baseweb_homeEDU/user/normal/notice/update",
+					url:"<%=basePath %>/user/normal/notice/update",
 					data:{
 						username:'<%=((User)request.getAttribute("normalUser")).getUsername()%>',
 						fromname:'<%=((User)request.getSession().getAttribute("user")).getUsername()%>',

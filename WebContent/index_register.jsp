@@ -19,7 +19,7 @@
 	<title>RegisterPage</title>
 	<style type="text/css">
 		.register-wrap{
-			background:url(/baseweb_homeEDU/images/register/bg_register.jpg) no-repeat left;
+			background:url(/Home-Edu/images/register/bg_register.jpg) no-repeat left;
 			width: 100%;
 			height: 667px;
 		}
@@ -178,7 +178,7 @@
 				$('#label-username').html("Username is empty!&times;").show();
 			}else{
 				$.ajax({
-					url:"/baseweb_homeEDU/register/findName",
+					url:"<%=basePath %>/register/findName",
 					type:"get",
 					data:{username:username},
 					success:function(info){

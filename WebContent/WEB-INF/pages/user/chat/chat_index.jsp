@@ -28,7 +28,7 @@
 <title>chat test</title>
 <style>
 body{
-	background-image: url("/baseweb_homeEDU/images/pass/pattern.png");
+	background-image: url("/Home-Edu/images/pass/pattern.png");
 }
 .title {
 	text-align: center;
@@ -118,7 +118,7 @@ body{
 			$('#myEditor')[0].focus() ;
 			
 			//websocket页面端的调用
-			var websk = new WebSocket("ws://localhost:8080/baseweb_homeEDU/chatserver/" + "<%=username + ">" + toName%>") ;
+			var websk = new WebSocket("ws://localhost:8080/Home-Edu/chatserver/" + "<%=username + ">" + toName%>") ;
 			//点击发送的事件
 			$('#send').on('click',function(){
 				var username = $('#username').val();

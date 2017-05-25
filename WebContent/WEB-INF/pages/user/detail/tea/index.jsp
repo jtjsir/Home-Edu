@@ -68,7 +68,7 @@
     }
     .personal_content{
     	width: 117%;
-    	background-image: url('/baseweb_homeEDU/images/user/detail/index/bg.jpg');
+    	background-image: url('/Home-Edu/images/user/detail/index/bg.jpg');
     	background-size: 100%;
     }
     .wrap-content{
@@ -204,7 +204,7 @@
 		//个人信息设置修改点击事件
 		$('.left-border .set-info').click(function(event){
 			$.ajax({
-				url:"/baseweb_homeEDU/user/detail/tea/index/right/info",
+				url:"<%=basePath %>/user/detail/tea/index/right/info",
 				type:"GET",
 				success:function(data){
 					$('.right-content').addClass("personal_content");
@@ -287,7 +287,7 @@
 		//个人信息点击事件
 		$('.left-border .personal-info').click(function(event){
 			$.ajax({
-				url:"/baseweb_homeEDU/user/detail/content/personinfoHTML",
+				url:"<%=basePath %>/user/detail/content/personinfoHTML",
 				type:"GET",
 				success:function(data){
 					$('.right-content').html(data) ;
@@ -341,14 +341,14 @@
 		//消息按钮响应事件
 		$('.left-border .personal-message').click(function(event){
 			$.ajax({
-				url:"/baseweb_homeEDU/user/detail/content/informMessageHTML",
+				url:"<%=basePath %>/user/detail/content/informMessageHTML",
 				type:"GET",
 				success:function(data){
 					$('.right-content').html(data) ;
 				}
 			});
 			$.ajax({
-				url:"/baseweb_homeEDU/user/detail/record/inform/getmessage",
+				url:"<%=basePath %>/user/detail/record/inform/getmessage",
 				type:"GET",
 				data:{
 					"username":"<%=teaUser.getUsername()%>",
@@ -421,14 +421,14 @@
 	//推荐按钮响应事件
 	$('.left-border .recommend-info').click(function(event){
 		$.ajax({
-			url:"/baseweb_homeEDU/user/detail/content/resRecommendHTML",
+			url:"<%=basePath %>/user/detail/content/resRecommendHTML",
 			type:"GET",
 			success:function(data){
 				$('.right-content').html(data) ;
 			}
 		});
 		$.ajax({
-			url:"/baseweb_homeEDU/user/detail/record/recommend/getmessage",
+			url:"<%=basePath %>/user/detail/record/recommend/getmessage",
 			type:"GET",
 			data:{
 				"userType":"tea"
@@ -480,7 +480,7 @@
 	$(function(){
 		$(document).on('click','.changebt a',function(event){
 			$.ajax({
-				url:"/baseweb_homeEDU/user/detail/content/resRecommendHTML",
+				url:"<%=basePath %>/user/detail/content/resRecommendHTML",
 				type:"GET",
 				success:function(data){
 					$('.right-content').html(data) ;
@@ -488,7 +488,7 @@
 			});
 			
 			$.ajax({
-				url:"/baseweb_homeEDU/user/detail/record/recommend/getmessage",
+				url:"<%=basePath %>/user/detail/record/recommend/getmessage",
 				type:"GET",
 				data:{
 					"userType":"tea"

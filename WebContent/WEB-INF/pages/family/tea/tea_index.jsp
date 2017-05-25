@@ -215,7 +215,7 @@
 	//第一次访问首先请求后台图片数据
 	$(function(){
 		$.ajax({
-			url:"/baseweb_homeEDU/family/stutea/infos",
+			url:"<%=basePath %>/family/stutea/infos",
 			type:"GET",
 			data:{
 				userType:"tea",
@@ -291,7 +291,7 @@
 		$('.keyword_search .theme .content .city a').click(function(event){
 			var city= $(this).text() ;
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					city:city,
@@ -343,7 +343,7 @@
 			var grade= $(this).text()  ; 
 			//通过ajax请求得到相应的数据内容
 			$.ajax({
-				url:"/baseweb_homeEDU/family/content/getsubject",
+				url:"<%=basePath %>/family/content/getsubject",
 				type:"GET",
 				data:{
 					grade:grade
@@ -353,7 +353,7 @@
 				}
 			});
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					grade:grade,
@@ -406,7 +406,7 @@
 			var subject= $(this).text()  ;
 			console.log(subject) ;
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					subject:subject,
@@ -466,7 +466,7 @@
 				$('.pagebtn').html("<ul class='pagination'><li><a href='javascript:void(0)'><<</a></li><li><a href='javascript:void(0)'>>></a></li></ul>");
 			}else{
 				$.ajax({
-					url:"/baseweb_homeEDU/family/all/stutea/infos",
+					url:"<%=basePath %>/family/all/stutea/infos",
 					data:{
 						content:content,
 						userType:"tea",
@@ -523,7 +523,7 @@
 			var id = $(this).attr('id') ;
 			var page = id.substring(id.indexOf('_') + 1,id.length) ;
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/infos",
+				url:"<%=basePath %>/family/stutea/infos",
 				type:"GET",
 				data:{
 					userType:"tea",
@@ -571,7 +571,7 @@
 			var page = id.substring(id.indexOf('_') + 1,id.length) ;
 			
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"tea",
@@ -626,7 +626,7 @@
 				$('.sort_menu #sort_price').removeClass('dropup');
 			}
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"tea",
@@ -685,7 +685,7 @@
 				$('.sort_menu #sort_age').removeClass('dropup');
 			}
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"tea",
@@ -744,7 +744,7 @@
 				$('.sort_menu #sort_notice').removeClass('dropup');
 			}
 			$.ajax({
-				url:"/baseweb_homeEDU/family/stutea/sort",
+				url:"<%=basePath %>/family/stutea/sort",
 				type:"GET",
 				data:{
 					userType:"tea",

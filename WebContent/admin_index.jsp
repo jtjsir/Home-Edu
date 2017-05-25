@@ -89,7 +89,7 @@
 			$(this).attr('class','stuRq active') ;
 			$('.teaRq').attr('class','teaRq') ;
 			$.ajax({
-				url:"/baseweb_homeEDU/admin/user/index/query/all",
+				url:"<%=basePath %>/admin/user/index/query/all",
 				data:{
 					userType:"2"
 				},
@@ -110,7 +110,7 @@
 			$(this).attr('class','teaRq active') ;
 			$('.stuRq').attr('class','stuRq') ;
 			$.ajax({
-				url:"/baseweb_homeEDU/admin/user/index/query/all",
+				url:"<%=basePath %>/admin/user/index/query/all",
 				data:{
 					userType:"1"
 				},
@@ -157,7 +157,7 @@
 			var name = $(this).parent().children('.text').val() ;
 			var userType = $('.teaRq').attr('class')=="teaRq active"?"1":"2" ;
 			$.ajax({
-				url:"/baseweb_homeEDU/admin/user/index/query/some",
+				url:"<%=basePath %>/admin/user/index/query/some",
 				data:{
 					name:name,
 					userType:userType
@@ -180,7 +180,7 @@
 			$(this).parent().parent().attr('hidden',true) ;
 			
 			$.ajax({
-				url:"/baseweb_homeEDU/admin/user/index/accept",
+				url:"<%=basePath %>/admin/user/index/accept",
 				data:{
 					name:name 
 				},
@@ -196,7 +196,7 @@
 			$(this).parent().parent().attr('hidden',true) ;
 			
 			$.ajax({
-				url:"/baseweb_homeEDU/admin/user/index/ignore",
+				url:"<%=basePath %>/admin/user/index/ignore",
 				data:{
 					name:name 
 				},

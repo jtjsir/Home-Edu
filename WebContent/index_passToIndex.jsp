@@ -19,7 +19,7 @@
 	<style type="text/css">
 		body{
 			font-family: "华文新魏";
-			background-image: url("/baseweb_homeEDU/images/pass/pattern.png");
+			background-image: url("/Home-Edu/images/pass/pattern.png");
 		}
 		.content{
 			width: auto;

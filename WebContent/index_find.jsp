@@ -109,7 +109,7 @@
 				var accountTips = $('.accountTip').html();
 				if(emailTips==accountTips){
 					$.ajax({
-						url:"/baseweb_homeEDU/password/find/emailval",
+						url:"<%=basePath %>/password/find/emailval",
 						type:"post",
 						data:{
 							username:account,
@@ -138,7 +138,7 @@
 				$('.accountTip').html("Username is empty!<span style='color:red;'>&times;</span>").show();
 			}else{
 				$.ajax({
-					url:"/baseweb_homeEDU/password/findName",
+					url:"<%=basePath %>/password/findName",
 					type:"get",
 					data:{username:username},
 					success:function(info){

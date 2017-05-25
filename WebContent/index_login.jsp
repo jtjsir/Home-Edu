@@ -20,7 +20,7 @@
 	<style type="text/css">
 		.login_wrap{
 			/*position: absolute;*/
-			background: url(/baseweb_homeEDU/images/login/bg_login.jpg) no-repeat center;
+			background: url(/Home-Edu/images/login/bg_login.jpg) no-repeat center;
 			/*background-size: 90%;*/
 			width: 100%;
 			height: 623px;
